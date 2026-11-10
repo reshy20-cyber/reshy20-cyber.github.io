@@ -1,5 +1,5 @@
 /* HAYATI service worker — v2.8 */
-const CACHE = 'hayati-v2.8';
+const CACHE = 'hayati-v2.9';
 const ASSETS = ['./', './index.html', './manifest.webmanifest', './icon-192.png', './icon-512.png'];
 
 self.addEventListener('install', e => {

@@ -1354,14 +1354,14 @@ document.getElementById('importFile').addEventListener('change',function(e){
    Works only inside the Android app from Google Play (Trusted Web Activity with Play Billing on).
    Every purchase is verified + acknowledged by the Supabase Edge Function "verify-purchase". */
 var PREMIUM_SKU='hayati_premium';
-var PLAY_PACKAGE='';            // e.g. 'site.nippy.dapper_maple_73.twa' — fill in after publishing, to show a Google Play link on the web
+var PLAY_PACKAGE='app.hayati.organizer'; // Google Play link shown on the website's paywall
 var FREE_HABITS=3;
-/* Locks only apply where Premium can actually be bought: Android (the Google Play app, or Android
-   browsers that are sent to Google Play). iPhone / desktop get everything until a payment exists there.
+/* The apps are sold only on Google Play, so the locks apply everywhere: on the website the paywall
+     points to the Google Play app, which is the only place Premium can be bought.
    Add ?preview=free to the address to see the free version on any device. */
 var PREVIEW_FREE=/[?&#]preview=free/.test(location.search+location.hash);
 try{if(PREVIEW_FREE)sessionStorage.setItem('hayati_preview','1');else if(/[?&#]preview=off/.test(location.search+location.hash))sessionStorage.removeItem('hayati_preview');PREVIEW_FREE=PREVIEW_FREE||sessionStorage.getItem('hayati_preview')==='1';}catch(e){}
-var LOCKS_ON=PREVIEW_FREE||/Android/i.test(navigator.userAgent)||('getDigitalGoodsService' in window);
+var LOCKS_ON=true;
 var billing={service:null,price:'',busy:false};
 function owned(){return !!(S.premium&&S.premium.active);}
 function isPro(){if(PREVIEW_FREE)return false;return !LOCKS_ON||!!S.gift||owned();}

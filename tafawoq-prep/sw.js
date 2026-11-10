@@ -1,4 +1,4 @@
-const CACHE='tafawoqprep-v102';
+const CACHE='tafawoqprep-v103';
 const FILES=['./','./index.html','./manifest.webmanifest','./icon-192.png'];
 self.addEventListener('install',e=>e.waitUntil(caches.open(CACHE).then(c=>c.addAll(FILES)).then(()=>self.skipWaiting())));
 self.addEventListener('activate',e=>e.waitUntil(Promise.all([caches.keys().then(k=>Promise.all(k.filter(x=>x.startsWith('tafawoqprep-')&&x!==CACHE).map(x=>caches.delete(x)))),self.clients.claim()])));

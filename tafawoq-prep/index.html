@@ -1065,14 +1065,14 @@ function searchKb(text,subject){
      Free: the first unit of every subject (lessons, questions, normal exams).
      Plus (one-time purchase "tafawoq_plus_2026_2027", no auto-renewal, valid until 31 August 2027):
      every unit, bubble-sheet exams and the smart tutor.
-     Locks only apply where Plus can be bought: Android (the Google Play app). iPhone and computers get
-     everything until a payment exists there. Add ?preview=free to the address to see the free version anywhere.
+     The apps are sold only on Google Play, so the locks apply everywhere: on the website the paywall
+     points to the Google Play app, which is the only place Plus can be bought. Add ?preview=free to the address to see the free version anywhere.
      Every purchase is checked and acknowledged by the shared Supabase function "verify-purchase". */
   const PLUS_SKU='tafawoq_prep_plus_2026_2027',PLUS_YEAR='2026–2027',PLUS_END=Date.parse('2027-09-01T00:00:00+03:00'),PLAY_ID='app.tafawoq.prep';
   const VERIFY_URL='https://nwlmoecyepsajayyyugd.supabase.co/functions/v1/verify-purchase',VERIFY_KEY='sb_publishable_rgaE-hjmqV37RU57_C8JEA_yn-0AcEO';
   let PREVIEW_FREE=/[?&#]preview=free/.test(location.search+location.hash);
   try{if(PREVIEW_FREE)sessionStorage.setItem('tafawoqprep_preview','1');else if(/[?&#]preview=off/.test(location.search+location.hash))sessionStorage.removeItem('tafawoqprep_preview');PREVIEW_FREE=PREVIEW_FREE||sessionStorage.getItem('tafawoqprep_preview')==='1'}catch(e){}
-  const LOCKS_ON=PREVIEW_FREE||/Android/i.test(navigator.userAgent)||('getDigitalGoodsService' in window);
+  const LOCKS_ON=true;
   const billing={service:null,price:'',busy:false};
   const plusOwned=()=>{const p=load('plus',null);return !!(p&&p.active&&p.sku===PLUS_SKU)};
   const plusExpired=()=>Date.now()>=PLUS_END;
