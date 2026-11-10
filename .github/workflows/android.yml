@@ -42,6 +42,13 @@ jobs:
         env:
           KEY_PASSWORD: ${{ secrets.HAYATI_KEY_PASSWORD }}
         run: |
+          # remove spaces / line breaks that can sneak in when pasting the secret on a phone
+          KEY_PASSWORD="$(printf '%s' "$KEY_PASSWORD" | tr -d '[:space:]')"
+          export KEY_PASSWORD
+          if ! keytool -list -keystore hayati-upload.keystore -storepass "$KEY_PASSWORD" > /dev/null 2>&1; then
+            echo "::error::HAYATI_KEY_PASSWORD does not open the keystore (length ${#KEY_PASSWORD}, expected 32). Re-enter the secret exactly as in KEY-INFO.txt."
+            exit 1
+          fi
           mkdir -p ../dist
           # App bundle for Google Play
           cp app/build/outputs/bundle/release/app-release.aab ../dist/hayati-${VERSION_NAME}.aab
