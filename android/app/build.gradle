@@ -55,7 +55,7 @@ android {
     namespace "app.hayati.organizer"
     defaultConfig {
         applicationId "app.hayati.organizer"
-        minSdkVersion 23
+        minSdkVersion 24
         targetSdkVersion 36
         versionCode((System.getenv("VERSION_CODE") ?: "1").toInteger())
         versionName(System.getenv("VERSION_NAME") ?: "2.0.0")
