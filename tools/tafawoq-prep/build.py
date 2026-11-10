@@ -8,7 +8,7 @@ and the branding, storage keys, offline cache name and Google Play product are s
 prep app, so the two apps can live side by side on reshy20-cyber.github.io without sharing data.
 Writes ../../tafawoq-prep/index.html and sw.js.
 """
-import json, os, sys
+import json, os, re, sys
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 OUT = os.path.join(HERE, '..', '..', 'tafawoq-prep')
@@ -24,15 +24,22 @@ SUBJ = {  # id: (name, glyph, colour, unit word, unit plural)
 }
 SUBJ['science'] = ('العلوم', '⚗', '#2f8a4e', 'الوحدة', 'وحدات')
 BYNAME = {v[0]: k for k, v in SUBJ.items()}
-# Until the 2026–2027 ministry books are matched, every subject has one practice unit.
-CHAPTERS = {k: ['تدريبات عامة (قبل المطابقة مع كتاب الوزارة)'] for k in SUBJ}
-
-qs = json.load(open(os.path.join(HERE, 'questions-v0.9.json'), encoding='utf-8'))
-bank = {k: [] for k in SUBJ}
-for q in qs:
-    a = list(q['a']); c = a.pop(q['correct']); a.insert(0, c)  # engine: a[0] is the correct answer
-    item = {'q': q['q'], 'a': a, 'e': q.get('explain', ''), 'ch': 0}
-    bank[BYNAME[q['subject']]].append(item)
+# Content per subject comes from content/<id>.json, written from the Ministry's 2026–2027
+# 3rd-preparatory term-1 textbooks: {"chapters": [...], "lessons": [...], "bank": [{ch,q,a,e}]}
+# with a[0] the correct answer (the engine shuffles options at exam time).
+CHAPTERS, LESSONS, bank = {}, {}, {}
+for k in SUBJ:
+    c = json.load(open(os.path.join(HERE, 'content', k + '.json'), encoding='utf-8'))
+    CHAPTERS[k] = c['chapters']
+    LESSONS[k] = c['lessons']
+    assert len(c['lessons']) == len(c['chapters']), k
+    bank[k] = []
+    for q in c['bank']:
+        assert 0 <= q['ch'] < len(c['chapters']) and len(q['a']) == 4 and len(set(q['a'])) == 4, (k, q['q'])
+        a = q['a']
+        if k in ('math', 'science'):  # typeset non-ASCII symbol options (−, ∅, √, ×) as LTR maths; pure ASCII is already shown LTR
+            a = [x if '`' in x or x.isascii() or re.search('[\u0600-\u06ff]', x) else '`' + x + '`' for x in a]
+        bank[k].append({'q': q['q'], 'a': a, 'e': q.get('e', ''), 'ch': q['ch']})
 
 J = lambda o: json.dumps(o, ensure_ascii=False)
 data = (
@@ -45,7 +52,7 @@ data = (
     "const chSingle=s=>(CHAPTER_WORD[s]||'الوحدة').replace(/^ال/,'');\n"
     "const CHAPTERS=" + J(CHAPTERS) + ";\n"
     "const BANK=" + J(bank) + ";\n"
-    "const PHYSICS_LESSONS=[];\nconst FIGS={};\nconst LESSONS={};\nconst ESSAYS={};\n"
+    "const PHYSICS_LESSONS=[];\nconst FIGS={};\nconst LESSONS=" + J(LESSONS) + ";\nconst ESSAYS={};\n"
     "const NOTES=" + J({k: [] for k in SUBJ}) + ";\n\n"
 )
 
@@ -71,8 +78,7 @@ rep("'tafawoq_preview'", "'tafawoqprep_preview'", 0)
 rep("const PLUS_SKU='tafawoq_plus_2026_2027'", "const PLUS_SKU='tafawoq_prep_plus_2026_2027'")
 rep("PLAY_ID='app.tafawoq'", "PLAY_ID='app.tafawoq.prep'")
 rep('الشراء متاح من تطبيق «تفوق» على Google Play', 'الشراء متاح من تطبيق «تفوق إعدادي» على Google Play', 0)
-rep('الأسئلة والملخصات مبنية على كتب الوزارة 2026–2027، ويُنصح بمراجعتها مع مدرس المادة.',
-    'الأسئلة الحالية تدريبات عامة على منهج الصف الثالث الإعدادي، وستُطابق مع كتب الوزارة 2026–2027 وحدة بوحدة.')
+# the secondary app's note already says the content follows the 2026–2027 ministry books; keep it.
 # prep colours: purple with teal (from the TAFAWOQ PREP design)
 rep('--accent:#078fc2;--accent-ink:#ffffff;--accent-soft:#dcf0fa;--accent-deep:#05668f;',
     '--accent:#6244a9;--accent-ink:#ffffff;--accent-soft:#ece6f8;--accent-deep:#47308a;')

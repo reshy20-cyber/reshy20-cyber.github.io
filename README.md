@@ -12,7 +12,7 @@ Personal life organizer — tasks, money, shopping, notes and goals. Web app + A
 | `.well-known/assetlinks.json` | Digital Asset Links for the Android app |
 | `android/` | Android project (`app.hayati.organizer`), built by `.github/workflows/android.yml` |
 | `android-tafawoq/` | Tafawoq Android app (`app.tafawoq`), built by `.github/workflows/android-tafawoq.yml` |
-| `tafawoq-prep/` | Tafawoq Prep (تفوق إعدادي) web app, built from the Tafawoq engine by `tools/tafawoq-prep/build.py` |
+| `tafawoq-prep/` | Tafawoq Prep (تفوق إعدادي) web app, built from the Tafawoq engine by `tools/tafawoq-prep/build.py`; content (units, unit summaries, question banks from the 2026–2027 term-1 ministry books) lives in `tools/tafawoq-prep/content/*.json` |
 | `android-tafawoq-prep/` | Tafawoq Prep Android app (`app.tafawoq.prep`), built by `.github/workflows/android-tafawoq-prep.yml` (secret `TAFAWOQPREP_KEY_PASSWORD`) |
 | `android-border/` | Border Companion Android app (`app.bordercompanion`), built by `.github/workflows/android-border.yml` |
 | `supabase/functions/` | Edge Functions: `verify-purchase`, `delete-account` |
