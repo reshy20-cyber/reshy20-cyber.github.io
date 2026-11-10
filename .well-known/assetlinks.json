@@ -37,7 +37,10 @@
       "namespace": "android_app",
       "package_name": "app.bordercompanion",
       "sha256_cert_fingerprints": [
-        "1F:6C:A5:A6:60:8C:AA:0E:62:B3:29:2E:22:95:98:E2:2C:9C:C9:FC:94:2A:C6:04:5A:66:0B:EB:D4:B0:AE:B5"
+        "1F:6C:A5:A6:60:8C:AA:0E:62:B3:29:2E:22:95:98:E2:2C:9C:C9:FC:94:2A:C6:04:5A:66:0B:EB:D4:B0:AE:B5",
+        "6D:E6:2F:DE:B2:7A:A5:AA:D9:36:81:3A:6D:2A:4A:4E:A9:79:9C:0C:DD:82:28:59:31:3E:24:12:3A:25:51:E9",
+        "2C:E5:EF:87:2A:04:90:C5:DA:35:3A:B9:E2:C7:D5:AF:B3:15:7C:6A:CA:A5:78:E7:02:88:59:38:93:A3:55:BC",
+        "86:65:8A:9E:28:D8:34:88:7F:C7:9D:3F:51:47:C4:5A:DD:E6:39:DB:5D:76:58:26:1C:36:DD:E9:10:5C:53:A4"
       ]
     }
   },
