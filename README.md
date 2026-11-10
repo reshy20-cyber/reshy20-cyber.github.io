@@ -11,6 +11,10 @@ Personal life organizer — tasks, money, shopping, notes and goals. Web app + A
 | `hayati/` | The web app (served by GitHub Pages) |
 | `.well-known/assetlinks.json` | Digital Asset Links for the Android app |
 | `android/` | Android project (`app.hayati.organizer`), built by `.github/workflows/android.yml` |
+| `android-tafawoq/` | Tafawoq Android app (`app.tafawoq`), built by `.github/workflows/android-tafawoq.yml` |
+| `android-border/` | Border Companion Android app (`app.bordercompanion`), built by `.github/workflows/android-border.yml` |
 | `supabase/functions/` | Edge Functions: `verify-purchase`, `delete-account` |
 
 The signing keystore in `android/` is password-protected; the password lives only in the repository secret `HAYATI_KEY_PASSWORD`.
+
+The Tafawoq and Border Companion keystores are protected the same way, with the secrets `TAFAWOQ_KEY_PASSWORD` and `BORDER_KEY_PASSWORD`.

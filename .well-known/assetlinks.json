@@ -1,11 +1,37 @@
 [
   {
-    "relation": ["delegate_permission/common.handle_all_urls"],
+    "relation": [
+      "delegate_permission/common.handle_all_urls"
+    ],
     "target": {
       "namespace": "android_app",
       "package_name": "app.hayati.organizer",
       "sha256_cert_fingerprints": [
         "2E:9A:E8:33:75:E4:29:2C:23:1E:FC:F8:E4:E0:9A:22:74:B2:41:26:A1:6C:99:6C:97:69:CA:99:B6:8D:82:52"
+      ]
+    }
+  },
+  {
+    "relation": [
+      "delegate_permission/common.handle_all_urls"
+    ],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "app.tafawoq",
+      "sha256_cert_fingerprints": [
+        "B1:DA:7A:91:51:34:B8:09:9C:4B:23:71:56:0F:D7:21:DD:9E:AD:A3:5E:FD:C7:12:4D:2A:FC:0C:D7:D1:C9:43"
+      ]
+    }
+  },
+  {
+    "relation": [
+      "delegate_permission/common.handle_all_urls"
+    ],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "app.bordercompanion",
+      "sha256_cert_fingerprints": [
+        "1F:6C:A5:A6:60:8C:AA:0E:62:B3:29:2E:22:95:98:E2:2C:9C:C9:FC:94:2A:C6:04:5A:66:0B:EB:D4:B0:AE:B5"
       ]
     }
   }
