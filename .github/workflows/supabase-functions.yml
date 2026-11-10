@@ -30,13 +30,15 @@ jobs:
           TOKEN_RAW: ${{ secrets.SUPABASE_ACCESS_TOKEN }}
         # The apps call it without a signed-in user; the function itself checks every purchase with Google.
         run: |
-          # remove spaces / line breaks that can sneak in when pasting the secret on a phone
+          # remove spaces / line breaks that can sneak in when pasting the secret on a phone, and the
+          # hyphen an iPhone can add when a long token wraps over two lines (real tokens: sbp_ + 40 hex, no hyphen)
           SUPABASE_ACCESS_TOKEN="$(printf '%s' "$TOKEN_RAW" | tr -d '[:space:]')"
+          SUPABASE_ACCESS_TOKEN="$(printf '%s' "$SUPABASE_ACCESS_TOKEN" | LC_ALL=C sed 's/[^A-Za-z0-9_]//g')"
           case "$SUPABASE_ACCESS_TOKEN" in
             sbp_*) ;;
             *) echo "::error::SUPABASE_ACCESS_TOKEN does not look like a Supabase access token (it should start with sbp_; length ${#SUPABASE_ACCESS_TOKEN}). Paste the token from supabase.com → Account → Access Tokens."; exit 1 ;;
           esac
           # shape only (never the token itself), to tell a mis-paste from a new token format
-          echo "token length ${#SUPABASE_ACCESS_TOKEN}; after sbp_: $(printf '%s' "${SUPABASE_ACCESS_TOKEN#sbp_}" | sed 's/[0-9a-f]/h/g; s/[g-zG-Z]/a/g; s/hh*/<hex>/g; s/aa*/<letters>/g' | head -c 120)"
+          echo "token length ${#SUPABASE_ACCESS_TOKEN}; after sbp_: $(printf '%s' "${SUPABASE_ACCESS_TOKEN#sbp_}" | sed 's/[0-9a-f]/#/g; s/[g-zG-Z]/@/g; s/##*/<hex>/g; s/@@*/<letters>/g' | head -c 120)"
           export SUPABASE_ACCESS_TOKEN
           supabase functions deploy verify-purchase --remote=nwlmoecyepsajayyyugd --no-verify-jwt --use-api --yes
