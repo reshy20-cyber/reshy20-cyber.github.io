@@ -29,4 +29,4 @@ jobs:
         env:
           SUPABASE_ACCESS_TOKEN: ${{ secrets.SUPABASE_ACCESS_TOKEN }}
         # The apps call it without a signed-in user; the function itself checks every purchase with Google.
-        run: supabase functions deploy verify-purchase --project-ref nwlmoecyepsajayyyugd --no-verify-jwt --use-api
+        run: supabase functions deploy verify-purchase --remote=nwlmoecyepsajayyyugd --no-verify-jwt --use-api --yes
