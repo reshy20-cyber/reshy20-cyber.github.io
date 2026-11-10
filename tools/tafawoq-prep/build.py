@@ -89,7 +89,7 @@ out = out.replace('--bg:#0c1820;--surface:#12232e;--surface-2:#173040;--line:#23
                   '--bg:#110f1d;--surface:#1a1729;--surface-2:#241f38;--line:#332c4d;')
 rep('</style>', '.hero{background:linear-gradient(125deg,#263c86,#6241a9 55%,#0a8b99);color:#fff}\n</style>')
 for n in ('manifest.webmanifest?v=120', 'icon-192.png?v=120', 'icon-180.png?v=120'):
-    rep(n, n.replace('?v=120', '?v=1'), 0)
+    rep(n, n.replace('?v=120', '?v=2'), 0)
 i = out.index('function tutorSuggestions(s){return({'); j = out.index('})[s]||[]}', i)
 out = out[:i] + "function tutorSuggestions(s){return(" + J({
     'general': ['كيف أذاكر قبل امتحانات الشهادة الإعدادية؟', 'حل: 2س + 3 = 11', 'ما علامة رفع الفاعل؟'],
