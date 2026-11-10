@@ -1,0 +1,21 @@
+{
+  "name": "HAYATI · حياتي",
+  "short_name": "HAYATI",
+  "description": "Personal life organizer — tasks, money, shopping, notes and goals",
+  "id": "/hayati/",
+  "start_url": "/hayati/",
+  "scope": "/hayati/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#0f1720",
+  "theme_color": "#0f1720",
+  "dir": "auto",
+  "lang": "ar",
+  "categories": ["productivity", "lifestyle", "finance"],
+  "icons": [
+    {"src": "icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any"},
+    {"src": "icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any"},
+    {"src": "icon-maskable-192.png", "sizes": "192x192", "type": "image/png", "purpose": "maskable"},
+    {"src": "icon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable"}
+  ]
+}

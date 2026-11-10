@@ -1,0 +1,12 @@
+[
+  {
+    "relation": ["delegate_permission/common.handle_all_urls"],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "app.hayati.organizer",
+      "sha256_cert_fingerprints": [
+        "2E:9A:E8:33:75:E4:29:2C:23:1E:FC:F8:E4:E0:9A:22:74:B2:41:26:A1:6C:99:6C:97:69:CA:99:B6:8D:82:52"
+      ]
+    }
+  }
+]

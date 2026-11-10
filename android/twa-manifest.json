@@ -1,0 +1,46 @@
+{
+  "packageId": "app.hayati.organizer",
+  "host": "reshy20-cyber.github.io",
+  "name": "HAYATI · حياتي",
+  "launcherName": "HAYATI",
+  "display": "standalone",
+  "themeColor": "#0F1720",
+  "themeColorDark": "#0F1720",
+  "navigationColor": "#0F1720",
+  "navigationColorDark": "#0F1720",
+  "navigationDividerColor": "#0F1720",
+  "navigationDividerColorDark": "#0F1720",
+  "backgroundColor": "#0F1720",
+  "enableNotifications": false,
+  "startUrl": "/hayati/",
+  "iconUrl": "https://reshy20-cyber.github.io/hayati/icon-512.png",
+  "maskableIconUrl": "https://reshy20-cyber.github.io/hayati/icon-maskable-512.png",
+  "splashScreenFadeOutDuration": 300,
+  "signingKey": {
+    "path": "./hayati-upload.keystore",
+    "alias": "hayati"
+  },
+  "appVersionCode": 1,
+  "shortcuts": [],
+  "generatorApp": "bubblewrap-cli",
+  "webManifestUrl": "https://reshy20-cyber.github.io/hayati/manifest.webmanifest",
+  "fallbackType": "customtabs",
+  "features": {
+    "playBilling": {
+      "enabled": true
+    }
+  },
+  "alphaDependencies": {
+    "enabled": false
+  },
+  "enableSiteSettingsShortcut": false,
+  "isChromeOSOnly": false,
+  "isMetaQuest": false,
+  "fullScopeUrl": "https://reshy20-cyber.github.io/hayati/",
+  "minSdkVersion": 21,
+  "orientation": "portrait",
+  "fingerprints": [],
+  "additionalTrustedOrigins": [],
+  "retainedBundles": [],
+  "displayOverride": []
+}

@@ -1,0 +1,62 @@
+name: Build HAYATI Android app
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths: ["android/**", ".github/workflows/android.yml"]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: android
+    env:
+      VERSION_CODE: ${{ github.run_number }}
+      VERSION_NAME: 2.0.${{ github.run_number }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "17"
+
+      - name: Check signing password
+        env:
+          KEY_PASSWORD: ${{ secrets.HAYATI_KEY_PASSWORD }}
+        run: |
+          if [ -z "$KEY_PASSWORD" ]; then
+            echo "::error::Add the repository secret HAYATI_KEY_PASSWORD (Settings → Secrets and variables → Actions)."
+            exit 1
+          fi
+
+      - name: Build app bundle and APK
+        run: |
+          chmod +x gradlew
+          yes | "$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager" --licenses > /dev/null || true
+          ./gradlew --no-daemon bundleRelease assembleRelease
+
+      - name: Sign
+        env:
+          KEY_PASSWORD: ${{ secrets.HAYATI_KEY_PASSWORD }}
+        run: |
+          mkdir -p ../dist
+          # App bundle for Google Play
+          cp app/build/outputs/bundle/release/app-release.aab ../dist/hayati-${VERSION_NAME}.aab
+          jarsigner -sigalg SHA256withRSA -digestalg SHA-256 \
+            -keystore hayati-upload.keystore -storepass "$KEY_PASSWORD" -keypass "$KEY_PASSWORD" \
+            ../dist/hayati-${VERSION_NAME}.aab hayati
+          # APK to install directly on an Android phone for a quick test
+          BT=$(ls -d "$ANDROID_HOME"/build-tools/* | sort -V | tail -1)
+          "$BT/zipalign" -f -p 4 app/build/outputs/apk/release/app-release-unsigned.apk ../dist/aligned.apk
+          "$BT/apksigner" sign --ks hayati-upload.keystore --ks-pass env:KEY_PASSWORD --key-pass env:KEY_PASSWORD \
+            --ks-key-alias hayati --out ../dist/hayati-${VERSION_NAME}.apk ../dist/aligned.apk
+          rm ../dist/aligned.apk
+          ls -la ../dist
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: hayati-android-${{ env.VERSION_NAME }}
+          path: dist/

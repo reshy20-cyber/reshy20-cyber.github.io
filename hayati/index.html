@@ -1,0 +1,1596 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl" data-theme="auto">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>HAYATI · حياتي</title>
+<meta name="description" content="HAYATI — Personal life organizer: tasks, money, shopping, notes and habits.">
+<meta name="theme-color" content="#0f1720">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="HAYATI">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon-192.png">
+<link rel="apple-touch-icon" href="icon-192.png">
+<style>
+:root{
+  --bg:#0f1720;--bg2:#1b2633;--card:#1c2733;--card2:#223040;--field:#121b24;--line:#2c3a49;
+  --text:#f3ede2;--muted:#9aa6b2;--gold:#e0c27f;--gold-strong:#e0c27f;--g1:#e6cf93;--g2:#b8955a;--ink:#1a1408;
+  --danger:#e48e8e;--ok:#86cfa6;--warn:#e9b86a;--shadow:0 10px 30px rgba(0,0,0,.35);
+  --nav:rgba(18,26,35,.92);--chip:#18222d;
+  color-scheme:dark;
+}
+:root[data-theme="light"]{
+  --bg:#f5f1e9;--bg2:#ece5d7;--card:#ffffff;--card2:#fbf8f2;--field:#f7f3ec;--line:#e5dccb;
+  --text:#1d232b;--muted:#69717c;--gold:#9a7230;--gold-strong:#8a6428;--g1:#e2c483;--g2:#bb914b;--ink:#1a1408;
+  --danger:#c0504d;--ok:#2f8a5b;--warn:#b07418;--shadow:0 8px 24px rgba(60,45,20,.10);
+  --nav:rgba(255,255,255,.94);--chip:#f1ebdf;
+  color-scheme:light;
+}
+@media (prefers-color-scheme: light){
+  :root[data-theme="auto"]{
+    --bg:#f5f1e9;--bg2:#ece5d7;--card:#ffffff;--card2:#fbf8f2;--field:#f7f3ec;--line:#e5dccb;
+    --text:#1d232b;--muted:#69717c;--gold:#9a7230;--gold-strong:#8a6428;--g1:#e2c483;--g2:#bb914b;--ink:#1a1408;
+    --danger:#c0504d;--ok:#2f8a5b;--warn:#b07418;--shadow:0 8px 24px rgba(60,45,20,.10);
+    --nav:rgba(255,255,255,.94);--chip:#f1ebdf;
+    color-scheme:light;
+  }
+}
+:root[data-accent="emerald"]{--g1:#8fe0b8;--g2:#3fa37a;--gold:#8fd9b2;--gold-strong:#8fd9b2}
+:root[data-theme="light"][data-accent="emerald"]{--gold:#2f8a5b;--gold-strong:#2f8a5b}
+@media (prefers-color-scheme: light){:root[data-theme="auto"][data-accent="emerald"]{--gold:#2f8a5b;--gold-strong:#2f8a5b}}
+:root[data-accent="sapphire"]{--g1:#a8c8f2;--g2:#4f7fc4;--gold:#a8c8f2;--gold-strong:#a8c8f2}
+:root[data-theme="light"][data-accent="sapphire"]{--gold:#3b67a8;--gold-strong:#3b67a8}
+@media (prefers-color-scheme: light){:root[data-theme="auto"][data-accent="sapphire"]{--gold:#3b67a8;--gold-strong:#3b67a8}}
+:root[data-accent="rose"]{--g1:#f2b3c4;--g2:#c4687f;--gold:#f0aabd;--gold-strong:#f0aabd}
+:root[data-theme="light"][data-accent="rose"]{--gold:#b0506a;--gold-strong:#b0506a}
+@media (prefers-color-scheme: light){:root[data-theme="auto"][data-accent="rose"]{--gold:#b0506a;--gold-strong:#b0506a}}
+:root[data-accent="violet"]{--g1:#cbb3f2;--g2:#7f5fc4;--gold:#c6adf0;--gold-strong:#c6adf0}
+:root[data-theme="light"][data-accent="violet"]{--gold:#6a4bb0;--gold-strong:#6a4bb0}
+@media (prefers-color-scheme: light){:root[data-theme="auto"][data-accent="violet"]{--gold:#6a4bb0;--gold-strong:#6a4bb0}}
+.accents{display:flex;gap:10px;flex-wrap:wrap}
+.accents button{width:40px;height:40px;border-radius:50%;border:2px solid transparent;color:#1a1408;font-weight:900}
+.accents button.on{border-color:var(--text)}
+.toggle{width:52px;height:30px;flex:0 0 52px;border-radius:99px;background:var(--field);border:1px solid var(--line);position:relative;display:grid;place-items:center;font-size:14px}
+.toggle i{position:absolute;top:3px;inset-inline-start:3px;width:22px;height:22px;border-radius:50%;background:var(--muted);transition:all .2s}
+.toggle.on{background:linear-gradient(135deg,var(--g1),var(--g2));border-color:transparent}
+.toggle.on i{inset-inline-start:25px;background:#fff}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;padding:0}
+body{
+  background:var(--bg);
+  background-image:radial-gradient(1200px 600px at 50% -200px,var(--bg2),transparent 70%);
+  background-attachment:fixed;
+  color:var(--text);
+  font-family:-apple-system,BlinkMacSystemFont,"SF Arabic","Segoe UI","Noto Sans Arabic","Noto Sans",Tahoma,Arial,sans-serif;
+  font-size:16px;line-height:1.5;min-height:100vh;
+  -webkit-font-smoothing:antialiased;
+}
+button,input,select,textarea{font:inherit;color:inherit}
+button{cursor:pointer;border:0;background:none;padding:0}
+svg{display:block}
+.wrap{max-width:560px;margin:0 auto;padding:calc(env(safe-area-inset-top) + 14px) 16px calc(env(safe-area-inset-bottom) + 100px)}
+
+/* Header */
+.top{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:18px}
+.brand{display:flex;align-items:center;gap:10px}
+.brand img{width:40px;height:40px;border-radius:11px;box-shadow:0 4px 14px rgba(0,0,0,.25)}
+.brand b{display:block;font-size:20px;letter-spacing:.14em;color:var(--gold);line-height:1.1;font-weight:800}
+.brand small{display:block;font-size:9.5px;letter-spacing:.22em;color:var(--muted);text-transform:uppercase}
+.iconbtn{width:42px;height:42px;border-radius:13px;border:1px solid var(--line);background:var(--card);display:grid;place-items:center;color:var(--gold)}
+.iconbtn svg{width:20px;height:20px}
+.iconbtn.on{background:var(--gold);color:var(--ink);border-color:transparent}
+
+/* Hero */
+.hero{margin:4px 0 18px}
+.hero .hi{color:var(--muted);font-size:15px}
+.hero h1{margin:2px 0 0;font-size:28px;line-height:1.25;font-weight:800}
+.hero .date{color:var(--gold);font-size:14px;margin-top:4px}
+
+/* Cards */
+.card{background:linear-gradient(160deg,var(--card2),var(--card));border:1px solid var(--line);border-radius:22px;padding:18px;margin-bottom:14px;box-shadow:var(--shadow)}
+.card h2{margin:0 0 14px;font-size:19px;font-weight:800;display:flex;align-items:center;justify-content:space-between;gap:8px}
+.card h2 .sub{font-size:13px;font-weight:500;color:var(--muted)}
+.title-row{display:flex;align-items:center;justify-content:space-between;gap:10px;margin:0 0 12px}
+.title-row h2{margin:0}
+.page-title{font-size:24px;font-weight:800;margin:0 0 14px}
+
+.stats{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:14px}
+.stat{background:linear-gradient(160deg,var(--card2),var(--card));border:1px solid var(--line);border-radius:20px;padding:16px;box-shadow:var(--shadow);text-align:start;width:100%}
+.stat .ic{width:34px;height:34px;border-radius:10px;display:grid;place-items:center;background:color-mix(in srgb,var(--gold) 14%,transparent);color:var(--gold);margin-bottom:10px}
+.stat .ic svg{width:18px;height:18px}
+.stat .v{font-size:24px;font-weight:800;line-height:1.15;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.stat .v small{font-size:13px;font-weight:700;color:var(--muted);margin-inline-start:4px}
+.stat .l{font-size:13px;color:var(--muted);margin-top:2px}
+.stat.wide{grid-column:1/-1}
+.bar{height:8px;border-radius:99px;background:var(--field);border:1px solid var(--line);overflow:hidden;margin-top:10px}
+.bar i{display:block;height:100%;border-radius:99px;background:linear-gradient(90deg,var(--g1),var(--g2));transition:width .4s}
+.bar.over i{background:var(--danger)}
+
+.quick{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:14px}
+.quick button{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:12px 4px;display:flex;flex-direction:column;align-items:center;gap:6px;font-size:12px;color:var(--muted)}
+.quick button svg{width:22px;height:22px;color:var(--gold)}
+
+/* Forms */
+.field{width:100%;background:var(--field);border:1px solid var(--line);border-radius:14px;padding:13px 14px;outline:none;transition:border-color .2s}
+.field:focus{border-color:var(--gold)}
+.field::placeholder{color:var(--muted);opacity:.8}
+textarea.field{resize:vertical;min-height:120px;line-height:1.7}
+select.field{appearance:none;-webkit-appearance:none;background-image:linear-gradient(45deg,transparent 50%,var(--muted) 50%),linear-gradient(135deg,var(--muted) 50%,transparent 50%);background-position:calc(12px) 55%,calc(17px) 55%;background-size:5px 5px;background-repeat:no-repeat;padding-inline-start:30px}
+[dir="ltr"] select.field{background-position:calc(100% - 17px) 55%,calc(100% - 12px) 55%;padding-inline-start:14px;padding-inline-end:30px}
+.lbl{display:block;font-size:13px;color:var(--muted);margin:10px 2px 6px}
+.row{display:flex;gap:10px;align-items:center}
+.row>*{flex:1;min-width:0}
+.gap{height:10px}
+.btn{width:100%;border-radius:15px;padding:14px;font-weight:800;font-size:16px;background:linear-gradient(135deg,var(--g1),var(--g2));color:var(--ink);box-shadow:0 6px 18px color-mix(in srgb,var(--g2) 30%,transparent);transition:transform .1s}
+.btn:active{transform:scale(.98)}
+.btn.ghost{background:var(--card);border:1px solid var(--line);color:var(--text);box-shadow:none;font-weight:600}
+.btn.danger{background:transparent;border:1px solid color-mix(in srgb,var(--danger) 50%,transparent);color:var(--danger);box-shadow:none;font-weight:700}
+.btn.sm{width:auto;padding:9px 14px;font-size:14px;border-radius:12px}
+.addbtn{width:42px;height:42px;border-radius:13px;flex:0 0 42px;background:linear-gradient(135deg,var(--g1),var(--g2));color:var(--ink);display:grid;place-items:center}
+.addbtn svg{width:22px;height:22px}
+
+.chips{display:flex;gap:8px;flex-wrap:wrap}
+.chips.scroll{flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;margin:0 -18px;padding:0 18px 2px}
+.chips.scroll::-webkit-scrollbar{display:none}
+.chip{flex:0 0 auto;border:1px solid var(--line);background:var(--chip);border-radius:99px;padding:8px 13px;font-size:14px;color:var(--muted);white-space:nowrap;display:inline-flex;align-items:center;gap:6px;position:relative}
+.chip.on{background:var(--gold);color:var(--ink);border-color:transparent;font-weight:700}
+.chip svg{width:15px;height:15px}
+.datefield svg{width:18px;height:18px;color:var(--gold)}
+.datefield input{position:absolute;inset:0;opacity:0;width:100%;height:100%;cursor:pointer}
+.chip.date input{position:absolute;inset:0;opacity:0;width:100%;height:100%;cursor:pointer}
+.chip.date.set{color:var(--gold);border-color:color-mix(in srgb,var(--gold) 50%,transparent)}
+.chip.flag.on{background:color-mix(in srgb,var(--danger) 18%,transparent);color:var(--danger);border-color:color-mix(in srgb,var(--danger) 45%,transparent)}
+
+.seg{display:flex;background:var(--field);border:1px solid var(--line);border-radius:14px;padding:4px;gap:4px;margin-bottom:12px}
+.seg button{flex:1;padding:9px 6px;border-radius:10px;font-size:14px;color:var(--muted)}
+.seg button.on{background:var(--gold);color:var(--ink);font-weight:800}
+
+/* Lists */
+.list{margin:0;padding:0;list-style:none}
+.item{display:flex;align-items:center;gap:12px;padding:13px 0;border-bottom:1px solid var(--line)}
+.item:last-child{border-bottom:0}
+.item .main{flex:1;min-width:0;cursor:pointer}
+.item .t{overflow-wrap:anywhere}
+.item .m{font-size:13px;color:var(--muted);display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-top:2px}
+.item.done .t{text-decoration:line-through;color:var(--muted)}
+.check{width:26px;height:26px;flex:0 0 26px;border-radius:50%;border:2px solid color-mix(in srgb,var(--gold) 70%,transparent);display:grid;place-items:center;transition:background .15s}
+.check svg{width:15px;height:15px;opacity:0;color:var(--ink)}
+.check.on{background:var(--gold);border-color:var(--gold)}
+.check.on svg{opacity:1}
+.check.sq{border-radius:8px}
+.del{width:34px;height:34px;flex:0 0 34px;border-radius:10px;display:grid;place-items:center;color:var(--muted);opacity:.75}
+.del svg{width:17px;height:17px}
+.del:active{color:var(--danger)}
+.tag{font-size:12px;padding:1px 8px;border-radius:99px;background:var(--chip);border:1px solid var(--line)}
+.c-over{color:var(--danger)}.c-today{color:var(--gold)}.c-ok{color:var(--ok)}
+.prio{width:8px;height:8px;border-radius:50%;background:var(--danger);display:inline-block}
+.count{min-width:30px;height:30px;padding:0 8px;border-radius:99px;border:1px solid color-mix(in srgb,var(--gold) 60%,transparent);color:var(--gold);display:grid;place-items:center;font-size:14px;font-weight:700}
+
+.empty{text-align:center;color:var(--muted);padding:26px 10px 14px}
+.empty .e{font-size:36px;margin-bottom:6px}
+
+/* Money */
+.monthnav{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
+.monthnav b{font-size:18px}
+.monthnav button{width:38px;height:38px;border-radius:12px;border:1px solid var(--line);background:var(--card);display:grid;place-items:center;color:var(--gold)}
+.monthnav svg{width:18px;height:18px}
+[dir="ltr"] .flip-ltr svg,[dir="rtl"] .flip-rtl svg{transform:scaleX(-1)}
+.bal{font-size:32px;font-weight:800;line-height:1.1}
+.bal small{font-size:16px;color:var(--muted);font-weight:700;margin-inline-start:6px}
+.io{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px}
+.io div{background:var(--field);border:1px solid var(--line);border-radius:14px;padding:10px 12px}
+.io span{display:block;font-size:12px;color:var(--muted)}
+.io b{font-size:17px}
+.budget-l{display:flex;justify-content:space-between;font-size:13px;color:var(--muted);margin-top:14px}
+.donut-wrap{display:flex;align-items:center;gap:16px}
+.donut{width:120px;height:120px;flex:0 0 120px;position:relative}
+.donut svg{width:100%;height:100%;transform:rotate(-90deg)}
+.donut .ctr{position:absolute;inset:0;display:grid;place-items:center;text-align:center;font-size:12px;color:var(--muted);line-height:1.3}
+.donut .ctr b{display:block;color:var(--text);font-size:15px}
+.legend{flex:1;min-width:0;display:flex;flex-direction:column;gap:7px;font-size:13.5px}
+.legend div{display:flex;align-items:center;gap:8px}
+.legend i{width:10px;height:10px;border-radius:3px;flex:0 0 10px}
+.legend span{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.legend em{font-style:normal;color:var(--muted)}
+.amt{font-weight:800;white-space:nowrap;direction:ltr;unicode-bidi:isolate}
+.amt.inc{color:var(--ok)}
+.emo{width:38px;height:38px;flex:0 0 38px;border-radius:12px;background:var(--field);border:1px solid var(--line);display:grid;place-items:center;font-size:19px}
+
+/* Notes */
+.search{position:relative;margin-bottom:12px}
+.search svg{position:absolute;inset-inline-start:13px;top:50%;transform:translateY(-50%);width:18px;height:18px;color:var(--muted)}
+.search .field{padding-inline-start:40px}
+.notes{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.note{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:14px;text-align:start;min-height:110px;display:flex;flex-direction:column;gap:6px;width:100%}
+.note b{font-size:15px;overflow-wrap:anywhere}
+.note p{margin:0;font-size:13.5px;color:var(--muted);display:-webkit-box;-webkit-line-clamp:4;-webkit-box-orient:vertical;overflow:hidden;white-space:pre-line;overflow-wrap:anywhere}
+.note .d{margin-top:auto;font-size:11.5px;color:var(--muted);display:flex;justify-content:space-between;align-items:center}
+.note .d svg{width:14px;height:14px;color:var(--gold)}
+.note.pinned{border-color:color-mix(in srgb,var(--gold) 55%,transparent)}
+
+/* Habits */
+.habit{display:flex;align-items:center;gap:12px;padding:12px 0;border-bottom:1px solid var(--line)}
+.habit:last-child{border-bottom:0}
+.habit .main{flex:1;min-width:0}
+.habit .streak{font-size:13px;color:var(--muted)}
+.habit .streak b{color:var(--gold)}
+.dots{display:flex;gap:5px;margin-top:7px}
+.dot{width:24px;height:24px;border-radius:8px;border:1px solid var(--line);background:var(--field);font-size:10px;color:var(--muted);display:grid;place-items:center}
+.dot.on{background:color-mix(in srgb,var(--gold) 80%,transparent);color:var(--ink);border-color:transparent;font-weight:700}
+.bigcheck{width:48px;height:48px;flex:0 0 48px;border-radius:15px;border:2px solid color-mix(in srgb,var(--gold) 60%,transparent);display:grid;place-items:center;color:var(--gold)}
+.bigcheck svg{width:24px;height:24px}
+.bigcheck.on{background:linear-gradient(135deg,var(--g1),var(--g2));color:var(--ink);border-color:transparent}
+.emoji-pick{display:flex;gap:6px;flex-wrap:wrap;margin-top:10px}
+.emoji-pick button{width:40px;height:40px;border-radius:12px;border:1px solid var(--line);background:var(--field);font-size:19px}
+.emoji-pick button.on{border-color:var(--gold);background:color-mix(in srgb,var(--gold) 18%,transparent)}
+
+/* Settings */
+.setrow{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 0;border-bottom:1px solid var(--line)}
+.setrow:last-child{border-bottom:0}
+.setrow .k{font-weight:600}
+.setrow .k small{display:block;font-weight:400;color:var(--muted);font-size:12.5px}
+.setrow .field{width:auto;min-width:120px;padding:9px 12px}
+.langs{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}
+.langs .chip{justify-content:center}
+.cloud-user{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:14px;background:var(--field);border:1px solid var(--line);margin-bottom:10px;overflow-wrap:anywhere}
+.cloud-user i{width:9px;height:9px;border-radius:50%;background:var(--ok);flex:0 0 9px}
+.cloud-msg{font-size:13px;color:var(--muted);margin:10px 2px 0;text-align:center}
+.lockrow{width:100%;display:flex;align-items:center;gap:10px;padding:12px 14px;border-radius:14px;border:1px dashed color-mix(in srgb,var(--gold) 55%,transparent);background:color-mix(in srgb,var(--gold) 8%,transparent);color:var(--text);font-size:14px;text-align:start}
+.lockrow span{flex:1}
+.lockrow b{color:var(--gold);font-size:13px}
+.iconbtn.crown{font-size:19px;filter:grayscale(.2)}
+.iconbtn.crown.pro{background:linear-gradient(135deg,var(--g1),var(--g2));border-color:transparent}
+.pro-hero{text-align:center;padding:6px 0 4px}
+.pro-hero .k{font-size:44px;line-height:1}
+.pro-hero h3{margin:8px 0 4px;font-size:22px}
+.pro-hero p{margin:0;color:var(--muted);font-size:14px}
+.pro-list{list-style:none;margin:16px 0;padding:0;display:flex;flex-direction:column;gap:10px}
+.pro-list li{display:flex;gap:12px;align-items:flex-start;background:var(--field);border:1px solid var(--line);border-radius:14px;padding:12px}
+.pro-list li span{font-size:22px;line-height:1.2}
+.pro-list li b{display:block}
+.pro-list li small{color:var(--muted)}
+.pro-price{text-align:center;margin:4px 0 14px}
+.pro-price b{font-size:28px;color:var(--gold)}
+.pro-price small{display:block;color:var(--muted)}
+.pro-badge{display:inline-flex;align-items:center;gap:6px;padding:4px 10px;border-radius:99px;background:linear-gradient(135deg,var(--g1),var(--g2));color:var(--ink);font-weight:800;font-size:13px}
+.foot{text-align:center;color:var(--muted);font-size:13px;margin-top:16px}
+
+/* Bottom nav */
+.nav{position:fixed;left:0;right:0;bottom:0;z-index:20;background:var(--nav);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-top:1px solid var(--line);padding:6px 6px calc(env(safe-area-inset-bottom) + 6px)}
+.nav .in{max-width:560px;margin:0 auto;display:grid;grid-template-columns:repeat(6,1fr);gap:2px}
+.nav button{display:flex;flex-direction:column;align-items:center;gap:3px;padding:6px 0 4px;border-radius:12px;color:var(--muted);font-size:10.5px;position:relative}
+.nav button svg{width:22px;height:22px}
+.nav button span:not(.badge){max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;padding:0 2px}
+.nav button.on{color:var(--gold);font-weight:700}
+.nav button.on::before{content:"";position:absolute;top:-7px;width:26px;height:3px;border-radius:0 0 3px 3px;background:var(--gold)}
+.badge{position:absolute;top:1px;inset-inline-end:calc(50% - 20px);min-width:17px;height:17px;padding:0 4px;border-radius:99px;background:var(--danger);color:#fff;font-size:10px;font-weight:700;display:grid;place-items:center}
+
+/* Sheet */
+.overlay{position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:40;opacity:0;transition:opacity .2s}
+.overlay.show{opacity:1}
+.sheet{position:fixed;left:0;right:0;bottom:0;z-index:41;max-width:560px;margin:0 auto;background:var(--card);border:1px solid var(--line);border-bottom:0;border-radius:24px 24px 0 0;padding:10px 18px calc(env(safe-area-inset-bottom) + 18px);max-height:92vh;overflow:auto;transform:translateY(100%);transition:transform .25s cubic-bezier(.2,.8,.2,1)}
+.sheet.show{transform:none}
+.sheet .grab{width:40px;height:5px;border-radius:9px;background:var(--line);margin:0 auto 12px}
+.sheet h3{margin:0 0 12px;font-size:19px}
+.sheet .acts{display:flex;gap:10px;margin-top:16px}
+.sheet .acts>*{flex:1}
+
+/* Toast */
+.toast{position:fixed;left:50%;transform:translate(-50%,20px);bottom:calc(env(safe-area-inset-bottom) + 84px);z-index:60;background:var(--text);color:var(--bg);border-radius:14px;padding:11px 14px;display:flex;align-items:center;gap:14px;font-size:14px;box-shadow:var(--shadow);opacity:0;pointer-events:none;transition:all .25s;max-width:calc(100% - 32px);width:max-content}
+.toast.show{opacity:1;transform:translate(-50%,0);pointer-events:auto}
+.toast button{color:var(--gold-strong);font-weight:800;filter:brightness(1.4)}
+:root[data-theme="light"] .toast button{filter:none;color:var(--g1)}
+
+.fade{animation:fade .25s ease}
+@keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+/* ---- Readability ---- */
+body{font-family:"IBM Plex Sans Arabic",-apple-system,BlinkMacSystemFont,"SF Arabic","Segoe UI","Noto Sans Arabic","Noto Sans",Tahoma,Arial,sans-serif;font-size:18.5px;line-height:1.65}
+.brand b{font-size:22px}.brand small{font-size:10.5px;letter-spacing:.16em}
+.hero .hi{font-size:17.5px}.hero h1{font-size:32px;line-height:1.3}.hero .date{font-size:17px}
+.page-title{font-size:28px}
+.card h2{font-size:21.5px}.card h2 .sub{font-size:15px}
+.stat .v{font-size:29px}.stat .v small{font-size:15px}.stat .l{font-size:15.5px;line-height:1.45}
+.quick button{font-size:15px;padding:14px 4px}.quick button svg{width:25px;height:25px}
+.field{font-size:18px;padding:14px 15px}
+.lbl{font-size:15.5px}
+.btn{font-size:18px}.btn.sm{font-size:16px;padding:10px 15px}
+.chip{font-size:16px;padding:9px 15px}
+.seg button{font-size:16.5px;padding:10px 6px}
+.item{padding:15px 0}.item .t{font-size:18.5px;line-height:1.5}.item .m{font-size:15px}
+.tag{font-size:14px;padding:2px 9px}
+.empty{font-size:17px}
+.io span{font-size:14.5px}.io b{font-size:19px}
+.budget-l{font-size:15px}
+.legend{font-size:16px}
+.note b{font-size:17.5px}.note p{font-size:16px;line-height:1.6}.note .d{font-size:13.5px}
+.habit .streak{font-size:15px}
+.dot{width:31px;height:31px;font-size:13px;border-radius:9px}
+.dots{gap:6px}
+.setrow .k{font-size:17px}.setrow .k small{font-size:14.5px}
+.cloud-msg{font-size:15.5px;line-height:1.6}
+.foot{font-size:15px}
+.toast{font-size:16px}
+.lockrow{font-size:16px}
+.pro-hero p{font-size:16.5px}.pro-list li small{font-size:15px;display:block;margin-top:2px}.pro-list li b{font-size:17.5px}
+.sheet h3{font-size:21px}
+.nav button{font-size:12.5px;gap:4px;padding:7px 0 5px}.nav button svg{width:25px;height:25px}
+@media (max-width:360px){.nav button{font-size:11px}.quick button{font-size:13px}.stat .v{font-size:24px}.hero h1{font-size:27px}}
+/* user text size (Settings) */
+.wrap,.nav .in,.sheet>*{zoom:var(--z,1)}
+.tsize{display:flex;gap:8px}.tsize button{flex:1;border:1px solid var(--line);background:var(--chip);border-radius:14px;padding:8px 4px;color:var(--muted)}
+.tsize button.on{background:var(--gold);color:var(--ink);border-color:transparent;font-weight:700}
+
+/* ---- Room for the hosting banner (the host adds a bar fixed at the bottom on its free plan) ---- */
+.nav{bottom:var(--bh,0px)}
+.wrap{padding-bottom:calc(env(safe-area-inset-bottom) + 110px + var(--bh,0px))}
+.toast{bottom:calc(env(safe-area-inset-bottom) + 92px + var(--bh,0px))}
+.sheet{bottom:var(--bh,0px);max-height:calc(92vh - var(--bh,0px))}
+</style>
+</head>
+<body>
+<div class="wrap" id="app"></div>
+<nav class="nav" id="nav"></nav>
+<div id="sheetRoot"></div>
+<div class="toast" id="toast"><span id="toastMsg"></span><button id="toastBtn"></button></div>
+<input type="file" id="importFile" accept="application/json,.json" hidden>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script>
+(function(){
+'use strict';
+
+/* ---------------- Storage ---------------- */
+var KEY = 'hayati_v2';
+var LANG_NAMES=[['ar','العربية'],['en','English'],['fr','Français'],['es','Español'],['de','Deutsch'],['it','Italiano'],['pt','Português'],['tr','Türkçe'],['zh','中文'],['hi','हिन्दी']];
+var LANG_CODES=['ar','en','fr','es','de','it','pt','tr','zh','hi'];
+function defaults(){return {v:2,lang:'ar',theme:'auto',currency:'GBP',budget:0,tasks:[],tx:[],shop:[],notes:[],habits:[],premium:{active:false,checked:0},gift:false,accent:'gold'};}
+function lsGet(k){try{return localStorage.getItem(k);}catch(e){return null;}}
+function lsSet(k,v){try{localStorage.setItem(k,v);return true;}catch(e){return false;}}
+/* Language and currency from the phone's settings (used only on first launch). */
+function deviceLocale(){
+  var list=[];try{list=(navigator.languages&&navigator.languages.length?navigator.languages:[navigator.language||'']);}catch(e){}
+  var lang='en',region='';
+  for(var i=0;i<list.length;i++){
+    var code=String(list[i]||'').toLowerCase().split(/[-_]/)[0];
+    if(LANG_CODES.indexOf(code)>-1){lang=code;break;}
+  }
+  for(var j=0;j<list.length;j++){var m=String(list[j]||'').match(/[-_]([A-Za-z]{2})\b/);if(m){region=m[1].toUpperCase();break;}}
+  var EUR='AT BE CY DE EE ES FI FR GR HR IE IT LT LU LV MT NL PT SI SK'.split(' ');
+  var MAP={SA:'SAR',AE:'AED',KW:'KWD',QA:'QAR',BH:'BHD',OM:'OMR',EG:'EGP',JO:'JOD',MA:'MAD',DZ:'DZD',TN:'TND',IQ:'IQD',LB:'LBP',US:'USD',GB:'GBP',TR:'TRY',IN:'INR',CN:'CNY',BR:'BRL',MX:'MXN',CH:'CHF',CA:'CAD',AU:'AUD'};
+  var cur=MAP[region]||(EUR.indexOf(region)>-1?'EUR':'');
+  if(!cur){cur={ar:'SAR',fr:'EUR',es:'EUR',de:'EUR',it:'EUR',pt:'EUR',tr:'TRY',zh:'CNY',hi:'INR'}[lang]||'USD';}
+  return {lang:lang,currency:cur};
+}
+function load(){
+  var d=null;
+  try{d=JSON.parse(lsGet(KEY));}catch(e){}
+  if(!d||typeof d!=='object'){
+    d=defaults();
+    var dev=deviceLocale();d.lang=dev.lang;d.currency=dev.currency;   // first launch: follow the phone's language & region
+    try{migrate(d);}catch(e){}
+  }
+  var base=defaults();
+  for(var k in base){if(d[k]===undefined)d[k]=base[k];}
+  ['tasks','tx','shop','notes','habits'].forEach(function(k){if(!Array.isArray(d[k]))d[k]=[];});
+  return d;
+}
+function save(){
+  lsSet(KEY,JSON.stringify(S));
+  if(!syncQuiet&&isDirty())scheduleSync();
+  try{var L=toLegacy(S);lsSet(LEGACY+'tasks',JSON.stringify(L.tasks));lsSet(LEGACY+'expenses',JSON.stringify(L.expenses));lsSet(LEGACY+'shopping',JSON.stringify(L.shopping));lsSet(LEGACY+'habits',JSON.stringify(L.habits));lsSet(LEGACY+'notes',JSON.stringify(L.notes));lsSet('hayati_language',S.lang);}catch(e){}
+}
+
+/* ---------------- Legacy (previous HAYATI version) ----------------
+   The previous version stored data under hayati_v2_tasks / _expenses / _shopping / _habits / _notes
+   and the language under hayati_language. We import it once, and keep writing those keys too,
+   so an older copy of the app (or a rollback) still sees the same data. */
+var LEGACY='hayati_v2_';
+var SYNC_KEY='hayati_sync',syncQuiet=false,syncTimer=null;
+function syncMeta(){try{return JSON.parse(lsGet(SYNC_KEY))||{last:0,hash:''};}catch(e){return {last:0,hash:''};}}
+function dataHash(){var str=JSON.stringify([S.tasks,S.tx,S.shop,S.notes,S.habits,S.budget,S.currency]),h=5381;for(var i=0;i<str.length;i++)h=((h<<5)+h+str.charCodeAt(i))|0;return String(h);}
+function isEmptyData(){return !S.tasks.length&&!S.tx.length&&!S.shop.length&&!S.notes.length&&!S.habits.length;}
+function isDirty(){if(isEmptyData())return false;return dataHash()!==syncMeta().hash;}
+function setSyncMeta(m){lsSet(SYNC_KEY,JSON.stringify(m));}
+function autoSyncOn(){return typeof cloud!=='undefined'&&!!(cloud&&cloud.client&&cloud.user)&&isPro()&&S.autoSync!==false;}
+function scheduleSync(){if(!autoSyncOn())return;clearTimeout(syncTimer);syncTimer=setTimeout(pushNow,3000);}
+function migrate(d){
+  var found=false,p={};
+  ['tasks','expenses','shopping','habits'].forEach(function(k){
+    var raw=lsGet(LEGACY+k);if(raw==null)return;
+    try{var v=JSON.parse(raw);if(Array.isArray(v)){p[k]=v;found=true;}}catch(e){}
+  });
+  var nr=lsGet(LEGACY+'notes');
+  if(nr!=null){var nv;try{nv=JSON.parse(nr);}catch(e){nv=nr;}if(typeof nv==='string'){p.notes=nv;found=true;}}
+  var lg=lsGet('hayati_language');
+  if(lg&&LANG_CODES.indexOf(lg)>-1)d.lang=lg;
+  else if(found)d.lang='ar';
+  if(found){importLegacy(d,p);d.currency='GBP';if(d.tasks.length||d.tx.length||d.shop.length||d.habits.length||d.notes.length){d.gift=true;d.giftNew=true;}lsSet(KEY,JSON.stringify(d));}
+}
+/* Convert a payload in the old format (also used by old cloud backups / backup files) into our data. */
+function importLegacy(d,p){
+  var td=iso(new Date());
+  (p.tasks||[]).forEach(function(o){
+    if(!o||typeof o!=='object')return;
+    var title=String(o.title||o.name||'').trim();if(!title)return;
+    d.tasks.push({id:o.id||uid(),title:title,due:typeof o.due==='string'?o.due.slice(0,10):'',prio:(o.prio===1||o.priority==='high')?1:0,
+      rep:/^(daily|weekly|monthly)$/.test(o.rep)?o.rep:'none',done:!!o.done,created:o.created||Date.now()});
+  });
+  (p.expenses||[]).forEach(function(o){
+    if(!o||typeof o!=='object')return;
+    var a=Number(o.amount);if(!(a>0))return;
+    d.tx.push({id:o.id||uid(),type:o.type==='inc'?'inc':'exp',amount:Math.round(a*100)/100,cur:/^[A-Z]{3}$/.test(o.cur)?o.cur:'GBP',
+      cat:o.cat||'other',note:String(o.note!=null?o.note:(o.desc||'')),date:/^\d{4}-\d{2}-\d{2}$/.test(o.date)?o.date:td});
+  });
+  (p.shopping||[]).forEach(function(o){
+    if(!o||typeof o!=='object')return;
+    var n=String(o.name||'').trim();if(!n)return;
+    d.shop.push({id:o.id||uid(),name:n,qty:String(o.qty||''),done:!!o.done});
+  });
+  (p.habits||[]).forEach(function(o){
+    if(!o||typeof o!=='object')return;
+    var n=String(o.name||'').trim();if(!n)return;
+    var log={};(Array.isArray(o.days)?o.days:[]).forEach(function(x){if(typeof x==='string')log[x]=1;});
+    d.habits.push({id:o.id||uid(),name:n,emoji:o.emoji||'🎯',log:log,created:o.created||Date.now()});
+  });
+  if(typeof p.notes==='string'&&p.notes.trim())d.notes.push({id:uid(),title:'',body:p.notes,pinned:false,updated:Date.now()});
+}
+/* Our data in the old format (extra fields are ignored by the old version). */
+function toLegacy(d){
+  return {
+    tasks:d.tasks.map(function(x){return {name:x.title,done:x.done,priority:x.prio?'high':'normal',due:x.due,id:x.id,rep:x.rep,created:x.created};}),
+    expenses:d.tx.filter(function(x){return x.type==='exp';}).map(function(x){return {amount:x.amount,desc:x.note,id:x.id,cur:x.cur,cat:x.cat,date:x.date};}),
+    shopping:d.shop.map(function(x){return {name:x.name,done:x.done,qty:x.qty,id:x.id};}),
+    habits:d.habits.map(function(x){return {name:x.name,days:Object.keys(x.log).filter(function(k){return x.log[k];}).sort(),id:x.id,emoji:x.emoji};}),
+    notes:d.notes.map(function(n){return (n.title?n.title+'\n':'')+n.body;}).join('\n\n———\n\n')
+  };
+}
+/* Accept: our own format, a payload with .app (new cloud/backup), or the old format. */
+function dataFromPayload(v){
+  if(!v||typeof v!=='object')return null;
+  var src=(v.app&&Array.isArray(v.app.tasks))?v.app:(Array.isArray(v.tx)?v:null);
+  var d=defaults();
+  if(src){for(var k in d)if(src[k]!==undefined)d[k]=src[k];['tasks','tx','shop','notes','habits'].forEach(function(k){if(!Array.isArray(d[k]))d[k]=[];});return d;}
+  if(Array.isArray(v.tasks)){importLegacy(d,v);d.gift=true;d.giftNew=true;return d;}
+  return null;
+}
+
+/* ---------------- Utils ---------------- */
+function uid(){return Date.now().toString(36)+Math.random().toString(36).slice(2,7);}
+function pad(n){return (n<10?'0':'')+n;}
+function iso(dt){return dt.getFullYear()+'-'+pad(dt.getMonth()+1)+'-'+pad(dt.getDate());}
+function parseISO(s){var p=s.split('-');return new Date(+p[0],+p[1]-1,+p[2]);}
+function today(){return iso(new Date());}
+function addDays(s,n){var d=parseISO(s);d.setDate(d.getDate()+n);return iso(d);}
+function addMonths(s,n){var d=parseISO(s),day=d.getDate();d.setDate(1);d.setMonth(d.getMonth()+n);var last=new Date(d.getFullYear(),d.getMonth()+1,0).getDate();d.setDate(Math.min(day,last));return iso(d);}
+function ym(s){return s.slice(0,7);}
+function esc(s){return String(s==null?'':s).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];});}
+function newTask(title){return {id:uid(),title:title,due:'',prio:0,rep:'none',done:false,created:Date.now()};}
+var LOCALES={ar:'ar-u-nu-latn',en:'en-GB',fr:'fr-FR',es:'es-ES',de:'de-DE',it:'it-IT',pt:'pt-PT',tr:'tr-TR',zh:'zh-CN',hi:'hi-IN-u-nu-latn'};
+function locale(){return LOCALES[S.lang]||'en-GB';}
+function fmtDate(s,opts){try{return new Intl.DateTimeFormat(locale(),opts||{day:'numeric',month:'long'}).format(parseISO(s));}catch(e){return s;}}
+function fmtMonth(m){try{return new Intl.DateTimeFormat(locale(),{month:'long',year:'numeric'}).format(parseISO(m+'-01'));}catch(e){return m;}}
+function money(n){var v=Math.round(n*100)/100;return v.toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2});}
+function moneyShort(n){return Math.abs(n)>=100000?Math.round(n).toLocaleString('en-US'):money(n);}
+
+/* ---------------- i18n ---------------- */
+var T={
+ar:{home:'الرئيسية',tasks:'المهام',money:'المال',shop:'التسوق',notes:'ملاحظاتي',habits:'أهدافي',settings:'الإعدادات',
+ morning:'صباح الخير ☀️',evening:'مساء الخير 🌙',hero:'حياتك، أكثر تنظيماً',
+ pending:'مهام متبقية',spent_month:'مصروفات هذا الشهر',of_budget:'من ميزانية',habits_today:'عادات اليوم',no_budget:'لم تحدد ميزانية',
+ today_focus:'تركيز اليوم',nothing_due:'لا توجد مهام مستحقة اليوم 🎉',see_all:'عرض الكل',
+ q_task:'مهمة',q_exp:'مصروف',q_item:'منتج',q_note:'ملاحظة',
+ task_ph:'اكتب مهمة جديدة…',add:'إضافة',due:'الموعد',priority:'مهمة',high:'مهمة جداً',repeat:'التكرار',
+ r_none:'بدون تكرار',r_daily:'يومياً',r_weekly:'أسبوعياً',r_monthly:'شهرياً',
+ f_all:'الكل',f_today:'اليوم',f_upcoming:'القادمة',f_done:'المنجزة',
+ overdue:'متأخرة',today:'اليوم',tomorrow:'غداً',empty_tasks:'لا توجد مهام هنا',empty_tasks2:'أضف أول مهمة من الأعلى',
+ edit_task:'تعديل المهمة',no_date:'بدون موعد',save:'حفظ',cancel:'إلغاء',del:'حذف',
+ next_on:'أحسنت! الموعد القادم:',
+ expense:'مصروف',income:'دخل',amount:'المبلغ',currency:'العملة',category:'التصنيف',desc:'الوصف (اختياري)',record:'تسجيل',
+ balance:'الرصيد',spent:'المصروفات',earned:'الدخل',budget:'الميزانية',remaining:'متبقي',over:'تجاوزت بـ',set_budget:'حدد ميزانية شهرية',
+ by_cat:'حسب التصنيف',tx_list:'العمليات',empty_tx:'لا توجد عمليات في هذا الشهر',other_cur:'عملات أخرى',total:'الإجمالي',
+ c_food:'طعام',c_transport:'مواصلات',c_bills:'فواتير',c_shopping:'تسوق',c_health:'صحة',c_fun:'ترفيه',c_edu:'تعليم',c_home:'منزل',c_other:'أخرى',
+ c_salary:'راتب',c_gift:'هدية',c_extra:'دخل إضافي',
+ item_ph:'أضف منتجاً…',qty:'الكمية',clear_bought:'حذف ما تم شراؤه',share:'مشاركة',empty_shop:'قائمة التسوق فارغة',bought:'تم شراء',of:'من',shop_list:'قائمة التسوق',
+ search:'ابحث في الملاحظات…',new_note:'ملاحظة جديدة',title_ph:'العنوان',body_ph:'اكتب ملاحظتك…',pin:'تثبيت',unpin:'إلغاء التثبيت',empty_notes:'لا توجد ملاحظات بعد',untitled:'بدون عنوان',autosave:'يُحفظ تلقائياً على هذا الجهاز',
+ habit_ph:'هدف أو عادة يومية… مثل: قراءة 20 صفحة',streak:'سلسلة',days:'يوم',best:'الأفضل',empty_habits:'ابنِ عاداتك يوماً بعد يوم',empty_habits2:'أضف عادة وسجّلها كل يوم',
+ language:'اللغة',theme:'المظهر',t_auto:'تلقائي',t_dark:'داكن',t_light:'فاتح',def_cur:'العملة الافتراضية',month_budget:'الميزانية الشهرية',month_budget_h:'0 = بدون ميزانية',
+ backup:'النسخ الاحتياطي',export:'تصدير البيانات',import:'استيراد البيانات',backup_h:'احفظ نسخة من بياناتك في ملف',imported:'تم استيراد البيانات ✓',bad_file:'الملف غير صالح',
+ danger:'منطقة الخطر',clear_all:'مسح كل البيانات',confirm_clear:'هل أنت متأكد؟ سيتم حذف كل شيء نهائياً.',cleared:'تم مسح البيانات',
+ deleted:'تم الحذف',undo:'تراجع',done_msg:'تم ✓',privacy:'بياناتك محفوظة على جهازك، ويمكنك مزامنتها مع حسابك',
+ footer:'HAYATI · حياتك، أكثر تنظيماً'},
+en:{home:'Home',tasks:'Tasks',money:'Money',shop:'Shopping',notes:'Notes',habits:'Habits',settings:'Settings',
+ morning:'Good morning ☀️',evening:'Good evening 🌙',hero:'Your life, beautifully organized',
+ pending:'Tasks left',spent_month:'Spent this month',of_budget:'of budget',habits_today:"Today's habits",no_budget:'No budget set',
+ today_focus:"Today's focus",nothing_due:'Nothing due today 🎉',see_all:'See all',
+ q_task:'Task',q_exp:'Expense',q_item:'Item',q_note:'Note',
+ task_ph:'Write a new task…',add:'Add',due:'Due',priority:'Important',high:'Important',repeat:'Repeat',
+ r_none:'No repeat',r_daily:'Daily',r_weekly:'Weekly',r_monthly:'Monthly',
+ f_all:'All',f_today:'Today',f_upcoming:'Upcoming',f_done:'Done',
+ overdue:'Overdue',today:'Today',tomorrow:'Tomorrow',empty_tasks:'No tasks here',empty_tasks2:'Add your first task above',
+ edit_task:'Edit task',no_date:'No due date',save:'Save',cancel:'Cancel',del:'Delete',
+ next_on:'Nice! Next due:',
+ expense:'Expense',income:'Income',amount:'Amount',currency:'Currency',category:'Category',desc:'Description (optional)',record:'Record',
+ balance:'Balance',spent:'Spent',earned:'Income',budget:'Budget',remaining:'left',over:'Over by',set_budget:'Set a monthly budget',
+ by_cat:'By category',tx_list:'Transactions',empty_tx:'No transactions this month',other_cur:'Other currencies',total:'Total',
+ c_food:'Food',c_transport:'Transport',c_bills:'Bills',c_shopping:'Shopping',c_health:'Health',c_fun:'Fun',c_edu:'Education',c_home:'Home',c_other:'Other',
+ c_salary:'Salary',c_gift:'Gift',c_extra:'Side income',
+ item_ph:'Add an item…',qty:'Qty',clear_bought:'Clear purchased',share:'Share',empty_shop:'Your shopping list is empty',bought:'Bought',of:'of',shop_list:'Shopping list',
+ search:'Search notes…',new_note:'New note',title_ph:'Title',body_ph:'Write your note…',pin:'Pin',unpin:'Unpin',empty_notes:'No notes yet',untitled:'Untitled',autosave:'Saved automatically on this device',
+ habit_ph:'New habit… e.g. Read 20 pages',streak:'Streak',days:'days',best:'Best',empty_habits:'Build your habits day by day',empty_habits2:'Add a habit and check it daily',
+ language:'Language',theme:'Appearance',t_auto:'Auto',t_dark:'Dark',t_light:'Light',def_cur:'Default currency',month_budget:'Monthly budget',month_budget_h:'0 = no budget',
+ backup:'Backup',export:'Export data',import:'Import data',backup_h:'Save a copy of your data to a file',imported:'Data imported ✓',bad_file:'Invalid file',
+ danger:'Danger zone',clear_all:'Erase all data',confirm_clear:'Are you sure? Everything will be permanently deleted.',cleared:'Data erased',
+ deleted:'Deleted',undo:'Undo',done_msg:'Done ✓',privacy:'Your data stays on your device; you can sync it with your account',
+ footer:'HAYATI · Your life, beautifully organized'},
+fr:{home:'Accueil',tasks:'Tâches',money:'Argent',shop:'Courses',notes:'Notes',habits:'Habitudes',settings:'Réglages',
+ morning:'Bonjour ☀️',evening:'Bonsoir 🌙',hero:'Votre vie, mieux organisée',
+ pending:'Tâches restantes',spent_month:'Dépenses du mois',of_budget:'du budget',habits_today:'Habitudes du jour',no_budget:'Aucun budget',
+ today_focus:"Aujourd'hui",nothing_due:"Rien à faire aujourd'hui 🎉",see_all:'Tout voir',
+ q_task:'Tâche',q_exp:'Dépense',q_item:'Article',q_note:'Note',
+ task_ph:'Nouvelle tâche…',add:'Ajouter',due:'Échéance',priority:'Important',high:'Important',repeat:'Répéter',
+ r_none:'Pas de répétition',r_daily:'Chaque jour',r_weekly:'Chaque semaine',r_monthly:'Chaque mois',
+ f_all:'Toutes',f_today:"Aujourd'hui",f_upcoming:'À venir',f_done:'Terminées',
+ overdue:'En retard',today:"Aujourd'hui",tomorrow:'Demain',empty_tasks:'Aucune tâche ici',empty_tasks2:'Ajoutez votre première tâche',
+ edit_task:'Modifier la tâche',no_date:'Sans échéance',save:'Enregistrer',cancel:'Annuler',del:'Supprimer',
+ next_on:'Bravo ! Prochaine échéance :',
+ expense:'Dépense',income:'Revenu',amount:'Montant',currency:'Devise',category:'Catégorie',desc:'Description (facultatif)',record:'Enregistrer',
+ balance:'Solde',spent:'Dépenses',earned:'Revenus',budget:'Budget',remaining:'restant',over:'Dépassé de',set_budget:'Définir un budget mensuel',
+ by_cat:'Par catégorie',tx_list:'Opérations',empty_tx:'Aucune opération ce mois-ci',other_cur:'Autres devises',total:'Total',
+ c_food:'Alimentation',c_transport:'Transport',c_bills:'Factures',c_shopping:'Achats',c_health:'Santé',c_fun:'Loisirs',c_edu:'Éducation',c_home:'Maison',c_other:'Autre',
+ c_salary:'Salaire',c_gift:'Cadeau',c_extra:'Revenu annexe',
+ item_ph:'Ajouter un article…',qty:'Qté',clear_bought:'Retirer les achetés',share:'Partager',empty_shop:'Votre liste est vide',bought:'Acheté',of:'sur',shop_list:'Liste de courses',
+ search:'Rechercher…',new_note:'Nouvelle note',title_ph:'Titre',body_ph:'Écrivez votre note…',pin:'Épingler',unpin:'Désépingler',empty_notes:'Aucune note',untitled:'Sans titre',autosave:'Enregistré automatiquement sur cet appareil',
+ habit_ph:'Nouvelle habitude… ex. Lire 20 pages',streak:'Série',days:'jours',best:'Record',empty_habits:'Construisez vos habitudes jour après jour',empty_habits2:'Ajoutez une habitude et cochez-la chaque jour',
+ language:'Langue',theme:'Apparence',t_auto:'Auto',t_dark:'Sombre',t_light:'Clair',def_cur:'Devise par défaut',month_budget:'Budget mensuel',month_budget_h:'0 = aucun budget',
+ backup:'Sauvegarde',export:'Exporter',import:'Importer',backup_h:'Enregistrez une copie de vos données',imported:'Données importées ✓',bad_file:'Fichier invalide',
+ danger:'Zone sensible',clear_all:'Tout effacer',confirm_clear:'Êtes-vous sûr ? Tout sera supprimé définitivement.',cleared:'Données effacées',
+ deleted:'Supprimé',undo:'Annuler',done_msg:'Fait ✓',privacy:'Vos données restent sur votre appareil ; vous pouvez les synchroniser avec votre compte',
+ footer:'HAYATI · Votre vie, mieux organisée'}
+};
+T.es={home:'Inicio',tasks:'Tareas',money:'Dinero',shop:'Compras',notes:'Notas',habits:'Hábitos',settings:'Ajustes',
+ morning:'Buenos días ☀️',evening:'Buenas tardes 🌙',hero:'Tu vida, mejor organizada',
+ pending:'Tareas pendientes',spent_month:'Gastos del mes',of_budget:'del presupuesto',habits_today:'Hábitos de hoy',no_budget:'Sin presupuesto',
+ today_focus:'Enfoque de hoy',nothing_due:'Nada pendiente hoy 🎉',see_all:'Ver todo',
+ q_task:'Tarea',q_exp:'Gasto',q_item:'Artículo',q_note:'Nota',
+ task_ph:'Escribe una nueva tarea…',add:'Añadir',due:'Fecha',priority:'Importante',high:'Importante',repeat:'Repetir',
+ r_none:'Sin repetición',r_daily:'Diario',r_weekly:'Semanal',r_monthly:'Mensual',
+ f_all:'Todas',f_today:'Hoy',f_upcoming:'Próximas',f_done:'Hechas',
+ overdue:'Atrasada',today:'Hoy',tomorrow:'Mañana',empty_tasks:'No hay tareas aquí',empty_tasks2:'Añade tu primera tarea arriba',
+ edit_task:'Editar tarea',no_date:'Sin fecha',save:'Guardar',cancel:'Cancelar',del:'Eliminar',next_on:'¡Bien! Próxima fecha:',
+ expense:'Gasto',income:'Ingreso',amount:'Importe',currency:'Moneda',category:'Categoría',desc:'Descripción (opcional)',record:'Registrar',
+ balance:'Saldo',spent:'Gastos',earned:'Ingresos',budget:'Presupuesto',remaining:'restante',over:'Excedido en',set_budget:'Definir presupuesto mensual',
+ by_cat:'Por categoría',tx_list:'Movimientos',empty_tx:'No hay movimientos este mes',other_cur:'Otras monedas',total:'Total',
+ c_food:'Comida',c_transport:'Transporte',c_bills:'Facturas',c_shopping:'Compras',c_health:'Salud',c_fun:'Ocio',c_edu:'Educación',c_home:'Hogar',c_other:'Otros',
+ c_salary:'Salario',c_gift:'Regalo',c_extra:'Ingreso extra',
+ item_ph:'Añade un artículo…',qty:'Cant.',clear_bought:'Quitar comprados',share:'Compartir',empty_shop:'Tu lista está vacía',bought:'Comprado',of:'de',shop_list:'Lista de compras',
+ search:'Buscar notas…',new_note:'Nueva nota',title_ph:'Título',body_ph:'Escribe tu nota…',pin:'Fijar',unpin:'Desfijar',empty_notes:'Aún no hay notas',untitled:'Sin título',autosave:'Se guarda automáticamente en este dispositivo',
+ habit_ph:'Nuevo hábito… ej. Leer 20 páginas',streak:'Racha',days:'días',best:'Mejor',empty_habits:'Construye tus hábitos día a día',empty_habits2:'Añade un hábito y márcalo cada día',
+ language:'Idioma',theme:'Apariencia',t_auto:'Auto',t_dark:'Oscuro',t_light:'Claro',def_cur:'Moneda predeterminada',month_budget:'Presupuesto mensual',month_budget_h:'0 = sin presupuesto',
+ backup:'Copia de seguridad',export:'Exportar datos',import:'Importar datos',backup_h:'Guarda una copia de tus datos en un archivo',imported:'Datos importados ✓',bad_file:'Archivo no válido',
+ danger:'Zona de peligro',clear_all:'Borrar todos los datos',confirm_clear:'¿Seguro? Todo se eliminará definitivamente.',cleared:'Datos borrados',
+ deleted:'Eliminado',undo:'Deshacer',done_msg:'Hecho ✓',privacy:'Tus datos se guardan en tu dispositivo; puedes sincronizarlos con tu cuenta',
+ footer:'HAYATI · Tu vida, mejor organizada'};
+T.de={home:'Start',tasks:'Aufgaben',money:'Geld',shop:'Einkauf',notes:'Notizen',habits:'Ziele',settings:'Einstellungen',
+ morning:'Guten Morgen ☀️',evening:'Guten Abend 🌙',hero:'Dein Leben, besser organisiert',
+ pending:'Offene Aufgaben',spent_month:'Ausgaben diesen Monat',of_budget:'des Budgets',habits_today:'Heutige Gewohnheiten',no_budget:'Kein Budget',
+ today_focus:'Fokus heute',nothing_due:'Heute nichts fällig 🎉',see_all:'Alle',
+ q_task:'Aufgabe',q_exp:'Ausgabe',q_item:'Artikel',q_note:'Notiz',
+ task_ph:'Neue Aufgabe…',add:'Hinzufügen',due:'Fällig',priority:'Wichtig',high:'Wichtig',repeat:'Wiederholen',
+ r_none:'Keine Wiederholung',r_daily:'Täglich',r_weekly:'Wöchentlich',r_monthly:'Monatlich',
+ f_all:'Alle',f_today:'Heute',f_upcoming:'Demnächst',f_done:'Erledigt',
+ overdue:'Überfällig',today:'Heute',tomorrow:'Morgen',empty_tasks:'Keine Aufgaben',empty_tasks2:'Füge oben deine erste Aufgabe hinzu',
+ edit_task:'Aufgabe bearbeiten',no_date:'Kein Datum',save:'Speichern',cancel:'Abbrechen',del:'Löschen',next_on:'Super! Nächster Termin:',
+ expense:'Ausgabe',income:'Einnahme',amount:'Betrag',currency:'Währung',category:'Kategorie',desc:'Beschreibung (optional)',record:'Speichern',
+ balance:'Saldo',spent:'Ausgaben',earned:'Einnahmen',budget:'Budget',remaining:'übrig',over:'Überschritten um',set_budget:'Monatsbudget festlegen',
+ by_cat:'Nach Kategorie',tx_list:'Buchungen',empty_tx:'Keine Buchungen in diesem Monat',other_cur:'Andere Währungen',total:'Gesamt',
+ c_food:'Essen',c_transport:'Verkehr',c_bills:'Rechnungen',c_shopping:'Einkäufe',c_health:'Gesundheit',c_fun:'Freizeit',c_edu:'Bildung',c_home:'Zuhause',c_other:'Sonstiges',
+ c_salary:'Gehalt',c_gift:'Geschenk',c_extra:'Nebeneinkommen',
+ item_ph:'Artikel hinzufügen…',qty:'Menge',clear_bought:'Gekaufte entfernen',share:'Teilen',empty_shop:'Deine Einkaufsliste ist leer',bought:'Gekauft',of:'von',shop_list:'Einkaufsliste',
+ search:'Notizen suchen…',new_note:'Neue Notiz',title_ph:'Titel',body_ph:'Schreibe deine Notiz…',pin:'Anheften',unpin:'Lösen',empty_notes:'Noch keine Notizen',untitled:'Ohne Titel',autosave:'Wird automatisch auf diesem Gerät gespeichert',
+ habit_ph:'Neue Gewohnheit… z. B. 20 Seiten lesen',streak:'Serie',days:'Tage',best:'Rekord',empty_habits:'Baue deine Gewohnheiten Tag für Tag auf',empty_habits2:'Füge eine Gewohnheit hinzu und hake sie täglich ab',
+ language:'Sprache',theme:'Darstellung',t_auto:'Auto',t_dark:'Dunkel',t_light:'Hell',def_cur:'Standardwährung',month_budget:'Monatsbudget',month_budget_h:'0 = kein Budget',
+ backup:'Sicherung',export:'Daten exportieren',import:'Daten importieren',backup_h:'Speichere eine Kopie deiner Daten als Datei',imported:'Daten importiert ✓',bad_file:'Ungültige Datei',
+ danger:'Gefahrenzone',clear_all:'Alle Daten löschen',confirm_clear:'Bist du sicher? Alles wird dauerhaft gelöscht.',cleared:'Daten gelöscht',
+ deleted:'Gelöscht',undo:'Rückgängig',done_msg:'Erledigt ✓',privacy:'Deine Daten bleiben auf deinem Gerät; du kannst sie mit deinem Konto synchronisieren',
+ footer:'HAYATI · Dein Leben, besser organisiert'};
+T.it={home:'Home',tasks:'Attività',money:'Soldi',shop:'Spesa',notes:'Note',habits:'Abitudini',settings:'Impostazioni',
+ morning:'Buongiorno ☀️',evening:'Buonasera 🌙',hero:'La tua vita, più organizzata',
+ pending:'Attività rimaste',spent_month:'Spese del mese',of_budget:'del budget',habits_today:'Abitudini di oggi',no_budget:'Nessun budget',
+ today_focus:'Focus di oggi',nothing_due:'Niente in scadenza oggi 🎉',see_all:'Vedi tutto',
+ q_task:'Attività',q_exp:'Spesa',q_item:'Articolo',q_note:'Nota',
+ task_ph:'Scrivi una nuova attività…',add:'Aggiungi',due:'Scadenza',priority:'Importante',high:'Importante',repeat:'Ripeti',
+ r_none:'Nessuna ripetizione',r_daily:'Ogni giorno',r_weekly:'Ogni settimana',r_monthly:'Ogni mese',
+ f_all:'Tutte',f_today:'Oggi',f_upcoming:'In arrivo',f_done:'Fatte',
+ overdue:'In ritardo',today:'Oggi',tomorrow:'Domani',empty_tasks:'Nessuna attività qui',empty_tasks2:'Aggiungi la prima attività qui sopra',
+ edit_task:'Modifica attività',no_date:'Nessuna data',save:'Salva',cancel:'Annulla',del:'Elimina',next_on:'Ottimo! Prossima scadenza:',
+ expense:'Spesa',income:'Entrata',amount:'Importo',currency:'Valuta',category:'Categoria',desc:'Descrizione (facoltativa)',record:'Registra',
+ balance:'Saldo',spent:'Spese',earned:'Entrate',budget:'Budget',remaining:'rimanenti',over:'Superato di',set_budget:'Imposta un budget mensile',
+ by_cat:'Per categoria',tx_list:'Movimenti',empty_tx:'Nessun movimento questo mese',other_cur:'Altre valute',total:'Totale',
+ c_food:'Cibo',c_transport:'Trasporti',c_bills:'Bollette',c_shopping:'Acquisti',c_health:'Salute',c_fun:'Svago',c_edu:'Istruzione',c_home:'Casa',c_other:'Altro',
+ c_salary:'Stipendio',c_gift:'Regalo',c_extra:'Entrata extra',
+ item_ph:'Aggiungi un articolo…',qty:'Qtà',clear_bought:'Rimuovi acquistati',share:'Condividi',empty_shop:'La lista della spesa è vuota',bought:'Acquistati',of:'su',shop_list:'Lista della spesa',
+ search:'Cerca nelle note…',new_note:'Nuova nota',title_ph:'Titolo',body_ph:'Scrivi la tua nota…',pin:'Fissa',unpin:'Sblocca',empty_notes:'Ancora nessuna nota',untitled:'Senza titolo',autosave:'Salvato automaticamente su questo dispositivo',
+ habit_ph:'Nuova abitudine… es. Leggere 20 pagine',streak:'Serie',days:'giorni',best:'Record',empty_habits:'Costruisci le tue abitudini giorno dopo giorno',empty_habits2:'Aggiungi un’abitudine e spuntala ogni giorno',
+ language:'Lingua',theme:'Aspetto',t_auto:'Auto',t_dark:'Scuro',t_light:'Chiaro',def_cur:'Valuta predefinita',month_budget:'Budget mensile',month_budget_h:'0 = nessun budget',
+ backup:'Backup',export:'Esporta dati',import:'Importa dati',backup_h:'Salva una copia dei tuoi dati in un file',imported:'Dati importati ✓',bad_file:'File non valido',
+ danger:'Zona pericolosa',clear_all:'Cancella tutti i dati',confirm_clear:'Sei sicuro? Tutto verrà eliminato definitivamente.',cleared:'Dati cancellati',
+ deleted:'Eliminato',undo:'Annulla',done_msg:'Fatto ✓',privacy:'I tuoi dati restano sul dispositivo; puoi sincronizzarli con il tuo account',
+ footer:'HAYATI · La tua vita, più organizzata'};
+T.pt={home:'Início',tasks:'Tarefas',money:'Dinheiro',shop:'Compras',notes:'Notas',habits:'Hábitos',settings:'Definições',
+ morning:'Bom dia ☀️',evening:'Boa noite 🌙',hero:'A sua vida, mais organizada',
+ pending:'Tarefas pendentes',spent_month:'Gastos deste mês',of_budget:'do orçamento',habits_today:'Hábitos de hoje',no_budget:'Sem orçamento',
+ today_focus:'Foco de hoje',nothing_due:'Nada para hoje 🎉',see_all:'Ver tudo',
+ q_task:'Tarefa',q_exp:'Gasto',q_item:'Item',q_note:'Nota',
+ task_ph:'Escreva uma nova tarefa…',add:'Adicionar',due:'Prazo',priority:'Importante',high:'Importante',repeat:'Repetir',
+ r_none:'Sem repetição',r_daily:'Diariamente',r_weekly:'Semanalmente',r_monthly:'Mensalmente',
+ f_all:'Todas',f_today:'Hoje',f_upcoming:'Próximas',f_done:'Concluídas',
+ overdue:'Atrasada',today:'Hoje',tomorrow:'Amanhã',empty_tasks:'Sem tarefas aqui',empty_tasks2:'Adicione a primeira tarefa acima',
+ edit_task:'Editar tarefa',no_date:'Sem prazo',save:'Guardar',cancel:'Cancelar',del:'Eliminar',next_on:'Boa! Próximo prazo:',
+ expense:'Gasto',income:'Receita',amount:'Valor',currency:'Moeda',category:'Categoria',desc:'Descrição (opcional)',record:'Registar',
+ balance:'Saldo',spent:'Gastos',earned:'Receitas',budget:'Orçamento',remaining:'restante',over:'Ultrapassado em',set_budget:'Definir orçamento mensal',
+ by_cat:'Por categoria',tx_list:'Movimentos',empty_tx:'Sem movimentos este mês',other_cur:'Outras moedas',total:'Total',
+ c_food:'Comida',c_transport:'Transporte',c_bills:'Contas',c_shopping:'Compras',c_health:'Saúde',c_fun:'Lazer',c_edu:'Educação',c_home:'Casa',c_other:'Outros',
+ c_salary:'Salário',c_gift:'Presente',c_extra:'Rendimento extra',
+ item_ph:'Adicione um item…',qty:'Qtd',clear_bought:'Remover comprados',share:'Partilhar',empty_shop:'A sua lista está vazia',bought:'Comprado',of:'de',shop_list:'Lista de compras',
+ search:'Pesquisar notas…',new_note:'Nova nota',title_ph:'Título',body_ph:'Escreva a sua nota…',pin:'Fixar',unpin:'Desafixar',empty_notes:'Ainda sem notas',untitled:'Sem título',autosave:'Guardado automaticamente neste dispositivo',
+ habit_ph:'Novo hábito… ex. Ler 20 páginas',streak:'Sequência',days:'dias',best:'Recorde',empty_habits:'Construa os seus hábitos dia a dia',empty_habits2:'Adicione um hábito e marque-o todos os dias',
+ language:'Idioma',theme:'Aparência',t_auto:'Auto',t_dark:'Escuro',t_light:'Claro',def_cur:'Moeda predefinida',month_budget:'Orçamento mensal',month_budget_h:'0 = sem orçamento',
+ backup:'Cópia de segurança',export:'Exportar dados',import:'Importar dados',backup_h:'Guarde uma cópia dos seus dados num ficheiro',imported:'Dados importados ✓',bad_file:'Ficheiro inválido',
+ danger:'Zona de perigo',clear_all:'Apagar todos os dados',confirm_clear:'Tem a certeza? Tudo será apagado definitivamente.',cleared:'Dados apagados',
+ deleted:'Eliminado',undo:'Desfazer',done_msg:'Feito ✓',privacy:'Os seus dados ficam no dispositivo; pode sincronizá-los com a sua conta',
+ footer:'HAYATI · A sua vida, mais organizada'};
+T.tr={home:'Ana sayfa',tasks:'Görevler',money:'Para',shop:'Alışveriş',notes:'Notlar',habits:'Hedefler',settings:'Ayarlar',
+ morning:'Günaydın ☀️',evening:'İyi akşamlar 🌙',hero:'Hayatın, daha düzenli',
+ pending:'Kalan görevler',spent_month:'Bu ayki harcamalar',of_budget:'bütçenin',habits_today:'Bugünün alışkanlıkları',no_budget:'Bütçe yok',
+ today_focus:'Bugünün odağı',nothing_due:'Bugün bekleyen bir şey yok 🎉',see_all:'Tümü',
+ q_task:'Görev',q_exp:'Harcama',q_item:'Ürün',q_note:'Not',
+ task_ph:'Yeni görev yaz…',add:'Ekle',due:'Tarih',priority:'Önemli',high:'Önemli',repeat:'Tekrar',
+ r_none:'Tekrar yok',r_daily:'Her gün',r_weekly:'Her hafta',r_monthly:'Her ay',
+ f_all:'Tümü',f_today:'Bugün',f_upcoming:'Yaklaşan',f_done:'Biten',
+ overdue:'Gecikti',today:'Bugün',tomorrow:'Yarın',empty_tasks:'Burada görev yok',empty_tasks2:'İlk görevini yukarıdan ekle',
+ edit_task:'Görevi düzenle',no_date:'Tarih yok',save:'Kaydet',cancel:'İptal',del:'Sil',next_on:'Harika! Sonraki tarih:',
+ expense:'Harcama',income:'Gelir',amount:'Tutar',currency:'Para birimi',category:'Kategori',desc:'Açıklama (isteğe bağlı)',record:'Kaydet',
+ balance:'Bakiye',spent:'Harcamalar',earned:'Gelirler',budget:'Bütçe',remaining:'kaldı',over:'Aşıldı:',set_budget:'Aylık bütçe belirle',
+ by_cat:'Kategoriye göre',tx_list:'İşlemler',empty_tx:'Bu ay işlem yok',other_cur:'Diğer para birimleri',total:'Toplam',
+ c_food:'Yemek',c_transport:'Ulaşım',c_bills:'Faturalar',c_shopping:'Alışveriş',c_health:'Sağlık',c_fun:'Eğlence',c_edu:'Eğitim',c_home:'Ev',c_other:'Diğer',
+ c_salary:'Maaş',c_gift:'Hediye',c_extra:'Ek gelir',
+ item_ph:'Ürün ekle…',qty:'Adet',clear_bought:'Alınanları temizle',share:'Paylaş',empty_shop:'Alışveriş listen boş',bought:'Alınan',of:'/',shop_list:'Alışveriş listesi',
+ search:'Notlarda ara…',new_note:'Yeni not',title_ph:'Başlık',body_ph:'Notunu yaz…',pin:'Sabitle',unpin:'Sabitlemeyi kaldır',empty_notes:'Henüz not yok',untitled:'Başlıksız',autosave:'Bu cihaza otomatik kaydedilir',
+ habit_ph:'Yeni alışkanlık… örn. 20 sayfa oku',streak:'Seri',days:'gün',best:'En iyi',empty_habits:'Alışkanlıklarını gün gün oluştur',empty_habits2:'Bir alışkanlık ekle ve her gün işaretle',
+ language:'Dil',theme:'Görünüm',t_auto:'Otomatik',t_dark:'Koyu',t_light:'Açık',def_cur:'Varsayılan para birimi',month_budget:'Aylık bütçe',month_budget_h:'0 = bütçe yok',
+ backup:'Yedekleme',export:'Verileri dışa aktar',import:'Verileri içe aktar',backup_h:'Verilerinin bir kopyasını dosyaya kaydet',imported:'Veriler içe aktarıldı ✓',bad_file:'Geçersiz dosya',
+ danger:'Tehlikeli bölge',clear_all:'Tüm verileri sil',confirm_clear:'Emin misin? Her şey kalıcı olarak silinecek.',cleared:'Veriler silindi',
+ deleted:'Silindi',undo:'Geri al',done_msg:'Tamam ✓',privacy:'Verilerin cihazında kalır; hesabınla senkronize edebilirsin',
+ footer:'HAYATI · Hayatın, daha düzenli'};
+T.zh={home:'首页',tasks:'任务',money:'财务',shop:'购物',notes:'笔记',habits:'习惯',settings:'设置',
+ morning:'早上好 ☀️',evening:'晚上好 🌙',hero:'让生活更有条理',
+ pending:'待办任务',spent_month:'本月支出',of_budget:'预算占比',habits_today:'今日习惯',no_budget:'未设置预算',
+ today_focus:'今日重点',nothing_due:'今天没有到期任务 🎉',see_all:'全部',
+ q_task:'任务',q_exp:'支出',q_item:'商品',q_note:'笔记',
+ task_ph:'输入新任务…',add:'添加',due:'日期',priority:'重要',high:'重要',repeat:'重复',
+ r_none:'不重复',r_daily:'每天',r_weekly:'每周',r_monthly:'每月',
+ f_all:'全部',f_today:'今天',f_upcoming:'即将到来',f_done:'已完成',
+ overdue:'已逾期',today:'今天',tomorrow:'明天',empty_tasks:'这里没有任务',empty_tasks2:'在上方添加第一个任务',
+ edit_task:'编辑任务',no_date:'无日期',save:'保存',cancel:'取消',del:'删除',next_on:'很好！下次日期：',
+ expense:'支出',income:'收入',amount:'金额',currency:'货币',category:'类别',desc:'描述（可选）',record:'记录',
+ balance:'结余',spent:'支出',earned:'收入',budget:'预算',remaining:'剩余',over:'超出',set_budget:'设置每月预算',
+ by_cat:'按类别',tx_list:'收支记录',empty_tx:'本月没有记录',other_cur:'其他货币',total:'合计',
+ c_food:'餐饮',c_transport:'交通',c_bills:'账单',c_shopping:'购物',c_health:'健康',c_fun:'娱乐',c_edu:'教育',c_home:'居家',c_other:'其他',
+ c_salary:'工资',c_gift:'礼物',c_extra:'额外收入',
+ item_ph:'添加商品…',qty:'数量',clear_bought:'清除已购买',share:'分享',empty_shop:'购物清单为空',bought:'已购买',of:'/',shop_list:'购物清单',
+ search:'搜索笔记…',new_note:'新笔记',title_ph:'标题',body_ph:'写下你的笔记…',pin:'置顶',unpin:'取消置顶',empty_notes:'还没有笔记',untitled:'无标题',autosave:'自动保存在此设备上',
+ habit_ph:'新习惯… 例如：阅读20页',streak:'连续',days:'天',best:'最佳',empty_habits:'一天一天养成好习惯',empty_habits2:'添加一个习惯并每天打卡',
+ language:'语言',theme:'外观',t_auto:'自动',t_dark:'深色',t_light:'浅色',def_cur:'默认货币',month_budget:'每月预算',month_budget_h:'0 = 不设预算',
+ backup:'备份',export:'导出数据',import:'导入数据',backup_h:'将数据副本保存到文件',imported:'数据已导入 ✓',bad_file:'文件无效',
+ danger:'危险区域',clear_all:'清除所有数据',confirm_clear:'确定吗？所有内容将被永久删除。',cleared:'数据已清除',
+ deleted:'已删除',undo:'撤销',done_msg:'完成 ✓',privacy:'数据保存在你的设备上，也可以与账户同步',
+ footer:'HAYATI · 让生活更有条理'};
+T.hi={home:'होम',tasks:'काम',money:'पैसा',shop:'खरीदारी',notes:'नोट्स',habits:'आदतें',settings:'सेटिंग्स',
+ morning:'सुप्रभात ☀️',evening:'शुभ संध्या 🌙',hero:'आपका जीवन, और व्यवस्थित',
+ pending:'बाकी काम',spent_month:'इस महीने का खर्च',of_budget:'बजट का',habits_today:'आज की आदतें',no_budget:'कोई बजट नहीं',
+ today_focus:'आज का फोकस',nothing_due:'आज कुछ बाकी नहीं 🎉',see_all:'सभी देखें',
+ q_task:'काम',q_exp:'खर्च',q_item:'सामान',q_note:'नोट',
+ task_ph:'नया काम लिखें…',add:'जोड़ें',due:'तारीख',priority:'ज़रूरी',high:'ज़रूरी',repeat:'दोहराएँ',
+ r_none:'दोहराव नहीं',r_daily:'रोज़',r_weekly:'हर हफ़्ते',r_monthly:'हर महीने',
+ f_all:'सभी',f_today:'आज',f_upcoming:'आने वाले',f_done:'पूरे',
+ overdue:'देर हो गई',today:'आज',tomorrow:'कल',empty_tasks:'यहाँ कोई काम नहीं',empty_tasks2:'ऊपर से पहला काम जोड़ें',
+ edit_task:'काम बदलें',no_date:'कोई तारीख नहीं',save:'सहेजें',cancel:'रद्द करें',del:'हटाएँ',next_on:'बढ़िया! अगली तारीख:',
+ expense:'खर्च',income:'आय',amount:'राशि',currency:'मुद्रा',category:'श्रेणी',desc:'विवरण (वैकल्पिक)',record:'दर्ज करें',
+ balance:'शेष',spent:'खर्च',earned:'आय',budget:'बजट',remaining:'बाकी',over:'अधिक खर्च',set_budget:'मासिक बजट तय करें',
+ by_cat:'श्रेणी के अनुसार',tx_list:'लेन-देन',empty_tx:'इस महीने कोई लेन-देन नहीं',other_cur:'अन्य मुद्राएँ',total:'कुल',
+ c_food:'भोजन',c_transport:'यातायात',c_bills:'बिल',c_shopping:'खरीदारी',c_health:'स्वास्थ्य',c_fun:'मनोरंजन',c_edu:'शिक्षा',c_home:'घर',c_other:'अन्य',
+ c_salary:'वेतन',c_gift:'उपहार',c_extra:'अतिरिक्त आय',
+ item_ph:'सामान जोड़ें…',qty:'मात्रा',clear_bought:'खरीदे हुए हटाएँ',share:'शेयर करें',empty_shop:'खरीदारी सूची खाली है',bought:'खरीदे',of:'में से',shop_list:'खरीदारी सूची',
+ search:'नोट्स खोजें…',new_note:'नया नोट',title_ph:'शीर्षक',body_ph:'अपना नोट लिखें…',pin:'पिन करें',unpin:'पिन हटाएँ',empty_notes:'अभी कोई नोट नहीं',untitled:'बिना शीर्षक',autosave:'इस डिवाइस पर अपने-आप सहेजा जाता है',
+ habit_ph:'नई आदत… जैसे 20 पेज पढ़ना',streak:'लगातार',days:'दिन',best:'सबसे अच्छा',empty_habits:'दिन-ब-दिन अपनी आदतें बनाएँ',empty_habits2:'एक आदत जोड़ें और रोज़ टिक करें',
+ language:'भाषा',theme:'रूप',t_auto:'ऑटो',t_dark:'डार्क',t_light:'लाइट',def_cur:'डिफ़ॉल्ट मुद्रा',month_budget:'मासिक बजट',month_budget_h:'0 = कोई बजट नहीं',
+ backup:'बैकअप',export:'डेटा निर्यात करें',import:'डेटा आयात करें',backup_h:'अपने डेटा की कॉपी फ़ाइल में सहेजें',imported:'डेटा आयात हुआ ✓',bad_file:'अमान्य फ़ाइल',
+ danger:'खतरे का क्षेत्र',clear_all:'सारा डेटा मिटाएँ',confirm_clear:'क्या आप सुनिश्चित हैं? सब कुछ स्थायी रूप से मिट जाएगा।',cleared:'डेटा मिटाया गया',
+ deleted:'हटाया गया',undo:'वापस लें',done_msg:'हो गया ✓',privacy:'आपका डेटा आपके डिवाइस पर रहता है; आप इसे अपने खाते से सिंक कर सकते हैं',
+ footer:'HAYATI · आपका जीवन, और व्यवस्थित'};
+
+
+Object.assign(T.ar,{"pro_sub": "ادفع مرة وحدة، واستمتع بكل الميزات مدى الحياة", "pro_b1": "المزامنة السحابية", "pro_b1s": "ارفع بياناتك واحفظها بين أجهزتك", "pro_b2": "المال المتقدم", "pro_b2s": "الدخل والميزانية والتصنيفات والرسم البياني", "pro_b3": "بلا حدود", "pro_b3s": "المجاني: {h} أهداف و{n} ملاحظات — Premium: بلا حد", "pro_once": "دفعة وحدة · مدى الحياة", "pro_buy": "اشترِ Premium", "pro_restore": "استعادة المشتريات", "pro_active": "مفعّل", "pro_only_play": "الشراء متاح من تطبيق حياتي على Google Play (أندرويد)", "pro_thanks": "شكراً لك! تم تفعيل Premium 👑", "pro_fail": "تعذّر إتمام العملية، حاول مرة أخرى", "pro_none": "لا توجد مشتريات سابقة", "limit_habits": "وصلت للحد المجاني ({n} أهداف). افتح Premium لإضافة المزيد", "limit_notes": "وصلت للحد المجاني ({n} ملاحظات). افتح Premium لإضافة المزيد", "pro_money_teaser": "الدخل والميزانية والتصنيفات والرسم البياني"});
+Object.assign(T.en,{"pro_sub": "Pay once, enjoy every feature for life", "pro_b1": "Cloud sync", "pro_b1s": "Back up your data and use it across devices", "pro_b2": "Advanced money", "pro_b2s": "Income, budget, categories and charts", "pro_b3": "No limits", "pro_b3s": "Free: {h} goals and {n} notes — Premium: unlimited", "pro_once": "One-time payment · Lifetime", "pro_buy": "Get Premium", "pro_restore": "Restore purchases", "pro_active": "Active", "pro_only_play": "Purchase is available in the HAYATI app on Google Play (Android)", "pro_thanks": "Thank you! Premium is active 👑", "pro_fail": "Something went wrong, please try again", "pro_none": "No previous purchases found", "limit_habits": "Free limit reached ({n} goals). Unlock Premium to add more", "limit_notes": "Free limit reached ({n} notes). Unlock Premium to add more", "pro_money_teaser": "Income, budget, categories and charts"});
+Object.assign(T.fr,{"pro_sub": "Payez une fois, profitez de tout à vie", "pro_b1": "Synchronisation cloud", "pro_b1s": "Sauvegardez vos données sur tous vos appareils", "pro_b2": "Finances avancées", "pro_b2s": "Revenus, budget, catégories et graphiques", "pro_b3": "Sans limites", "pro_b3s": "Gratuit : {h} objectifs et {n} notes — Premium : illimité", "pro_once": "Paiement unique · À vie", "pro_buy": "Obtenir Premium", "pro_restore": "Restaurer les achats", "pro_active": "Actif", "pro_only_play": "L'achat est disponible dans l'app HAYATI sur Google Play (Android)", "pro_thanks": "Merci ! Premium est activé 👑", "pro_fail": "Une erreur est survenue, réessayez", "pro_none": "Aucun achat trouvé", "limit_habits": "Limite gratuite atteinte ({n} objectifs). Passez à Premium pour en ajouter", "limit_notes": "Limite gratuite atteinte ({n} notes). Passez à Premium pour en ajouter", "pro_money_teaser": "Revenus, budget, catégories et graphiques"});
+Object.assign(T.es,{"pro_sub": "Paga una vez y disfruta de todo para siempre", "pro_b1": "Sincronización en la nube", "pro_b1s": "Guarda tus datos y úsalos en todos tus dispositivos", "pro_b2": "Finanzas avanzadas", "pro_b2s": "Ingresos, presupuesto, categorías y gráficos", "pro_b3": "Sin límites", "pro_b3s": "Gratis: {h} objetivos y {n} notas — Premium: ilimitado", "pro_once": "Pago único · De por vida", "pro_buy": "Obtener Premium", "pro_restore": "Restaurar compras", "pro_active": "Activo", "pro_only_play": "La compra está disponible en la app HAYATI de Google Play (Android)", "pro_thanks": "¡Gracias! Premium está activo 👑", "pro_fail": "Algo salió mal, inténtalo de nuevo", "pro_none": "No se encontraron compras", "limit_habits": "Límite gratuito alcanzado ({n} objetivos). Desbloquea Premium para añadir más", "limit_notes": "Límite gratuito alcanzado ({n} notas). Desbloquea Premium para añadir más", "pro_money_teaser": "Ingresos, presupuesto, categorías y gráficos"});
+Object.assign(T.de,{"pro_sub": "Einmal zahlen, alle Funktionen für immer", "pro_b1": "Cloud-Sync", "pro_b1s": "Sichere deine Daten und nutze sie auf allen Geräten", "pro_b2": "Erweiterte Finanzen", "pro_b2s": "Einnahmen, Budget, Kategorien und Diagramme", "pro_b3": "Ohne Limits", "pro_b3s": "Gratis: {h} Ziele und {n} Notizen — Premium: unbegrenzt", "pro_once": "Einmalzahlung · Lebenslang", "pro_buy": "Premium holen", "pro_restore": "Käufe wiederherstellen", "pro_active": "Aktiv", "pro_only_play": "Der Kauf ist in der HAYATI-App bei Google Play (Android) möglich", "pro_thanks": "Danke! Premium ist aktiv 👑", "pro_fail": "Etwas ist schiefgelaufen, bitte erneut versuchen", "pro_none": "Keine früheren Käufe gefunden", "limit_habits": "Gratis-Limit erreicht ({n} Ziele). Premium freischalten für mehr", "limit_notes": "Gratis-Limit erreicht ({n} Notizen). Premium freischalten für mehr", "pro_money_teaser": "Einnahmen, Budget, Kategorien und Diagramme"});
+Object.assign(T.it,{"pro_sub": "Paghi una volta, tutte le funzioni per sempre", "pro_b1": "Sincronizzazione cloud", "pro_b1s": "Salva i tuoi dati e usali su tutti i dispositivi", "pro_b2": "Finanze avanzate", "pro_b2s": "Entrate, budget, categorie e grafici", "pro_b3": "Senza limiti", "pro_b3s": "Gratis: {h} obiettivi e {n} note — Premium: illimitato", "pro_once": "Pagamento unico · A vita", "pro_buy": "Ottieni Premium", "pro_restore": "Ripristina acquisti", "pro_active": "Attivo", "pro_only_play": "L'acquisto è disponibile nell'app HAYATI su Google Play (Android)", "pro_thanks": "Grazie! Premium è attivo 👑", "pro_fail": "Qualcosa è andato storto, riprova", "pro_none": "Nessun acquisto trovato", "limit_habits": "Limite gratuito raggiunto ({n} obiettivi). Sblocca Premium per aggiungerne altri", "limit_notes": "Limite gratuito raggiunto ({n} note). Sblocca Premium per aggiungerne altre", "pro_money_teaser": "Entrate, budget, categorie e grafici"});
+Object.assign(T.pt,{"pro_sub": "Pague uma vez e aproveite tudo para sempre", "pro_b1": "Sincronização na nuvem", "pro_b1s": "Guarde os seus dados e use-os em todos os dispositivos", "pro_b2": "Finanças avançadas", "pro_b2s": "Receitas, orçamento, categorias e gráficos", "pro_b3": "Sem limites", "pro_b3s": "Grátis: {h} objetivos e {n} notas — Premium: ilimitado", "pro_once": "Pagamento único · Vitalício", "pro_buy": "Obter Premium", "pro_restore": "Restaurar compras", "pro_active": "Ativo", "pro_only_play": "A compra está disponível na app HAYATI no Google Play (Android)", "pro_thanks": "Obrigado! O Premium está ativo 👑", "pro_fail": "Algo correu mal, tente novamente", "pro_none": "Nenhuma compra encontrada", "limit_habits": "Limite gratuito atingido ({n} objetivos). Desbloqueie o Premium para adicionar mais", "limit_notes": "Limite gratuito atingido ({n} notas). Desbloqueie o Premium para adicionar mais", "pro_money_teaser": "Receitas, orçamento, categorias e gráficos"});
+Object.assign(T.tr,{"pro_sub": "Bir kez öde, tüm özelliklerin ömür boyu senin", "pro_b1": "Bulut senkronizasyonu", "pro_b1s": "Verilerini yedekle, tüm cihazlarında kullan", "pro_b2": "Gelişmiş finans", "pro_b2s": "Gelir, bütçe, kategoriler ve grafikler", "pro_b3": "Sınırsız", "pro_b3s": "Ücretsiz: {h} hedef ve {n} not — Premium: sınırsız", "pro_once": "Tek seferlik ödeme · Ömür boyu", "pro_buy": "Premium'u al", "pro_restore": "Satın alımları geri yükle", "pro_active": "Etkin", "pro_only_play": "Satın alma, Google Play'deki HAYATI uygulamasında (Android) yapılabilir", "pro_thanks": "Teşekkürler! Premium etkin 👑", "pro_fail": "Bir sorun oluştu, tekrar dene", "pro_none": "Önceki satın alma bulunamadı", "limit_habits": "Ücretsiz sınıra ulaşıldı ({n} hedef). Daha fazlası için Premium'u aç", "limit_notes": "Ücretsiz sınıra ulaşıldı ({n} not). Daha fazlası için Premium'u aç", "pro_money_teaser": "Gelir, bütçe, kategoriler ve grafikler"});
+Object.assign(T.zh,{"pro_sub": "一次付费，终身享有全部功能", "pro_b1": "云同步", "pro_b1s": "备份数据并在多台设备间使用", "pro_b2": "高级财务", "pro_b2s": "收入、预算、分类和图表", "pro_b3": "无限制", "pro_b3s": "免费版：{h} 个目标和 {n} 条笔记 — Premium：无限制", "pro_once": "一次性付费 · 终身有效", "pro_buy": "获取 Premium", "pro_restore": "恢复购买", "pro_active": "已激活", "pro_only_play": "可在 Google Play（安卓）上的 HAYATI 应用内购买", "pro_thanks": "谢谢！Premium 已激活 👑", "pro_fail": "出了点问题，请重试", "pro_none": "未找到以前的购买", "limit_habits": "已达免费上限（{n} 个目标）。解锁 Premium 以添加更多", "limit_notes": "已达免费上限（{n} 条笔记）。解锁 Premium 以添加更多", "pro_money_teaser": "收入、预算、分类和图表"});
+Object.assign(T.hi,{"pro_sub": "एक बार भुगतान करें, हमेशा के लिए सभी सुविधाएँ", "pro_b1": "क्लाउड सिंक", "pro_b1s": "अपना डेटा बैकअप करें और सभी डिवाइस पर इस्तेमाल करें", "pro_b2": "उन्नत वित्त", "pro_b2s": "आय, बजट, श्रेणियाँ और चार्ट", "pro_b3": "कोई सीमा नहीं", "pro_b3s": "मुफ़्त: {h} लक्ष्य और {n} नोट्स — Premium: असीमित", "pro_once": "एक बार भुगतान · आजीवन", "pro_buy": "Premium लें", "pro_restore": "खरीदारी बहाल करें", "pro_active": "सक्रिय", "pro_only_play": "खरीदारी Google Play (Android) पर HAYATI ऐप में उपलब्ध है", "pro_thanks": "धन्यवाद! Premium सक्रिय है 👑", "pro_fail": "कुछ गलत हुआ, फिर से कोशिश करें", "pro_none": "कोई पिछली खरीदारी नहीं मिली", "limit_habits": "मुफ़्त सीमा पूरी ({n} लक्ष्य)। और जोड़ने के लिए Premium लें", "limit_notes": "मुफ़्त सीमा पूरी ({n} नोट्स)। और जोड़ने के लिए Premium लें", "pro_money_teaser": "आय, बजट, श्रेणियाँ और चार्ट"});
+Object.assign(T.ar,{"pro_b1": "مزامنة تلقائية", "pro_b1s": "بياناتك تتحدّث بين أجهزتك تلقائياً", "pro_b2": "المال المتقدم", "pro_b2s": "الميزانية والتصنيفات والرسم البياني والتقرير الشهري", "pro_b3": "أهداف بلا حد", "pro_b3s": "المجاني: {h} أهداف", "pro_b4": "المهام المتكررة", "pro_b4s": "يومياً أو أسبوعياً أو شهرياً", "pro_b5": "ألوان مميزة", "pro_b5s": "اختر لون التطبيق اللي يعجبك", "pro_rep_reason": "المهام المتكررة من ميزات Premium", "pro_gift": "لأنك من أوائل مستخدمي حياتي، Premium مفعّل لك مجاناً مدى الحياة", "gift_title": "هدية لك!", "gift_ok": "شكراً", "pro_money_teaser": "الميزانية والتصنيفات والرسم البياني والتقرير الشهري", "rep_title": "تقرير الشهر", "rep_vs_last": "المصروفات مقارنة بالشهر الماضي", "rep_per_day": "متوسط الصرف اليومي", "rep_top": "أكثر تصنيف صرفت عليه", "rep_tasks": "مهام أنجزتها", "rep_checks": "مرات إنجاز الأهداف", "synced": "تمت المزامنة", "sync_conflict": "فيه تغييرات على هذا الجهاز وفي السحابة. أيهما تبي تحتفظ فيه؟", "keep_cloud": "بيانات السحابة", "keep_device": "بيانات هذا الجهاز", "sync_never": "لم تتم المزامنة بعد", "sync_last": "آخر مزامنة:", "sync_off": "متوقفة", "auto_sync": "المزامنة التلقائية", "auto_sync_h": "ميزة Premium", "accent": "لون التطبيق"});
+Object.assign(T.en,{"pro_b1": "Automatic sync", "pro_b1s": "Your data stays up to date on all your devices", "pro_b2": "Advanced money", "pro_b2s": "Budget, categories, charts and monthly report", "pro_b3": "Unlimited goals", "pro_b3s": "Free: {h} goals", "pro_b4": "Recurring tasks", "pro_b4s": "Daily, weekly or monthly", "pro_b5": "Color themes", "pro_b5s": "Pick the app color you like", "pro_rep_reason": "Recurring tasks are a Premium feature", "pro_gift": "As one of HAYATI’s early users, Premium is yours free for life", "gift_title": "A gift for you!", "gift_ok": "Thanks", "pro_money_teaser": "Budget, categories, charts and monthly report", "rep_title": "Monthly report", "rep_vs_last": "Spending vs last month", "rep_per_day": "Average per day", "rep_top": "Top category", "rep_tasks": "Tasks completed", "rep_checks": "Goal check-ins", "synced": "Synced", "sync_conflict": "This device and the cloud both have changes. Which one do you want to keep?", "keep_cloud": "Cloud data", "keep_device": "This device’s data", "sync_never": "Not synced yet", "sync_last": "Last sync:", "sync_off": "Off", "auto_sync": "Automatic sync", "auto_sync_h": "Premium feature", "accent": "App color"});
+Object.assign(T.fr,{"pro_b1": "Synchronisation automatique", "pro_b1s": "Vos données à jour sur tous vos appareils", "pro_b2": "Finances avancées", "pro_b2s": "Budget, catégories, graphiques et rapport mensuel", "pro_b3": "Objectifs illimités", "pro_b3s": "Gratuit : {h} objectifs", "pro_b4": "Tâches récurrentes", "pro_b4s": "Quotidiennes, hebdomadaires ou mensuelles", "pro_b5": "Couleurs", "pro_b5s": "Choisissez la couleur de l'app", "pro_rep_reason": "Les tâches récurrentes sont une fonction Premium", "pro_gift": "En tant que premier utilisateur de HAYATI, Premium vous est offert à vie", "gift_title": "Un cadeau pour vous !", "gift_ok": "Merci", "pro_money_teaser": "Budget, catégories, graphiques et rapport mensuel", "rep_title": "Rapport du mois", "rep_vs_last": "Dépenses vs mois dernier", "rep_per_day": "Moyenne par jour", "rep_top": "Catégorie principale", "rep_tasks": "Tâches terminées", "rep_checks": "Objectifs cochés", "synced": "Synchronisé", "sync_conflict": "Cet appareil et le cloud ont des modifications. Lesquelles garder ?", "keep_cloud": "Données du cloud", "keep_device": "Données de cet appareil", "sync_never": "Pas encore synchronisé", "sync_last": "Dernière synchro :", "sync_off": "Désactivée", "auto_sync": "Synchronisation automatique", "auto_sync_h": "Fonction Premium", "accent": "Couleur de l'app"});
+Object.assign(T.es,{"pro_b1": "Sincronización automática", "pro_b1s": "Tus datos al día en todos tus dispositivos", "pro_b2": "Finanzas avanzadas", "pro_b2s": "Presupuesto, categorías, gráficos e informe mensual", "pro_b3": "Objetivos ilimitados", "pro_b3s": "Gratis: {h} objetivos", "pro_b4": "Tareas recurrentes", "pro_b4s": "Diarias, semanales o mensuales", "pro_b5": "Colores", "pro_b5s": "Elige el color de la app", "pro_rep_reason": "Las tareas recurrentes son una función Premium", "pro_gift": "Como uno de los primeros usuarios de HAYATI, Premium es tuyo gratis para siempre", "gift_title": "¡Un regalo para ti!", "gift_ok": "Gracias", "pro_money_teaser": "Presupuesto, categorías, gráficos e informe mensual", "rep_title": "Informe del mes", "rep_vs_last": "Gasto vs mes anterior", "rep_per_day": "Promedio diario", "rep_top": "Categoría principal", "rep_tasks": "Tareas completadas", "rep_checks": "Objetivos marcados", "synced": "Sincronizado", "sync_conflict": "Este dispositivo y la nube tienen cambios. ¿Cuál quieres conservar?", "keep_cloud": "Datos de la nube", "keep_device": "Datos de este dispositivo", "sync_never": "Aún sin sincronizar", "sync_last": "Última sincronización:", "sync_off": "Desactivada", "auto_sync": "Sincronización automática", "auto_sync_h": "Función Premium", "accent": "Color de la app"});
+Object.assign(T.de,{"pro_b1": "Automatischer Sync", "pro_b1s": "Deine Daten auf allen Geräten aktuell", "pro_b2": "Erweiterte Finanzen", "pro_b2s": "Budget, Kategorien, Diagramme und Monatsbericht", "pro_b3": "Unbegrenzte Ziele", "pro_b3s": "Gratis: {h} Ziele", "pro_b4": "Wiederkehrende Aufgaben", "pro_b4s": "Täglich, wöchentlich oder monatlich", "pro_b5": "Farben", "pro_b5s": "Wähle deine App-Farbe", "pro_rep_reason": "Wiederkehrende Aufgaben sind eine Premium-Funktion", "pro_gift": "Als einer der ersten HAYATI-Nutzer bekommst du Premium lebenslang geschenkt", "gift_title": "Ein Geschenk für dich!", "gift_ok": "Danke", "pro_money_teaser": "Budget, Kategorien, Diagramme und Monatsbericht", "rep_title": "Monatsbericht", "rep_vs_last": "Ausgaben vs. Vormonat", "rep_per_day": "Durchschnitt pro Tag", "rep_top": "Top-Kategorie", "rep_tasks": "Erledigte Aufgaben", "rep_checks": "Abgehakte Ziele", "synced": "Synchronisiert", "sync_conflict": "Dieses Gerät und die Cloud haben Änderungen. Was möchtest du behalten?", "keep_cloud": "Cloud-Daten", "keep_device": "Daten dieses Geräts", "sync_never": "Noch nicht synchronisiert", "sync_last": "Letzter Sync:", "sync_off": "Aus", "auto_sync": "Automatischer Sync", "auto_sync_h": "Premium-Funktion", "accent": "App-Farbe"});
+Object.assign(T.it,{"pro_b1": "Sincronizzazione automatica", "pro_b1s": "I tuoi dati aggiornati su tutti i dispositivi", "pro_b2": "Finanze avanzate", "pro_b2s": "Budget, categorie, grafici e report mensile", "pro_b3": "Obiettivi illimitati", "pro_b3s": "Gratis: {h} obiettivi", "pro_b4": "Attività ricorrenti", "pro_b4s": "Giornaliere, settimanali o mensili", "pro_b5": "Colori", "pro_b5s": "Scegli il colore dell'app", "pro_rep_reason": "Le attività ricorrenti sono una funzione Premium", "pro_gift": "Come uno dei primi utenti di HAYATI, Premium è tuo gratis per sempre", "gift_title": "Un regalo per te!", "gift_ok": "Grazie", "pro_money_teaser": "Budget, categorie, grafici e report mensile", "rep_title": "Report del mese", "rep_vs_last": "Spese vs mese scorso", "rep_per_day": "Media giornaliera", "rep_top": "Categoria principale", "rep_tasks": "Attività completate", "rep_checks": "Obiettivi spuntati", "synced": "Sincronizzato", "sync_conflict": "Questo dispositivo e il cloud hanno modifiche. Quali vuoi tenere?", "keep_cloud": "Dati del cloud", "keep_device": "Dati di questo dispositivo", "sync_never": "Non ancora sincronizzato", "sync_last": "Ultima sincronizzazione:", "sync_off": "Disattivata", "auto_sync": "Sincronizzazione automatica", "auto_sync_h": "Funzione Premium", "accent": "Colore dell'app"});
+Object.assign(T.pt,{"pro_b1": "Sincronização automática", "pro_b1s": "Os seus dados atualizados em todos os dispositivos", "pro_b2": "Finanças avançadas", "pro_b2s": "Orçamento, categorias, gráficos e relatório mensal", "pro_b3": "Objetivos ilimitados", "pro_b3s": "Grátis: {h} objetivos", "pro_b4": "Tarefas recorrentes", "pro_b4s": "Diárias, semanais ou mensais", "pro_b5": "Cores", "pro_b5s": "Escolha a cor da app", "pro_rep_reason": "As tarefas recorrentes são uma função Premium", "pro_gift": "Como um dos primeiros utilizadores do HAYATI, o Premium é seu grátis para sempre", "gift_title": "Um presente para si!", "gift_ok": "Obrigado", "pro_money_teaser": "Orçamento, categorias, gráficos e relatório mensal", "rep_title": "Relatório do mês", "rep_vs_last": "Gastos vs mês anterior", "rep_per_day": "Média diária", "rep_top": "Categoria principal", "rep_tasks": "Tarefas concluídas", "rep_checks": "Objetivos marcados", "synced": "Sincronizado", "sync_conflict": "Este dispositivo e a nuvem têm alterações. Qual quer manter?", "keep_cloud": "Dados da nuvem", "keep_device": "Dados deste dispositivo", "sync_never": "Ainda não sincronizado", "sync_last": "Última sincronização:", "sync_off": "Desligada", "auto_sync": "Sincronização automática", "auto_sync_h": "Função Premium", "accent": "Cor da app"});
+Object.assign(T.tr,{"pro_b1": "Otomatik senkronizasyon", "pro_b1s": "Verilerin tüm cihazlarında güncel", "pro_b2": "Gelişmiş finans", "pro_b2s": "Bütçe, kategoriler, grafikler ve aylık rapor", "pro_b3": "Sınırsız hedef", "pro_b3s": "Ücretsiz: {h} hedef", "pro_b4": "Tekrarlayan görevler", "pro_b4s": "Günlük, haftalık veya aylık", "pro_b5": "Renkler", "pro_b5s": "Uygulama rengini seç", "pro_rep_reason": "Tekrarlayan görevler bir Premium özelliğidir", "pro_gift": "HAYATI'nin ilk kullanıcılarından biri olduğun için Premium ömür boyu ücretsiz", "gift_title": "Sana bir hediye!", "gift_ok": "Teşekkürler", "pro_money_teaser": "Bütçe, kategoriler, grafikler ve aylık rapor", "rep_title": "Aylık rapor", "rep_vs_last": "Geçen aya göre harcama", "rep_per_day": "Günlük ortalama", "rep_top": "En çok harcanan kategori", "rep_tasks": "Tamamlanan görevler", "rep_checks": "İşaretlenen hedefler", "synced": "Senkronize edildi", "sync_conflict": "Bu cihazda ve bulutta değişiklik var. Hangisini tutmak istersin?", "keep_cloud": "Buluttaki veriler", "keep_device": "Bu cihazdaki veriler", "sync_never": "Henüz senkronize edilmedi", "sync_last": "Son senkronizasyon:", "sync_off": "Kapalı", "auto_sync": "Otomatik senkronizasyon", "auto_sync_h": "Premium özelliği", "accent": "Uygulama rengi"});
+Object.assign(T.zh,{"pro_b1": "自动同步", "pro_b1s": "数据在所有设备上保持最新", "pro_b2": "高级财务", "pro_b2s": "预算、分类、图表和月度报告", "pro_b3": "无限目标", "pro_b3s": "免费版：{h} 个目标", "pro_b4": "重复任务", "pro_b4s": "每天、每周或每月", "pro_b5": "主题颜色", "pro_b5s": "选择你喜欢的应用颜色", "pro_rep_reason": "重复任务是 Premium 功能", "pro_gift": "作为 HAYATI 的早期用户，你可终身免费使用 Premium", "gift_title": "送你一份礼物！", "gift_ok": "谢谢", "pro_money_teaser": "预算、分类、图表和月度报告", "rep_title": "月度报告", "rep_vs_last": "与上月支出对比", "rep_per_day": "日均支出", "rep_top": "支出最多的类别", "rep_tasks": "已完成任务", "rep_checks": "目标打卡次数", "synced": "已同步", "sync_conflict": "此设备和云端都有更改。你想保留哪一个？", "keep_cloud": "云端数据", "keep_device": "此设备的数据", "sync_never": "尚未同步", "sync_last": "上次同步：", "sync_off": "已关闭", "auto_sync": "自动同步", "auto_sync_h": "Premium 功能", "accent": "应用颜色"});
+Object.assign(T.hi,{"pro_b1": "ऑटो सिंक", "pro_b1s": "आपका डेटा सभी डिवाइस पर अपडेट रहता है", "pro_b2": "उन्नत वित्त", "pro_b2s": "बजट, श्रेणियाँ, चार्ट और मासिक रिपोर्ट", "pro_b3": "असीमित लक्ष्य", "pro_b3s": "मुफ़्त: {h} लक्ष्य", "pro_b4": "दोहराए जाने वाले काम", "pro_b4s": "रोज़, हर हफ़्ते या हर महीने", "pro_b5": "रंग", "pro_b5s": "ऐप का रंग चुनें", "pro_rep_reason": "दोहराए जाने वाले काम Premium सुविधा है", "pro_gift": "HAYATI के शुरुआती उपयोगकर्ता होने के नाते Premium आपके लिए आजीवन मुफ़्त है", "gift_title": "आपके लिए एक तोहफ़ा!", "gift_ok": "धन्यवाद", "pro_money_teaser": "बजट, श्रेणियाँ, चार्ट और मासिक रिपोर्ट", "rep_title": "मासिक रिपोर्ट", "rep_vs_last": "पिछले महीने की तुलना में खर्च", "rep_per_day": "रोज़ का औसत", "rep_top": "सबसे ज़्यादा खर्च की श्रेणी", "rep_tasks": "पूरे किए काम", "rep_checks": "लक्ष्य टिक किए", "synced": "सिंक हो गया", "sync_conflict": "इस डिवाइस और क्लाउड दोनों में बदलाव हैं। कौन-सा रखना है?", "keep_cloud": "क्लाउड का डेटा", "keep_device": "इस डिवाइस का डेटा", "sync_never": "अभी सिंक नहीं हुआ", "sync_last": "पिछला सिंक:", "sync_off": "बंद", "auto_sync": "ऑटो सिंक", "auto_sync_h": "Premium सुविधा", "accent": "ऐप का रंग"});
+Object.assign(T.ar,{"text_size": "حجم الخط", "ts_normal": "عادي", "ts_large": "كبير", "ts_xl": "كبير جداً"});
+Object.assign(T.en,{"text_size": "Text size", "ts_normal": "Normal", "ts_large": "Large", "ts_xl": "Extra large"});
+Object.assign(T.fr,{"text_size": "Taille du texte", "ts_normal": "Normale", "ts_large": "Grande", "ts_xl": "Très grande"});
+Object.assign(T.es,{"text_size": "Tamaño del texto", "ts_normal": "Normal", "ts_large": "Grande", "ts_xl": "Muy grande"});
+Object.assign(T.de,{"text_size": "Textgröße", "ts_normal": "Normal", "ts_large": "Groß", "ts_xl": "Sehr groß"});
+Object.assign(T.it,{"text_size": "Dimensione testo", "ts_normal": "Normale", "ts_large": "Grande", "ts_xl": "Molto grande"});
+Object.assign(T.pt,{"text_size": "Tamanho do texto", "ts_normal": "Normal", "ts_large": "Grande", "ts_xl": "Muito grande"});
+Object.assign(T.tr,{"text_size": "Yazı boyutu", "ts_normal": "Normal", "ts_large": "Büyük", "ts_xl": "Çok büyük"});
+Object.assign(T.zh,{"text_size": "字体大小", "ts_normal": "标准", "ts_large": "大", "ts_xl": "特大"});
+Object.assign(T.hi,{"text_size": "टेक्स्ट का आकार", "ts_normal": "सामान्य", "ts_large": "बड़ा", "ts_xl": "बहुत बड़ा"});
+Object.assign(T.ar,{"del_account": "حذف الحساب", "del_confirm": "سيتم حذف حسابك وكل بياناتك في السحابة نهائياً. بياناتك على هذا الجهاز تبقى. متأكد؟", "del_done": "تم حذف حسابك وبياناتك السحابية", "del_fail": "تعذّر حذف الحساب، حاول لاحقاً", "privacy_policy": "سياسة الخصوصية"});
+Object.assign(T.en,{"del_account": "Delete account", "del_confirm": "Your account and all your cloud data will be permanently deleted. Data on this device stays. Are you sure?", "del_done": "Your account and cloud data were deleted", "del_fail": "Could not delete the account, try again later", "privacy_policy": "Privacy policy"});
+Object.assign(T.fr,{"del_account": "Supprimer le compte", "del_confirm": "Votre compte et toutes vos données cloud seront supprimés définitivement. Les données de cet appareil restent. Confirmer ?", "del_done": "Compte et données cloud supprimés", "del_fail": "Impossible de supprimer le compte, réessayez plus tard", "privacy_policy": "Politique de confidentialité"});
+Object.assign(T.es,{"del_account": "Eliminar cuenta", "del_confirm": "Tu cuenta y todos tus datos en la nube se eliminarán para siempre. Los datos de este dispositivo se mantienen. ¿Seguro?", "del_done": "Cuenta y datos en la nube eliminados", "del_fail": "No se pudo eliminar la cuenta, inténtalo más tarde", "privacy_policy": "Política de privacidad"});
+Object.assign(T.de,{"del_account": "Konto löschen", "del_confirm": "Dein Konto und alle Cloud-Daten werden endgültig gelöscht. Daten auf diesem Gerät bleiben. Sicher?", "del_done": "Konto und Cloud-Daten wurden gelöscht", "del_fail": "Konto konnte nicht gelöscht werden, später erneut versuchen", "privacy_policy": "Datenschutzerklärung"});
+Object.assign(T.it,{"del_account": "Elimina account", "del_confirm": "Il tuo account e tutti i dati nel cloud verranno eliminati per sempre. I dati su questo dispositivo restano. Sei sicuro?", "del_done": "Account e dati cloud eliminati", "del_fail": "Impossibile eliminare l'account, riprova più tardi", "privacy_policy": "Informativa sulla privacy"});
+Object.assign(T.pt,{"del_account": "Eliminar conta", "del_confirm": "A sua conta e todos os dados na nuvem serão eliminados definitivamente. Os dados deste dispositivo ficam. Tem a certeza?", "del_done": "Conta e dados na nuvem eliminados", "del_fail": "Não foi possível eliminar a conta, tente mais tarde", "privacy_policy": "Política de privacidade"});
+Object.assign(T.tr,{"del_account": "Hesabı sil", "del_confirm": "Hesabın ve tüm bulut verilerin kalıcı olarak silinecek. Bu cihazdaki veriler kalır. Emin misin?", "del_done": "Hesabın ve bulut verilerin silindi", "del_fail": "Hesap silinemedi, daha sonra tekrar dene", "privacy_policy": "Gizlilik politikası"});
+Object.assign(T.zh,{"del_account": "删除账户", "del_confirm": "你的账户和所有云端数据将被永久删除，此设备上的数据会保留。确定吗？", "del_done": "账户和云端数据已删除", "del_fail": "无法删除账户，请稍后再试", "privacy_policy": "隐私政策"});
+Object.assign(T.hi,{"del_account": "खाता हटाएँ", "del_confirm": "आपका खाता और सारा क्लाउड डेटा हमेशा के लिए हट जाएगा। इस डिवाइस का डेटा बना रहेगा। क्या आप सुनिश्चित हैं?", "del_done": "आपका खाता और क्लाउड डेटा हटा दिया गया", "del_fail": "खाता नहीं हट सका, बाद में फिर कोशिश करें", "privacy_policy": "गोपनीयता नीति"});
+var AUTH_T={"ar": {"title": "حساب HAYATI والمزامنة", "email": "البريد الإلكتروني", "password": "كلمة المرور (6 أحرف على الأقل)", "signin": "تسجيل الدخول", "signup": "إنشاء حساب", "upload": "⬆ رفع إلى السحابة", "restore": "⬇ استعادة من السحابة", "signout": "تسجيل الخروج", "intro": "يمكنك استخدام التطبيق دون حساب. سجّل الدخول لمزامنة بياناتك بين أجهزتك.", "connected": "متصل بالسحابة", "disconnected": "غير متصل بالسحابة", "unavailable": "تعذر تحميل خدمة Supabase. تحقق من اتصال الإنترنت.", "verifyError": "تعذر التحقق من الحساب: ", "credentials": "أدخل بريدًا إلكترونيًا وكلمة مرور من 6 أحرف على الأقل.", "wait": "يرجى الانتظار…", "confirmEmail": "تم إرسال رسالة التأكيد إلى بريدك. أكّد البريد ثم سجّل الدخول.", "loginSuccess": "تم تسجيل الدخول بنجاح. يمكنك الآن استعادة البيانات من السحابة.", "loginError": "فشل تسجيل الدخول: ", "signedOut": "تم تسجيل الخروج.", "logoutError": "تعذر تسجيل الخروج: ", "signInFirst": "سجّل الدخول أولًا.", "uploadConfirm": "سيتم استبدال النسخة السحابية ببيانات هذا الجهاز. هل تريد المتابعة؟", "uploading": "جارٍ رفع البيانات…", "uploadSuccess": "تم حفظ بياناتك في السحابة بنجاح.", "uploadError": "فشل رفع البيانات: ", "checking": "جارٍ فحص النسخة السحابية…", "noBackup": "لا توجد نسخة سحابية لهذا الحساب.", "invalidCloud": "النسخة السحابية غير صالحة.", "restoreConfirm": "وجدنا نسخة سحابية تحتوي على {count} مهمة{preview}. ستستبدل بيانات هذا الجهاز فقط. هل تريد الاستعادة؟", "cancelled": "أُلغيت الاستعادة. لم تتغير البيانات.", "restoreSuccess": "تمت استعادة البيانات من السحابة بنجاح.", "restoreError": "فشل الاستعادة: ", "libraryError": "تعذر تحميل مكتبة Supabase. تحقق من اتصال الإنترنت.", "importConfirm": "سيتم استبدال البيانات الحالية بالنسخة الاحتياطية. متابعة؟", "importSuccess": "تمت استعادة النسخة الاحتياطية.", "invalidFile": "ملف النسخة الاحتياطية غير صالح.", "priority": "الأولوية", "due": "موعد المهمة"}, "en": {"title": "HAYATI account & cloud sync", "email": "Email address", "password": "Password (at least 6 characters)", "signin": "Sign in", "signup": "Create account", "upload": "⬆ Upload to cloud", "restore": "⬇ Restore from cloud", "signout": "Sign out", "intro": "Use the app without an account, or sign in to sync across devices.", "connected": "Connected to cloud", "disconnected": "Not connected to cloud", "unavailable": "Supabase is unavailable. Check your internet connection.", "verifyError": "Could not verify account: ", "credentials": "Enter an email and a password of at least 6 characters.", "wait": "Please wait…", "confirmEmail": "Check your email to confirm your account, then sign in.", "loginSuccess": "Signed in. You can now restore your cloud data.", "loginError": "Sign-in failed: ", "signedOut": "Signed out.", "logoutError": "Could not sign out: ", "signInFirst": "Please sign in first.", "uploadConfirm": "This device’s data will replace your cloud backup. Continue?", "uploading": "Uploading data…", "uploadSuccess": "Cloud backup saved successfully.", "uploadError": "Upload failed: ", "checking": "Checking cloud backup…", "noBackup": "No cloud backup found for this account.", "invalidCloud": "Cloud backup is invalid.", "restoreConfirm": "Cloud backup found with {count} tasks{preview}. This will replace data on this device only. Restore?", "cancelled": "Restore cancelled. No data was changed.", "restoreSuccess": "Cloud backup restored successfully.", "restoreError": "Restore failed: ", "libraryError": "Supabase library could not load. Check your internet connection.", "importConfirm": "This will replace your current data with the backup. Continue?", "importSuccess": "Backup restored.", "invalidFile": "Invalid backup file.", "priority": "Priority", "due": "Due date"}, "fr": {"title": "Compte HAYATI et synchronisation", "email": "Adresse e-mail", "password": "Mot de passe (6 caractères minimum)", "signin": "Se connecter", "signup": "Créer un compte", "upload": "⬆ Envoyer vers le cloud", "restore": "⬇ Restaurer du cloud", "signout": "Se déconnecter", "intro": "Utilisez l’application sans compte ou connectez-vous pour synchroniser vos appareils.", "connected": "Connecté au cloud", "disconnected": "Non connecté au cloud", "unavailable": "Supabase indisponible. Vérifiez votre connexion.", "verifyError": "Vérification du compte impossible : ", "credentials": "Saisissez un e-mail et un mot de passe de 6 caractères minimum.", "wait": "Veuillez patienter…", "confirmEmail": "Confirmez votre adresse e-mail, puis connectez-vous.", "loginSuccess": "Connexion réussie. Vous pouvez restaurer vos données.", "loginError": "Échec de connexion : ", "signedOut": "Déconnexion réussie.", "logoutError": "Échec de déconnexion : ", "signInFirst": "Connectez-vous d’abord.", "uploadConfirm": "Les données de cet appareil remplaceront la sauvegarde cloud. Continuer ?", "uploading": "Envoi des données…", "uploadSuccess": "Sauvegarde cloud enregistrée.", "uploadError": "Échec de l’envoi : ", "checking": "Recherche de la sauvegarde cloud…", "noBackup": "Aucune sauvegarde cloud pour ce compte.", "invalidCloud": "Sauvegarde cloud invalide.", "restoreConfirm": "Sauvegarde trouvée : {count} tâches{preview}. Les données de cet appareil seront remplacées. Restaurer ?", "cancelled": "Restauration annulée. Aucune donnée modifiée.", "restoreSuccess": "Sauvegarde cloud restaurée.", "restoreError": "Échec de restauration : ", "libraryError": "Impossible de charger Supabase. Vérifiez votre connexion.", "importConfirm": "Les données actuelles seront remplacées. Continuer ?", "importSuccess": "Sauvegarde restaurée.", "invalidFile": "Fichier de sauvegarde invalide.", "priority": "Priorité", "due": "Date limite"}, "es": {"title": "Cuenta HAYATI y sincronización", "email": "Correo electrónico", "password": "Contraseña (mínimo 6 caracteres)", "signin": "Iniciar sesión", "signup": "Crear cuenta", "upload": "⬆ Subir a la nube", "restore": "⬇ Restaurar de la nube", "signout": "Cerrar sesión", "intro": "Usa la aplicación sin cuenta o inicia sesión para sincronizar tus dispositivos.", "connected": "Conectado a la nube", "disconnected": "Sin conexión a la nube", "unavailable": "Supabase no está disponible. Comprueba internet.", "verifyError": "No se pudo verificar la cuenta: ", "credentials": "Introduce un correo y una contraseña de al menos 6 caracteres.", "wait": "Espera…", "confirmEmail": "Confirma tu correo electrónico y luego inicia sesión.", "loginSuccess": "Sesión iniciada. Ya puedes restaurar tus datos.", "loginError": "Error al iniciar sesión: ", "signedOut": "Sesión cerrada.", "logoutError": "Error al cerrar sesión: ", "signInFirst": "Primero inicia sesión.", "uploadConfirm": "Los datos de este dispositivo sustituirán la copia en la nube. ¿Continuar?", "uploading": "Subiendo datos…", "uploadSuccess": "Copia guardada en la nube.", "uploadError": "Error al subir: ", "checking": "Buscando copia en la nube…", "noBackup": "No hay copia en la nube para esta cuenta.", "invalidCloud": "La copia en la nube no es válida.", "restoreConfirm": "Copia encontrada con {count} tareas{preview}. Se reemplazarán los datos de este dispositivo. ¿Restaurar?", "cancelled": "Restauración cancelada. Los datos no cambiaron.", "restoreSuccess": "Copia restaurada desde la nube.", "restoreError": "Error al restaurar: ", "libraryError": "No se pudo cargar Supabase. Comprueba internet.", "importConfirm": "Se reemplazarán los datos actuales. ¿Continuar?", "importSuccess": "Copia restaurada.", "invalidFile": "Archivo de copia no válido.", "priority": "Prioridad", "due": "Fecha límite"}, "de": {"title": "HAYATI-Konto und Cloud-Synchronisierung", "email": "E-Mail-Adresse", "password": "Passwort (mindestens 6 Zeichen)", "signin": "Anmelden", "signup": "Konto erstellen", "upload": "⬆ In Cloud hochladen", "restore": "⬇ Aus Cloud wiederherstellen", "signout": "Abmelden", "intro": "Ohne Konto nutzbar. Melde dich an, um Geräte zu synchronisieren.", "connected": "Mit Cloud verbunden", "disconnected": "Nicht mit Cloud verbunden", "unavailable": "Supabase nicht verfügbar. Internetverbindung prüfen.", "verifyError": "Konto konnte nicht geprüft werden: ", "credentials": "E-Mail und Passwort mit mindestens 6 Zeichen eingeben.", "wait": "Bitte warten…", "confirmEmail": "Bestätige deine E-Mail und melde dich dann an.", "loginSuccess": "Angemeldet. Du kannst deine Cloud-Daten wiederherstellen.", "loginError": "Anmeldung fehlgeschlagen: ", "signedOut": "Abgemeldet.", "logoutError": "Abmeldung fehlgeschlagen: ", "signInFirst": "Bitte zuerst anmelden.", "uploadConfirm": "Gerätedaten ersetzen deine Cloud-Sicherung. Fortfahren?", "uploading": "Daten werden hochgeladen…", "uploadSuccess": "Cloud-Sicherung gespeichert.", "uploadError": "Upload fehlgeschlagen: ", "checking": "Cloud-Sicherung wird geprüft…", "noBackup": "Keine Cloud-Sicherung für dieses Konto.", "invalidCloud": "Ungültige Cloud-Sicherung.", "restoreConfirm": "Cloud-Sicherung mit {count} Aufgaben{preview} gefunden. Gerätedaten ersetzen?", "cancelled": "Wiederherstellung abgebrochen. Daten unverändert.", "restoreSuccess": "Cloud-Sicherung wiederhergestellt.", "restoreError": "Wiederherstellung fehlgeschlagen: ", "libraryError": "Supabase konnte nicht geladen werden. Internet prüfen.", "importConfirm": "Aktuelle Daten durch Sicherung ersetzen?", "importSuccess": "Sicherung wiederhergestellt.", "invalidFile": "Ungültige Sicherungsdatei.", "priority": "Priorität", "due": "Fälligkeitsdatum"}, "it": {"title": "Account HAYATI e sincronizzazione", "email": "Indirizzo e-mail", "password": "Password (almeno 6 caratteri)", "signin": "Accedi", "signup": "Crea account", "upload": "⬆ Carica sul cloud", "restore": "⬇ Ripristina dal cloud", "signout": "Esci", "intro": "Usa l’app senza account oppure accedi per sincronizzare i dispositivi.", "connected": "Connesso al cloud", "disconnected": "Non connesso al cloud", "unavailable": "Supabase non disponibile. Controlla internet.", "verifyError": "Impossibile verificare l’account: ", "credentials": "Inserisci e-mail e password di almeno 6 caratteri.", "wait": "Attendere…", "confirmEmail": "Conferma l’e-mail e poi accedi.", "loginSuccess": "Accesso riuscito. Puoi ripristinare i dati dal cloud.", "loginError": "Accesso non riuscito: ", "signedOut": "Disconnessione riuscita.", "logoutError": "Disconnessione non riuscita: ", "signInFirst": "Accedi prima di continuare.", "uploadConfirm": "I dati del dispositivo sostituiranno il backup cloud. Continuare?", "uploading": "Caricamento dati…", "uploadSuccess": "Backup cloud salvato.", "uploadError": "Caricamento non riuscito: ", "checking": "Verifica del backup cloud…", "noBackup": "Nessun backup cloud per questo account.", "invalidCloud": "Backup cloud non valido.", "restoreConfirm": "Backup con {count} attività{preview} trovato. Sostituire i dati del dispositivo?", "cancelled": "Ripristino annullato. Nessuna modifica ai dati.", "restoreSuccess": "Backup cloud ripristinato.", "restoreError": "Ripristino non riuscito: ", "libraryError": "Impossibile caricare Supabase. Controlla internet.", "importConfirm": "I dati attuali saranno sostituiti. Continuare?", "importSuccess": "Backup ripristinato.", "invalidFile": "File di backup non valido.", "priority": "Priorità", "due": "Scadenza"}, "pt": {"title": "Conta HAYATI e sincronização", "email": "Endereço de e-mail", "password": "Palavra-passe (mínimo 6 caracteres)", "signin": "Iniciar sessão", "signup": "Criar conta", "upload": "⬆ Enviar para a nuvem", "restore": "⬇ Restaurar da nuvem", "signout": "Terminar sessão", "intro": "Use sem conta ou inicie sessão para sincronizar dispositivos.", "connected": "Ligado à nuvem", "disconnected": "Sem ligação à nuvem", "unavailable": "Supabase indisponível. Verifique a internet.", "verifyError": "Não foi possível verificar a conta: ", "credentials": "Introduza e-mail e palavra-passe com pelo menos 6 caracteres.", "wait": "Aguarde…", "confirmEmail": "Confirme o e-mail e depois inicie sessão.", "loginSuccess": "Sessão iniciada. Pode restaurar os dados da nuvem.", "loginError": "Falha ao iniciar sessão: ", "signedOut": "Sessão terminada.", "logoutError": "Falha ao terminar sessão: ", "signInFirst": "Inicie sessão primeiro.", "uploadConfirm": "Os dados deste dispositivo substituirão a cópia na nuvem. Continuar?", "uploading": "A enviar dados…", "uploadSuccess": "Cópia na nuvem guardada.", "uploadError": "Falha no envio: ", "checking": "A verificar cópia na nuvem…", "noBackup": "Não existe cópia na nuvem para esta conta.", "invalidCloud": "Cópia na nuvem inválida.", "restoreConfirm": "Cópia com {count} tarefas{preview} encontrada. Substituir dados deste dispositivo?", "cancelled": "Restauro cancelado. Dados inalterados.", "restoreSuccess": "Cópia da nuvem restaurada.", "restoreError": "Falha no restauro: ", "libraryError": "Não foi possível carregar Supabase. Verifique a internet.", "importConfirm": "Os dados atuais serão substituídos. Continuar?", "importSuccess": "Cópia restaurada.", "invalidFile": "Ficheiro de cópia inválido.", "priority": "Prioridade", "due": "Data limite"}, "tr": {"title": "HAYATI hesabı ve bulut eşitleme", "email": "E-posta adresi", "password": "Şifre (en az 6 karakter)", "signin": "Giriş yap", "signup": "Hesap oluştur", "upload": "⬆ Buluta yükle", "restore": "⬇ Buluttan geri yükle", "signout": "Çıkış yap", "intro": "Hesapsız kullanabilir veya cihazları eşitlemek için giriş yapabilirsiniz.", "connected": "Buluta bağlı", "disconnected": "Buluta bağlı değil", "unavailable": "Supabase kullanılamıyor. İnternet bağlantınızı kontrol edin.", "verifyError": "Hesap doğrulanamadı: ", "credentials": "E-posta ve en az 6 karakterli şifre girin.", "wait": "Lütfen bekleyin…", "confirmEmail": "E-postanızı doğrulayın ve giriş yapın.", "loginSuccess": "Giriş yapıldı. Bulut verilerinizi geri yükleyebilirsiniz.", "loginError": "Giriş başarısız: ", "signedOut": "Çıkış yapıldı.", "logoutError": "Çıkış başarısız: ", "signInFirst": "Önce giriş yapın.", "uploadConfirm": "Bu cihazın verileri bulut yedeğinin üzerine yazılacak. Devam?", "uploading": "Veriler yükleniyor…", "uploadSuccess": "Bulut yedeği kaydedildi.", "uploadError": "Yükleme başarısız: ", "checking": "Bulut yedeği kontrol ediliyor…", "noBackup": "Bu hesap için bulut yedeği yok.", "invalidCloud": "Bulut yedeği geçersiz.", "restoreConfirm": "{count} görev{preview} içeren bulut yedeği bulundu. Cihaz verileri değiştirilsin mi?", "cancelled": "Geri yükleme iptal edildi. Veriler değişmedi.", "restoreSuccess": "Bulut yedeği geri yüklendi.", "restoreError": "Geri yükleme başarısız: ", "libraryError": "Supabase yüklenemedi. İnterneti kontrol edin.", "importConfirm": "Mevcut veriler yedekle değiştirilecek. Devam?", "importSuccess": "Yedek geri yüklendi.", "invalidFile": "Geçersiz yedek dosyası.", "priority": "Öncelik", "due": "Bitiş tarihi"}, "zh": {"title": "HAYATI 账户与云同步", "email": "电子邮箱", "password": "密码（至少6个字符）", "signin": "登录", "signup": "创建账户", "upload": "⬆ 上传到云端", "restore": "⬇ 从云端恢复", "signout": "退出登录", "intro": "无需账户也可使用。登录后可在设备间同步。", "connected": "已连接云端", "disconnected": "未连接云端", "unavailable": "Supabase 不可用，请检查网络。", "verifyError": "无法验证账户：", "credentials": "请输入邮箱和至少6个字符的密码。", "wait": "请稍候…", "confirmEmail": "请先确认邮箱，然后登录。", "loginSuccess": "登录成功，现在可以恢复云端数据。", "loginError": "登录失败：", "signedOut": "已退出登录。", "logoutError": "退出失败：", "signInFirst": "请先登录。", "uploadConfirm": "本设备数据将覆盖云端备份。继续吗？", "uploading": "正在上传数据…", "uploadSuccess": "云端备份已保存。", "uploadError": "上传失败：", "checking": "正在检查云端备份…", "noBackup": "此账户没有云端备份。", "invalidCloud": "云端备份无效。", "restoreConfirm": "找到包含 {count} 项任务{preview} 的云端备份。将覆盖本设备数据。恢复吗？", "cancelled": "已取消恢复，数据未更改。", "restoreSuccess": "已恢复云端备份。", "restoreError": "恢复失败：", "libraryError": "无法加载 Supabase，请检查网络。", "importConfirm": "当前数据将被备份覆盖。继续吗？", "importSuccess": "备份已恢复。", "invalidFile": "备份文件无效。", "priority": "优先级", "due": "截止日期"}, "hi": {"title": "HAYATI खाता और क्लाउड सिंक", "email": "ईमेल पता", "password": "पासवर्ड (कम से कम 6 अक्षर)", "signin": "साइन इन करें", "signup": "खाता बनाएँ", "upload": "⬆ क्लाउड पर अपलोड करें", "restore": "⬇ क्लाउड से पुनर्स्थापित करें", "signout": "साइन आउट करें", "intro": "बिना खाते के उपयोग करें या उपकरणों के बीच सिंक के लिए साइन इन करें।", "connected": "क्लाउड से जुड़ा है", "disconnected": "क्लाउड से नहीं जुड़ा", "unavailable": "Supabase उपलब्ध नहीं है। इंटरनेट जाँचें।", "verifyError": "खाते की पुष्टि नहीं हो सकी: ", "credentials": "ईमेल और कम से कम 6 अक्षरों का पासवर्ड डालें।", "wait": "कृपया प्रतीक्षा करें…", "confirmEmail": "ईमेल की पुष्टि करके साइन इन करें।", "loginSuccess": "साइन इन हो गया। अब क्लाउड डेटा पुनर्स्थापित कर सकते हैं।", "loginError": "साइन इन विफल: ", "signedOut": "साइन आउट हो गया।", "logoutError": "साइन आउट विफल: ", "signInFirst": "पहले साइन इन करें।", "uploadConfirm": "इस उपकरण का डेटा क्लाउड बैकअप की जगह लेगा। जारी रखें?", "uploading": "डेटा अपलोड हो रहा है…", "uploadSuccess": "क्लाउड बैकअप सहेजा गया।", "uploadError": "अपलोड विफल: ", "checking": "क्लाउड बैकअप जाँचा जा रहा है…", "noBackup": "इस खाते के लिए क्लाउड बैकअप नहीं है।", "invalidCloud": "क्लाउड बैकअप अमान्य है।", "restoreConfirm": "{count} कार्य{preview} वाला क्लाउड बैकअप मिला। उपकरण का डेटा बदलेगा। पुनर्स्थापित करें?", "cancelled": "पुनर्स्थापना रद्द। डेटा नहीं बदला।", "restoreSuccess": "क्लाउड बैकअप पुनर्स्थापित हो गया।", "restoreError": "पुनर्स्थापना विफल: ", "libraryError": "Supabase लोड नहीं हुआ। इंटरनेट जाँचें।", "importConfirm": "मौजूदा डेटा बैकअप से बदला जाएगा। जारी रखें?", "importSuccess": "बैकअप पुनर्स्थापित हुआ।", "invalidFile": "अमान्य बैकअप फ़ाइल।", "priority": "प्राथमिकता", "due": "अंतिम तिथि"}};
+function A(k){return (AUTH_T[S.lang]&&AUTH_T[S.lang][k])||AUTH_T.en[k]||k;}
+function t(k){return (T[S.lang]&&T[S.lang][k])||T.en[k]||k;}
+
+var EXP_CATS=[['food','🍽️','#e0c27f'],['transport','🚗','#7fb3e0'],['bills','🧾','#e48e8e'],['shopping','🛍️','#c58fe0'],['health','💊','#86cfa6'],['fun','🎬','#f0a46a'],['edu','📚','#8fd3d6'],['home','🏠','#b8a58a'],['other','✨','#9aa6b2']];
+var INC_CATS=[['salary','💼','#86cfa6'],['gift','🎁','#e0c27f'],['extra','💡','#7fb3e0'],['other','✨','#9aa6b2']];
+function catInfo(type,id){var l=type==='inc'?INC_CATS:EXP_CATS;for(var i=0;i<l.length;i++)if(l[i][0]===id)return l[i];return l[l.length-1];}
+var ACCENTS=[['gold','#e6cf93','#b8955a'],['emerald','#8fe0b8','#3fa37a'],['sapphire','#a8c8f2','#4f7fc4'],['rose','#f2b3c4','#c4687f'],['violet','#cbb3f2','#7f5fc4']];
+var CURRENCIES=['SAR','AED','KWD','QAR','BHD','OMR','EGP','JOD','MAD','DZD','TND','IQD','LBP','USD','EUR','GBP','TRY','INR','CNY','BRL','MXN','CHF','CAD','AUD'];
+var HABIT_EMOJI=['📖','💧','🏃','🧘','🕌','🥗','😴','✍️','🦷','📵','🚶','💪'];
+
+/* ---------------- Icons ---------------- */
+var I={
+home:'<path d="M3 10.5 12 3l9 7.5V20a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/>',
+tasks:'<rect x="3" y="3" width="18" height="18" rx="4"/><path d="m8 12 3 3 5-6"/>',
+money:'<rect x="2.5" y="6" width="19" height="13" rx="3"/><path d="M2.5 10h19"/><circle cx="16.5" cy="14.5" r="1.3"/>',
+shop:'<path d="M3 4h2l2.2 11h11.3L21 7H6.2"/><circle cx="9" cy="19.5" r="1.4"/><circle cx="17" cy="19.5" r="1.4"/>',
+notes:'<path d="M5 3h10l4 4v14H5z"/><path d="M15 3v4h4M8.5 12h7M8.5 16h5"/>',
+habits:'<path d="M12 3c1 3.5 5 5.5 5 10a5 5 0 0 1-10 0c0-2 1-3.5 2-4.5.3 1.5 1 2.5 2 2.5 0-3 .5-5.5 1-8z"/>',
+gear:'<circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/>',
+plus:'<path d="M12 5v14M5 12h14"/>',
+check:'<path d="m5 12.5 4.5 4.5L19 7.5"/>',
+trash:'<path d="M4 7h16M10 11v6M14 11v6M6 7l1 13h10l1-13M9 7V4h6v3"/>',
+cal:'<rect x="3" y="5" width="18" height="16" rx="3"/><path d="M3 10h18M8 3v4M16 3v4"/>',
+flag:'<path d="M5 21V4h11l-2 4 2 4H5"/>',
+rep:'<path d="M17 2l3 3-3 3"/><path d="M4 11V9a4 4 0 0 1 4-4h12M7 22l-3-3 3-3"/><path d="M20 13v2a4 4 0 0 1-4 4H4"/>',
+chev:'<path d="m9 6 6 6-6 6"/>',
+search:'<circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/>',
+pin:'<path d="M9 4h6l-1 5 3 3v2H7v-2l3-3zM12 14v7"/>',
+share:'<path d="M12 3v13M7 8l5-5 5 5"/><path d="M5 13v6a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-6"/>',
+down:'<path d="M12 3v13M7 11l5 5 5-5M5 21h14"/>',
+up:'<path d="M12 21V8M7 13l5-5 5 5M5 3h14"/>'
+};
+function ic(n){return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">'+I[n]+'</svg>';}
+
+/* ---------------- State ---------------- */
+var S=load();
+var ui={tab:'home',filter:'all',month:ym(today()),txType:'exp',noteQ:'',draft:{due:'',prio:0,rep:'none'},txDraft:{cat:'food',date:''},habitEmoji:'📖'};
+try{var lt=sessionStorage.getItem('hayati_tab');if(lt)ui.tab=lt;}catch(e){}
+
+function applyTheme(){
+  var r=document.documentElement;
+  r.setAttribute('data-theme',S.theme);
+  r.style.setProperty('--z',String(S.textSize||1));
+  r.setAttribute('data-accent',isPro()?(S.accent||'gold'):'gold');
+  r.lang=S.lang;r.dir=S.lang==='ar'?'rtl':'ltr';
+  var dark=S.theme==='dark'||(S.theme==='auto'&&!(window.matchMedia&&matchMedia('(prefers-color-scheme: light)').matches));
+  var m=document.querySelector('meta[name=theme-color]');if(m)m.content=dark?'#0f1720':'#f5f1e9';
+}
+
+/* ---------------- Computations ---------------- */
+function dueInfo(task){
+  if(!task.due)return null;
+  var td=today();
+  if(task.done)return {cls:'',txt:fmtDate(task.due)};
+  if(task.due<td)return {cls:'c-over',txt:t('overdue')+' · '+fmtDate(task.due)};
+  if(task.due===td)return {cls:'c-today',txt:t('today')};
+  if(task.due===addDays(td,1))return {cls:'',txt:t('tomorrow')};
+  return {cls:'',txt:fmtDate(task.due)};
+}
+function sortTasks(a){
+  return a.slice().sort(function(x,y){
+    if(x.done!==y.done)return x.done?1:-1;
+    var dx=x.due||'9999',dy=y.due||'9999';
+    if(dx!==dy)return dx<dy?-1:1;
+    if(x.prio!==y.prio)return y.prio-x.prio;
+    return x.created-y.created;
+  });
+}
+function monthTotals(m){
+  var r={exp:0,inc:0,other:{},byCat:{}};
+  S.tx.forEach(function(x){
+    if(ym(x.date)!==m)return;
+    if(x.cur!==S.currency){var o=r.other[x.cur]||(r.other[x.cur]={exp:0,inc:0});o[x.type]+=x.amount;return;}
+    r[x.type]+=x.amount;
+    if(x.type==='exp')r.byCat[x.cat]=(r.byCat[x.cat]||0)+x.amount;
+  });
+  return r;
+}
+function streak(h){
+  var d=today(),n=0;
+  if(!h.log[d])d=addDays(d,-1);
+  while(h.log[d]){n++;d=addDays(d,-1);}
+  return n;
+}
+function bestStreak(h){
+  var days=Object.keys(h.log).filter(function(k){return h.log[k];}).sort(),best=0,cur=0,prev=null;
+  days.forEach(function(d){cur=(prev&&addDays(prev,1)===d)?cur+1:1;if(cur>best)best=cur;prev=d;});
+  return best;
+}
+
+/* ---------------- Render ---------------- */
+var app=document.getElementById('app'),nav=document.getElementById('nav');
+var lastTab=null,logoTaps=0,logoLast=0;
+function render(){
+  applyTheme();
+  var anim=lastTab!==ui.tab;lastTab=ui.tab;
+  var keep={};
+  if(!anim)app.querySelectorAll('form[data-submit] [name]').forEach(function(el){if((el.tagName==='INPUT'||el.tagName==='TEXTAREA')&&!/^(checkbox|radio|submit|button|hidden|file)$/.test(el.type))keep[el.form.getAttribute('data-submit')+'|'+el.name]=el.value;});
+  var focused=document.activeElement&&document.activeElement.name&&document.activeElement.form?document.activeElement.form.getAttribute('data-submit')+'|'+document.activeElement.name:null;
+  var v={home:vHome,tasks:vTasks,money:vMoney,shop:vShop,notes:vNotes,habits:vHabits,settings:vSettings}[ui.tab]||vHome;
+  app.innerHTML=header()+'<div class="'+(anim?'fade':'')+'">'+v()+'</div><div class="foot">'+esc(t('footer'))+'</div>';
+  for(var kk in keep){var pr=kk.split('|'),inp=app.querySelector('form[data-submit="'+pr[0]+'"] [name="'+pr[1]+'"]');if(inp&&keep[kk])inp.value=keep[kk];}
+  renderNav();
+  try{sessionStorage.setItem('hayati_tab',ui.tab);}catch(e){}
+}
+function header(){
+  return '<header class="top"><div class="brand" data-act="logo"><img src="icon-192.png" alt=""><div><b>HAYATI</b><small>Personal life organizer</small></div></div>'+
+    '<div style="display:flex;gap:8px">'+(LOCKS_ON?'<button class="iconbtn crown'+(isPro()?' pro':'')+'" data-act="paywall" aria-label="Premium">👑</button>':'')+'<button class="iconbtn'+(ui.tab==='settings'?' on':'')+'" data-act="tab" data-v="settings" aria-label="'+esc(t('settings'))+'">'+ic('gear')+'</button></div></header>';
+}
+function renderNav(){
+  var td=today();
+  var late=S.tasks.filter(function(x){return !x.done&&x.due&&x.due<=td;}).length;
+  var tabs=['home','tasks','money','shop','notes','habits'];
+  nav.innerHTML='<div class="in">'+tabs.map(function(k){
+    var b=(k==='tasks'&&late)?'<span class="badge">'+late+'</span>':'';
+    return '<button class="'+(ui.tab===k?'on':'')+'" data-act="tab" data-v="'+k+'">'+ic(k)+'<span>'+esc(t(k))+'</span>'+b+'</button>';
+  }).join('')+'</div>';
+}
+
+function vHome(){
+  var td=today(),h=new Date().getHours();
+  var pending=S.tasks.filter(function(x){return !x.done;}).length;
+  var mt=monthTotals(ym(td));
+  var hb=S.habits.length,hd=S.habits.filter(function(x){return x.log[td];}).length;
+  var pct=S.budget>0?Math.min(100,mt.exp/S.budget*100):0;
+  var focus=sortTasks(S.tasks.filter(function(x){return !x.done&&((x.due&&x.due<=td)||(!x.due&&x.prio));})).slice(0,5);
+  var html='<section class="hero"><div class="hi">'+esc(h<12?t('morning'):t('evening'))+'</div><h1>'+esc(t('hero'))+'</h1><div class="date">'+esc(fmtDate(td,{weekday:'long',day:'numeric',month:'long'}))+'</div></section>';
+  html+='<div class="stats">'+
+    '<button class="stat" data-act="tab" data-v="tasks"><div class="ic">'+ic('tasks')+'</div><div class="v">'+pending+'</div><div class="l">'+esc(t('pending'))+'</div></button>'+
+    '<button class="stat" data-act="tab" data-v="habits"><div class="ic">'+ic('habits')+'</div><div class="v">'+hd+'<small>/ '+hb+'</small></div><div class="l">'+esc(t('habits_today'))+'</div></button>'+
+    '<button class="stat wide" data-act="tab" data-v="money"><div class="ic">'+ic('money')+'</div><div class="v"><span class="amt">'+moneyShort(mt.exp)+'</span> <small>'+esc(S.currency)+'</small></div><div class="l">'+esc(t('spent_month'))+
+      (S.budget>0&&isPro()?' · '+Math.round(mt.exp/S.budget*100)+'% '+esc(t('of_budget'))+' '+moneyShort(S.budget):'')+'</div>'+
+      (S.budget>0&&isPro()?'<div class="bar'+(mt.exp>S.budget?' over':'')+'"><i style="width:'+pct+'%"></i></div>':'')+'</button>'+
+  '</div>';
+  html+='<div class="quick">'+
+    '<button data-act="quick" data-v="task">'+ic('tasks')+esc(t('q_task'))+'</button>'+
+    '<button data-act="quick" data-v="exp">'+ic('money')+esc(t('q_exp'))+'</button>'+
+    '<button data-act="quick" data-v="item">'+ic('shop')+esc(t('q_item'))+'</button>'+
+    '<button data-act="quick" data-v="note">'+ic('notes')+esc(t('q_note'))+'</button></div>';
+  html+='<section class="card"><h2>'+esc(t('today_focus'))+(focus.length?'<span class="count">'+focus.length+'</span>':'')+'</h2>';
+  html+=focus.length?'<ul class="list">'+focus.map(taskRow).join('')+'</ul>':'<div class="empty">'+esc(t('nothing_due'))+'</div>';
+  html+='</section>';
+  if(hb){
+    html+='<section class="card"><h2>'+esc(t('habits_today'))+'<span class="sub">'+hd+' / '+hb+'</span></h2><div class="chips">'+
+      S.habits.map(function(x){return '<button class="chip'+(x.log[td]?' on':'')+'" data-act="habit-toggle" data-id="'+x.id+'" data-d="'+td+'">'+esc(x.emoji)+' '+esc(x.name)+'</button>';}).join('')+'</div></section>';
+  }
+  return html;
+}
+
+function taskRow(x){
+  var d=dueInfo(x);
+  var meta=[];
+  if(x.prio&&!x.done)meta.push('<span class="prio" title="'+esc(t('high'))+'"></span>');
+  if(d)meta.push('<span class="'+d.cls+'">'+esc(d.txt)+'</span>');
+  if(x.rep!=='none')meta.push('<span class="tag">↻ '+esc(t('r_'+x.rep))+'</span>');
+  return '<li class="item'+(x.done?' done':'')+'"><button class="check'+(x.done?' on':'')+'" data-act="task-toggle" data-id="'+x.id+'" aria-label="✓">'+ic('check')+'</button>'+
+    '<div class="main" data-act="task-edit" data-id="'+x.id+'"><div class="t">'+esc(x.title)+'</div>'+(meta.length?'<div class="m">'+meta.join('')+'</div>':'')+'</div>'+
+    '<button class="del" data-act="task-del" data-id="'+x.id+'" aria-label="'+esc(t('del'))+'">'+ic('trash')+'</button></li>';
+}
+
+function dateChip(val,act){
+  return '<label class="chip date'+(val?' set':'')+'">'+ic('cal')+'<span>'+esc(val?fmtDate(val):t('due'))+'</span><input type="date" value="'+esc(val)+'" data-change="'+act+'"></label>';
+}
+
+function vTasks(){
+  var td=today(),dr=ui.draft;
+  var html='<h1 class="page-title">'+esc(t('tasks'))+'</h1>';
+  html+='<section class="card"><form data-submit="task-add" class="row"><input class="field" name="title" placeholder="'+esc(t('task_ph'))+'" autocomplete="off" maxlength="200"><button class="addbtn" aria-label="'+esc(t('add'))+'">'+ic('plus')+'</button></form>'+
+    '<div class="gap"></div><div class="chips">'+dateChip(dr.due,'draft-due')+
+    (dr.due?'<button class="chip" data-act="draft-due-clear" aria-label="✕">✕</button>':'')+'<button class="chip flag'+(dr.prio?' on':'')+'" data-act="draft-prio">'+ic('flag')+esc(t('high'))+'</button>'+
+    '<button class="chip'+(dr.rep!=='none'?' on':'')+'" data-act="draft-rep">'+ic('rep')+(isPro()?'':'👑 ')+esc(t('r_'+dr.rep))+'</button></div></section>';
+  var counts={all:S.tasks.filter(function(x){return !x.done;}).length,today:S.tasks.filter(function(x){return !x.done&&x.due&&x.due<=td;}).length,upcoming:S.tasks.filter(function(x){return !x.done&&x.due>td;}).length,done:S.tasks.filter(function(x){return x.done;}).length};
+  html+='<div class="chips scroll" style="margin-bottom:12px;margin-left:0;margin-right:0;padding:0">'+['all','today','upcoming','done'].map(function(f){
+    return '<button class="chip'+(ui.filter===f?' on':'')+'" data-act="filter" data-v="'+f+'">'+esc(t('f_'+f))+' · '+counts[f]+'</button>';}).join('')+'</div>';
+  var list=S.tasks.filter(function(x){
+    if(ui.filter==='all')return true;
+    if(ui.filter==='done')return x.done;
+    if(ui.filter==='today')return !x.done&&x.due&&x.due<=td;
+    return !x.done&&x.due>td;
+  });
+  html+='<section class="card">';
+  html+=list.length?'<ul class="list">'+sortTasks(list).map(taskRow).join('')+'</ul>':'<div class="empty"><div class="e">📝</div>'+esc(t('empty_tasks'))+'<br><small>'+esc(t('empty_tasks2'))+'</small></div>';
+  html+='</section>';
+  return html;
+}
+
+function vMoney(){
+  var m=ui.month,mt=monthTotals(m),cur=S.currency;
+  var html='<h1 class="page-title">'+esc(t('money'))+'</h1>';
+  html+='<div class="monthnav"><button data-act="month" data-v="-1" aria-label="‹"><span class="flip-ltr">'+ic('chev')+'</span></button><b>'+esc(fmtMonth(m))+'</b><button data-act="month" data-v="1" aria-label="›"><span class="flip-rtl">'+ic('chev')+'</span></button></div>';
+  var bal=mt.inc-mt.exp;
+  html+='<section class="card"><div class="lbl" style="margin-top:0">'+esc(t('balance'))+'</div><div class="bal"><span class="amt'+(bal>0?' inc':'')+'">'+(bal<0?'−':'')+money(Math.abs(bal))+'</span><small>'+esc(cur)+'</small></div>'+
+    '<div class="io"><div><span>↓ '+esc(t('spent'))+'</span><b class="amt">'+money(mt.exp)+'</b></div><div><span>↑ '+esc(t('earned'))+'</span><b class="amt inc">'+money(mt.inc)+'</b></div></div>';
+  if(S.budget>0){
+    var left=S.budget-mt.exp;
+    html+='<div class="budget-l"><span>'+esc(t('budget'))+' '+money(S.budget)+'</span><span class="'+(left<0?'c-over':'')+'">'+(left<0?esc(t('over'))+' '+money(-left):money(left)+' '+esc(t('remaining')))+'</span></div><div class="bar'+(left<0?' over':'')+'"><i style="width:'+Math.min(100,mt.exp/S.budget*100)+'%"></i></div>';
+  }else if(isPro()){
+    html+='<div class="gap"></div><button class="btn ghost sm" data-act="budget">🎯 '+esc(t('set_budget'))+'</button>';
+  }else{
+    html+='<div class="gap"></div><button class="lockrow" data-act="paywall">👑 <span>'+esc(t('pro_money_teaser'))+'</span><b>Premium</b></button>';
+  }
+  var oc=Object.keys(mt.other);
+  if(oc.length)html+='<div class="lbl">'+esc(t('other_cur'))+'</div><div class="chips">'+oc.map(function(c){return '<span class="tag amt">'+c+' −'+money(mt.other[c].exp)+(mt.other[c].inc?' / +'+money(mt.other[c].inc):'')+'</span>';}).join('')+'</div>';
+  html+='</section>';
+  if(isPro())html+=reportCard(m,mt);
+
+  // add form
+  var cats=ui.txType==='inc'?INC_CATS:EXP_CATS;
+  if(!cats.some(function(c){return c[0]===ui.txDraft.cat;}))ui.txDraft.cat=cats[0][0];
+  html+='<section class="card"><div class="seg"><button class="'+(ui.txType==='exp'?'on':'')+'" data-act="txtype" data-v="exp">'+esc(t('expense'))+'</button><button class="'+(ui.txType==='inc'?'on':'')+'" data-act="txtype" data-v="inc">'+esc(t('income'))+'</button></div>'+
+    '<form data-submit="tx-add"><div class="row"><div><label class="lbl" style="margin-top:0">'+esc(t('amount'))+'</label><input class="field" name="amount" inputmode="decimal" placeholder="0.00" autocomplete="off" dir="ltr"></div>'+
+    '<div style="flex:0 0 38%"><label class="lbl" style="margin-top:0">'+esc(t('currency'))+'</label><select class="field" name="cur">'+CURRENCIES.map(function(c){return '<option'+(c===cur?' selected':'')+'>'+c+'</option>';}).join('')+'</select></div></div>'+
+    (isPro()?'<label class="lbl">'+esc(t('category'))+'</label><div class="chips scroll">'+cats.map(function(c){return '<button type="button" class="chip'+(ui.txDraft.cat===c[0]?' on':'')+'" data-act="txcat" data-v="'+c[0]+'">'+c[1]+' '+esc(t('c_'+c[0]))+'</button>';}).join('')+'</div>':'')+
+    '<div class="gap"></div><div class="row"><input class="field" name="note" placeholder="'+esc(t('desc'))+'" maxlength="120" autocomplete="off"><div style="flex:0 0 auto">'+dateChip(ui.txDraft.date||today(),'tx-date')+'</div></div>'+
+    '<div class="gap"></div><button class="btn">'+esc(t('record'))+'</button></form></section>';
+
+  // donut
+  var cs=Object.keys(mt.byCat).sort(function(a,b){return mt.byCat[b]-mt.byCat[a];});
+  if(cs.length&&isPro()){
+    var acc=0,segs='';
+    cs.forEach(function(c){var p=mt.byCat[c]/mt.exp*100;segs+='<circle r="15.915" cx="18" cy="18" fill="none" stroke="'+catInfo('exp',c)[2]+'" stroke-width="4.2" stroke-dasharray="'+Math.max(0,p-0.6)+' '+(100-Math.max(0,p-0.6))+'" stroke-dashoffset="'+(-acc)+'"/>';acc+=p;});
+    html+='<section class="card"><h2>'+esc(t('by_cat'))+'</h2><div class="donut-wrap"><div class="donut"><svg viewBox="0 0 36 36"><circle r="15.915" cx="18" cy="18" fill="none" stroke="var(--field)" stroke-width="4.2"/>'+segs+'</svg><div class="ctr"><div><b class="amt">'+moneyShort(mt.exp)+'</b>'+esc(cur)+'</div></div></div>'+
+      '<div class="legend">'+cs.map(function(c){var ci=catInfo('exp',c);return '<div><i style="background:'+ci[2]+'"></i><span>'+ci[1]+' '+esc(t('c_'+c))+'</span><em>'+Math.round(mt.byCat[c]/mt.exp*100)+'%</em></div>';}).join('')+'</div></div></section>';
+  }
+
+  var list=S.tx.filter(function(x){return ym(x.date)===m;}).sort(function(a,b){return a.date<b.date?1:a.date>b.date?-1:0;});
+  html+='<section class="card"><h2>'+esc(t('tx_list'))+'<span class="sub">'+list.length+'</span></h2>';
+  html+=list.length?'<ul class="list">'+list.map(function(x){var ci=catInfo(x.type,x.cat);
+    return '<li class="item"><div class="emo">'+ci[1]+'</div><div class="main"><div class="t">'+esc(x.note||t('c_'+ci[0]))+'</div><div class="m">'+esc(fmtDate(x.date))+(x.note?' · '+esc(t('c_'+ci[0])):'')+'</div></div>'+
+      '<span class="amt'+(x.type==='inc'?' inc':'')+'">'+(x.type==='inc'?'+':'−')+money(x.amount)+' '+esc(x.cur)+'</span>'+
+      '<button class="del" data-act="tx-del" data-id="'+x.id+'" aria-label="'+esc(t('del'))+'">'+ic('trash')+'</button></li>';}).join('')+'</ul>':'<div class="empty"><div class="e">💰</div>'+esc(t('empty_tx'))+'</div>';
+  html+='</section>';
+  return html;
+}
+
+function reportCard(m,mt){
+  var prev=ym(addMonths(m+'-01',-1)),pt=monthTotals(prev);
+  var td=today(),daysIn=new Date(+m.slice(0,4),+m.slice(5,7),0).getDate();
+  var days=ym(td)===m?parseISO(td).getDate():(m<ym(td)?daysIn:0);
+  if(!mt.exp&&!mt.inc&&!pt.exp)return '';
+  var top=Object.keys(mt.byCat).sort(function(a,b){return mt.byCat[b]-mt.byCat[a];})[0];
+  var tasksDone=S.tasks.filter(function(x){return x.done&&x.doneAt&&ym(iso(new Date(x.doneAt)))===m;}).length;
+  var checks=0;S.habits.forEach(function(h){for(var k in h.log)if(h.log[k]&&ym(k)===m)checks++;});
+  var change=pt.exp>0?Math.round((mt.exp-pt.exp)/pt.exp*100):null;
+  var rows=[
+    ['📉',t('rep_vs_last'),change===null?'—':(change>0?'▲ ':change<0?'▼ ':'')+Math.abs(change)+'%',change===null?'':change>0?'c-over':'c-ok'],
+    ['📅',t('rep_per_day'),days?money(mt.exp/days)+' '+S.currency:'—',''],
+    ['🏷️',t('rep_top'),top?catInfo('exp',top)[1]+' '+t('c_'+top):'—',''],
+    ['✅',t('rep_tasks'),String(tasksDone),''],
+    ['🔥',t('rep_checks'),String(checks),'']
+  ];
+  return '<section class="card"><h2>📋 '+esc(t('rep_title'))+'<span class="sub">'+esc(fmtMonth(m))+'</span></h2>'+rows.map(function(r){return '<div class="setrow"><div class="k" style="font-weight:500">'+r[0]+' '+esc(r[1])+'</div><b class="'+r[3]+'">'+esc(r[2])+'</b></div>';}).join('')+'</section>';
+}
+
+function vShop(){
+  var done=S.shop.filter(function(x){return x.done;}).length;
+  var html='<div class="title-row"><h1 class="page-title" style="margin:0">'+esc(t('shop'))+'</h1>'+(S.shop.length?'<button class="btn ghost sm" data-act="shop-share">'+'↗ '+esc(t('share'))+'</button>':'')+'</div>';
+  html+='<section class="card"><form data-submit="shop-add" class="row"><input class="field" name="name" placeholder="'+esc(t('item_ph'))+'" autocomplete="off" maxlength="80"><input class="field" name="qty" placeholder="'+esc(t('qty'))+'" style="flex:0 0 72px;text-align:center" autocomplete="off" maxlength="12"><button class="addbtn" aria-label="'+esc(t('add'))+'">'+ic('plus')+'</button></form></section>';
+  html+='<section class="card">';
+  if(S.shop.length){
+    html+='<h2>'+esc(t('shop_list'))+'<span class="sub">'+esc(t('bought'))+' '+done+' '+esc(t('of'))+' '+S.shop.length+'</span></h2>';
+    var items=S.shop.slice().sort(function(a,b){return (a.done?1:0)-(b.done?1:0);});
+    html+='<ul class="list">'+items.map(function(x){
+      return '<li class="item'+(x.done?' done':'')+'"><button class="check sq'+(x.done?' on':'')+'" data-act="shop-toggle" data-id="'+x.id+'" aria-label="✓">'+ic('check')+'</button><div class="main" data-act="shop-toggle" data-id="'+x.id+'"><div class="t">'+esc(x.name)+'</div></div>'+
+      (x.qty?'<span class="tag">×'+esc(x.qty)+'</span>':'')+'<button class="del" data-act="shop-del" data-id="'+x.id+'" aria-label="'+esc(t('del'))+'">'+ic('trash')+'</button></li>';}).join('')+'</ul>';
+    if(done)html+='<div class="gap"></div><button class="btn ghost sm" data-act="shop-clear">'+esc(t('clear_bought'))+' ('+done+')</button>';
+  }else html+='<div class="empty"><div class="e">🛒</div>'+esc(t('empty_shop'))+'</div>';
+  html+='</section>';
+  return html;
+}
+
+function vNotes(){
+  var q=ui.noteQ.trim().toLowerCase();
+  var list=S.notes.filter(function(n){return !q||(n.title+' '+n.body).toLowerCase().indexOf(q)>-1;}).sort(function(a,b){if(a.pinned!==b.pinned)return a.pinned?-1:1;return b.updated-a.updated;});
+  var html='<div class="title-row"><h1 class="page-title" style="margin:0">'+esc(t('notes'))+'</h1><button class="addbtn" data-act="note-new" aria-label="'+esc(t('new_note'))+'">'+ic('plus')+'</button></div>';
+  if(S.notes.length>2)html+='<div class="search">'+ic('search')+'<input class="field" data-input="note-q" value="'+esc(ui.noteQ)+'" placeholder="'+esc(t('search'))+'"></div>';
+  if(!S.notes.length)return html+'<section class="card"><div class="empty"><div class="e">🗒️</div>'+esc(t('empty_notes'))+'<div class="gap"></div><button class="btn sm" data-act="note-new">+ '+esc(t('new_note'))+'</button></div></section>';
+  html+='<div class="notes">'+list.map(function(n){
+    var d=new Date(n.updated);
+    return '<button class="note'+(n.pinned?' pinned':'')+'" data-act="note-open" data-id="'+n.id+'"><b>'+esc(n.title||firstLine(n.body)||t('untitled'))+'</b><p>'+esc(n.title?n.body:restLines(n.body))+'</p><div class="d"><span>'+esc(fmtDate(iso(d),{day:'numeric',month:'short'}))+'</span>'+(n.pinned?ic('pin'):'')+'</div></button>';}).join('')+'</div>';
+  html+='<div class="foot">'+esc(t('autosave'))+'</div>';
+  return html;
+}
+function firstLine(s){return String(s||'').split('\n')[0].slice(0,60);}
+function restLines(s){return String(s||'').split('\n').slice(1).join('\n');}
+
+function vHabits(){
+  var td=today();
+  var html='<h1 class="page-title">'+esc(t('habits'))+'</h1>';
+  html+='<section class="card"><form data-submit="habit-add" class="row"><input class="field" name="name" placeholder="'+esc(t('habit_ph'))+'" autocomplete="off" maxlength="60"><button class="addbtn" aria-label="'+esc(t('add'))+'">'+ic('plus')+'</button></form>'+
+    (isPro()?'':'<div class="lbl" style="margin-bottom:0">'+S.habits.length+' / '+FREE_HABITS+' · <a href="#" data-act="paywall" style="color:var(--gold)">👑 Premium</a></div>')+
+    '<div class="emoji-pick">'+HABIT_EMOJI.map(function(e){return '<button type="button" class="'+(ui.habitEmoji===e?'on':'')+'" data-act="habit-emoji" data-v="'+e+'">'+e+'</button>';}).join('')+'</div></section>';
+  html+='<section class="card">';
+  if(!S.habits.length)html+='<div class="empty"><div class="e">🌱</div>'+esc(t('empty_habits'))+'<br><small>'+esc(t('empty_habits2'))+'</small></div>';
+  else{
+    html+=S.habits.map(function(h){
+      var st=streak(h),dots='';
+      for(var i=6;i>=0;i--){var d=addDays(td,-i);dots+='<button class="dot'+(h.log[d]?' on':'')+'" data-act="habit-toggle" data-id="'+h.id+'" data-d="'+d+'" title="'+esc(fmtDate(d))+'">'+parseISO(d).getDate()+'</button>';}
+      return '<div class="habit"><div class="emo">'+esc(h.emoji)+'</div><div class="main"><div class="t">'+esc(h.name)+'</div><div class="streak">🔥 '+esc(t('streak'))+' <b>'+st+'</b> '+esc(t('days'))+' · '+esc(t('best'))+' '+bestStreak(h)+'</div><div class="dots">'+dots+'</div></div>'+
+        '<div style="display:flex;flex-direction:column;align-items:center;gap:6px"><button class="bigcheck'+(h.log[td]?' on':'')+'" data-act="habit-toggle" data-id="'+h.id+'" data-d="'+td+'" aria-label="✓">'+ic('check')+'</button><button class="del" data-act="habit-del" data-id="'+h.id+'" aria-label="'+esc(t('del'))+'" style="height:24px">'+ic('trash')+'</button></div></div>';
+    }).join('');
+  }
+  html+='</section>';
+  return html;
+}
+
+function cloudCard(){
+  var h='<section class="card"><h2>☁️ '+esc(A('title'))+'</h2>';
+  if(!cloud.client){h+='<div class="cloud-msg">'+esc(A('libraryError'))+'</div></section>';return h;}
+  if(cloud.user){
+    h+='<div class="cloud-user"><i></i><div><b>'+esc(cloud.user.email||'')+'</b><div class="lbl" style="margin:0">'+esc(A('connected'))+'</div></div></div>'+
+      '<div class="row"><button class="btn" data-act="cloud-up"'+(cloud.busy?' disabled':'')+'>'+(isPro()?'':'👑 ')+esc(A('upload'))+'</button><button class="btn ghost" data-act="cloud-down"'+(cloud.busy?' disabled':'')+'>'+esc(A('restore'))+'</button></div>'+
+      '<div class="setrow" style="margin-top:6px"><div class="k">🔄 '+esc(t('auto_sync'))+'<small id="syncState">'+esc(isPro()?(S.autoSync===false?t('sync_off'):syncLabel()):t('auto_sync_h'))+'</small></div>'+
+        '<button class="toggle'+(isPro()&&S.autoSync!==false?' on':'')+'" data-act="auto-sync" aria-label="'+esc(t('auto_sync'))+'">'+(isPro()?'<i></i>':'👑')+'</button></div>'+
+      '<div class="row" style="justify-content:space-between"><button class="btn ghost sm" style="flex:0 0 auto" data-act="cloud-out">'+esc(A('signout'))+'</button><button class="btn danger sm" style="flex:0 0 auto" data-act="del-account">'+esc(t('del_account'))+'</button></div>';
+  }else{
+    h+='<form data-submit="auth"><input class="field" name="email" type="email" autocomplete="email" dir="ltr" placeholder="'+esc(A('email'))+'"><div class="gap"></div>'+
+      '<input class="field" name="password" type="password" autocomplete="current-password" minlength="6" dir="ltr" placeholder="'+esc(A('password'))+'"><div class="gap"></div>'+
+      '<div class="row"><button class="btn" name="mode" value="signin"'+(cloud.busy?' disabled':'')+'>'+esc(A('signin'))+'</button><button class="btn ghost" name="mode" value="signup"'+(cloud.busy?' disabled':'')+'>'+esc(A('signup'))+'</button></div></form>';
+  }
+  h+='<div class="cloud-msg" id="cloudMsg">'+esc(cloud.msg||(cloud.user?'':A('intro')))+'</div></section>';
+  return h;
+}
+function vSettings(){
+  var html='<h1 class="page-title">'+esc(t('settings'))+'</h1>';
+  html+=premiumCard();
+  html+=cloudCard();
+  html+='<section class="card"><div class="lbl" style="margin-top:0">'+esc(t('language'))+'</div><div class="langs">'+
+    LANG_NAMES.map(function(l){return '<button class="chip'+(S.lang===l[0]?' on':'')+'" data-act="lang" data-v="'+l[0]+'" lang="'+l[0]+'">'+l[1]+'</button>';}).join('')+'</div>'+
+    '<div class="lbl">'+esc(t('theme'))+'</div><div class="seg">'+['auto','dark','light'].map(function(m){return '<button class="'+(S.theme===m?'on':'')+'" data-act="theme" data-v="'+m+'">'+esc(t('t_'+m))+'</button>';}).join('')+'</div>'+
+    '<div class="lbl">'+esc(t('text_size'))+'</div><div class="tsize">'+[[1,'ts_normal',15],[1.12,'ts_large',17],[1.25,'ts_xl',19]].map(function(o){return '<button class="'+((S.textSize||1)===o[0]?'on':'')+'" data-act="tsize" data-v="'+o[0]+'"><span style="font-size:'+o[2]+'px;font-weight:700">أA</span><br><small>'+esc(t(o[1]))+'</small></button>';}).join('')+'</div>'+
+    '<div class="lbl">'+esc(t('accent'))+(isPro()?'':' · 👑')+'</div><div class="accents">'+ACCENTS.map(function(a){var on=(isPro()?S.accent||'gold':'gold')===a[0];return '<button class="'+(on?'on':'')+'" style="background:linear-gradient(135deg,'+a[1]+','+a[2]+')" data-act="accent" data-v="'+a[0]+'" aria-label="'+a[0]+'">'+(on?'✓':'')+'</button>';}).join('')+'</div>'+
+    '<div class="setrow"><div class="k">'+esc(t('def_cur'))+'</div><select class="field" data-change="currency">'+CURRENCIES.map(function(c){return '<option'+(c===S.currency?' selected':'')+'>'+c+'</option>';}).join('')+'</select></div>'+
+    (isPro()?'':'<div class="setrow"><div class="k">'+esc(t('month_budget'))+'</div><button class="btn ghost sm" data-act="paywall">👑 Premium</button></div>')+(!isPro()?'':'<div class="setrow"><div class="k">'+esc(t('month_budget'))+'<small>'+esc(t('month_budget_h'))+'</small></div><input class="field" style="max-width:130px" inputmode="decimal" dir="ltr" data-change="budget" value="'+(S.budget||'')+'" placeholder="0"></div>')+
+  '</section>';
+  html+='<section class="card"><h2>'+esc(t('backup'))+'</h2><div class="lbl" style="margin-top:-8px">'+esc(t('backup_h'))+'</div><div class="row"><button class="btn ghost" data-act="export">⬇ '+esc(t('export'))+'</button><button class="btn ghost" data-act="import">⬆ '+esc(t('import'))+'</button></div>'+
+    '<div class="lbl" style="text-align:center;margin-top:12px">🔒 '+esc(t('privacy'))+'<br><a href="privacy.html" target="_blank" rel="noopener" style="color:var(--gold)">'+esc(t('privacy_policy'))+'</a></div></section>';
+  html+='<section class="card"><h2>'+esc(t('danger'))+'</h2><button class="btn danger" data-act="clear-all">'+esc(t('clear_all'))+'</button></section>';
+  return html;
+}
+
+/* ---------------- Sheet / Toast ---------------- */
+var sheetRoot=document.getElementById('sheetRoot'),sheetClose=null;
+function openSheet(html,onClose){
+  closeSheet(true);
+  sheetRoot.innerHTML='<div class="overlay" data-act="sheet-close"></div><div class="sheet" role="dialog" aria-modal="true"><div class="grab"></div>'+html+'</div>';
+  sheetClose=onClose||null;
+  requestAnimationFrame(function(){var o=sheetRoot.querySelector('.overlay'),s=sheetRoot.querySelector('.sheet');if(o)o.classList.add('show');if(s)s.classList.add('show');});
+}
+function closeSheet(instant){
+  if(!sheetRoot.firstChild)return;
+  var cb=sheetClose;sheetClose=null;if(cb)cb();
+  if(instant){sheetRoot.innerHTML='';return;}
+  var o=sheetRoot.querySelector('.overlay'),s=sheetRoot.querySelector('.sheet');
+  if(o)o.classList.remove('show');if(s)s.classList.remove('show');
+  setTimeout(function(){sheetRoot.innerHTML='';},220);
+}
+var toastEl=document.getElementById('toast'),toastTimer=null,toastUndo=null;
+function toast(msg,undo){
+  document.getElementById('toastMsg').textContent=msg;
+  var b=document.getElementById('toastBtn');
+  toastUndo=undo||null;b.textContent=undo?t('undo'):'';b.style.display=undo?'':'none';
+  toastEl.classList.add('show');clearTimeout(toastTimer);
+  toastTimer=setTimeout(function(){toastEl.classList.remove('show');toastUndo=null;},undo?5000:2200);
+}
+document.getElementById('toastBtn').addEventListener('click',function(){if(toastUndo){toastUndo();toastUndo=null;save();render();}toastEl.classList.remove('show');});
+
+function removeWithUndo(arrName,id){
+  var arr=S[arrName],i=-1;
+  for(var k=0;k<arr.length;k++)if(arr[k].id===id){i=k;break;}
+  if(i<0)return;
+  var item=arr.splice(i,1)[0];save();render();
+  toast(t('deleted'),function(){S[arrName].splice(Math.min(i,S[arrName].length),0,item);});
+}
+function find(arr,id){for(var i=0;i<arr.length;i++)if(arr[i].id===id)return arr[i];return null;}
+
+/* ---------------- Sheets content ---------------- */
+function taskSheet(task){
+  var isNew=!task;
+  var x=task||{title:'',due:'',prio:0,rep:'none'};
+  openSheet('<h3>'+esc(isNew?t('q_task'):t('edit_task'))+'</h3><form data-submit="task-save" data-id="'+(task?task.id:'')+'">'+
+    '<input class="field" name="title" value="'+esc(x.title)+'" placeholder="'+esc(t('task_ph'))+'" maxlength="200" required autocomplete="off">'+
+    '<label class="lbl">'+esc(t('due'))+'</label><div class="row"><label class="field datefield" style="position:relative;display:flex;align-items:center;gap:8px">'+ic('cal')+'<span>'+esc(x.due?fmtDate(x.due,{weekday:'long',day:'numeric',month:'long',year:'numeric'}):t('no_date'))+'</span><input type="date" name="due" value="'+esc(x.due)+'" data-change="sheet-due"></label>'+
+    '<button type="button" class="btn ghost sm" style="flex:0 0 auto" data-act="sheet-due-clear">✕</button></div>'+
+    '<label class="lbl">'+esc(t('repeat'))+(isPro()?'':' · 👑 Premium')+'</label><select class="field" name="rep"'+(isPro()||x.rep!=='none'?'':' disabled')+'>'+['none','daily','weekly','monthly'].map(function(r){return '<option value="'+r+'"'+(x.rep===r?' selected':'')+'>'+esc(t('r_'+r))+'</option>';}).join('')+'</select>'+
+    '<label class="chip flag'+(x.prio?' on':'')+'" style="margin-top:14px" data-act="sheet-prio">'+ic('flag')+esc(t('high'))+'<input type="checkbox" name="prio" hidden'+(x.prio?' checked':'')+'></label>'+
+    '<div class="acts">'+(isNew?'':'<button type="button" class="btn danger" data-act="task-del" data-id="'+task.id+'">'+esc(t('del'))+'</button>')+'<button class="btn">'+esc(t('save'))+'</button></div></form>');
+  if(isNew)setTimeout(function(){var i=sheetRoot.querySelector('input[name=title]');if(i)i.focus();},260);
+}
+function txSheet(){
+  ui.txType='exp';
+  ui.tab='money';render();
+  setTimeout(function(){var i=app.querySelector('input[name=amount]');if(i){i.scrollIntoView({block:'center'});i.focus();}},60);
+}
+function noteSheet(n){
+  var note=n;
+  openSheet('<div class="title-row" style="margin-bottom:10px"><h3 style="margin:0">'+esc(t('q_note'))+'</h3><div style="display:flex;gap:8px">'+
+    '<button class="iconbtn'+(note.pinned?' on':'')+'" data-act="note-pin" data-id="'+note.id+'" aria-label="'+esc(t('pin'))+'">'+ic('pin')+'</button>'+
+    '<button class="iconbtn" style="color:var(--danger)" data-act="note-del" data-id="'+note.id+'" aria-label="'+esc(t('del'))+'">'+ic('trash')+'</button></div></div>'+
+    '<input class="field" data-input="note-title" data-id="'+note.id+'" value="'+esc(note.title)+'" placeholder="'+esc(t('title_ph'))+'" maxlength="100" style="font-weight:700">'+
+    '<div class="gap"></div><textarea class="field" data-input="note-body" data-id="'+note.id+'" placeholder="'+esc(t('body_ph'))+'" style="min-height:42vh">'+esc(note.body)+'</textarea>'+
+    '<div class="lbl" style="text-align:center">'+esc(t('autosave'))+'</div><button class="btn" data-act="sheet-close">'+esc(t('save'))+'</button>',
+    function(){
+      var cur=find(S.notes,note.id);
+      if(cur&&!cur.title.trim()&&!cur.body.trim()){S.notes=S.notes.filter(function(x){return x.id!==note.id;});}
+      save();render();
+    });
+}
+function confirmSheet(msg,label,fn){
+  openSheet('<h3>'+esc(msg)+'</h3><div class="acts"><button class="btn ghost" data-act="sheet-close">'+esc(t('cancel'))+'</button><button class="btn danger" data-act="confirm-yes">'+esc(label)+'</button></div>');
+  confirmFn=fn;
+}
+var confirmFn=null;
+
+/* ---------------- Actions ---------------- */
+function nextDue(d,rep){return rep==='daily'?addDays(d,1):rep==='weekly'?addDays(d,7):addMonths(d,1);}
+function toggleTask(id){
+  var x=find(S.tasks,id);if(!x)return;
+  if(!x.done&&x.rep!=='none'){
+    var prev=x.due;
+    var base=x.due||today();
+    var nd=nextDue(base,x.rep);
+    while(nd<today())nd=nextDue(nd,x.rep);
+    x.due=nd;save();render();
+    toast(t('next_on')+' '+fmtDate(nd),function(){x.due=prev;});
+    return;
+  }
+  x.done=!x.done;x.doneAt=x.done?Date.now():0;save();render();
+  if(x.done)toast(t('done_msg'),function(){x.done=false;});
+}
+
+document.addEventListener('click',function(e){
+  var el=e.target.closest('[data-act]');if(!el)return;
+  var a=el.getAttribute('data-act'),id=el.getAttribute('data-id'),v=el.getAttribute('data-v');
+  switch(a){
+    case 'tab':ui.tab=v;closeSheet(true);render();window.scrollTo(0,0);break;
+    case 'quick':
+      if(v==='task')taskSheet(null);
+      else if(v==='exp')txSheet();
+      else if(v==='item'){ui.tab='shop';render();window.scrollTo(0,0);var i=app.querySelector('input[name=name]');if(i)i.focus();}
+      else if(v==='note'){if(!canAddNote())break;var n={id:uid(),title:'',body:'',pinned:false,updated:Date.now()};S.notes.push(n);ui.tab='notes';render();noteSheet(n);}
+      break;
+    case 'filter':ui.filter=v;render();break;
+    case 'draft-due-clear':ui.draft.due='';render();break;
+    case 'draft-prio':ui.draft.prio=ui.draft.prio?0:1;render();break;
+    case 'draft-rep':if(!isPro()){paywall(t('pro_rep_reason'));break;}var reps=['none','daily','weekly','monthly'];ui.draft.rep=reps[(reps.indexOf(ui.draft.rep)+1)%4];render();break;
+    case 'task-toggle':toggleTask(id);break;
+    case 'task-edit':taskSheet(find(S.tasks,id));break;
+    case 'task-del':closeSheet(true);removeWithUndo('tasks',id);break;
+    case 'sheet-prio':e.preventDefault();var cb=el.querySelector('input');cb.checked=!cb.checked;el.classList.toggle('on',cb.checked);break;
+    case 'sheet-due-clear':var di=sheetRoot.querySelector('input[name=due]');if(di){di.value='';di.parentNode.querySelector('span').textContent=t('no_date');}break;
+    case 'sheet-close':closeSheet();break;
+    case 'confirm-yes':var f=confirmFn;confirmFn=null;closeSheet(true);if(f)f();break;
+    case 'month':var d=parseISO(ui.month+'-01');d.setMonth(d.getMonth()+(+v));ui.month=ym(iso(d));render();break;
+    case 'txtype':ui.txType=v;render();break;
+    case 'txcat':e.preventDefault();ui.txDraft.cat=v;
+      el.parentNode.querySelectorAll('.chip').forEach(function(c){c.classList.toggle('on',c===el);});break;
+    case 'tx-del':removeWithUndo('tx',id);break;
+    case 'budget':if(!isPro()){paywall();break;}ui.tab='settings';render();setTimeout(function(){var i=app.querySelector('[data-change=budget]');if(i)i.focus();},50);break;
+    case 'shop-toggle':var s=find(S.shop,id);if(s){s.done=!s.done;save();render();}break;
+    case 'shop-del':removeWithUndo('shop',id);break;
+    case 'shop-clear':var removed=S.shop.filter(function(x){return x.done;});S.shop=S.shop.filter(function(x){return !x.done;});save();render();
+      toast(t('deleted'),function(){S.shop=S.shop.concat(removed);});break;
+    case 'shop-share':shareShop();break;
+    case 'note-new':if(!canAddNote())break;var nn={id:uid(),title:'',body:'',pinned:false,updated:Date.now()};S.notes.push(nn);noteSheet(nn);break;
+    case 'note-open':var no=find(S.notes,id);if(no)noteSheet(no);break;
+    case 'note-pin':var np=find(S.notes,id);if(np){np.pinned=!np.pinned;save();el.classList.toggle('on',np.pinned);}break;
+    case 'note-del':sheetClose=null;closeSheet(true);removeWithUndo('notes',id);break;
+    case 'habit-emoji':ui.habitEmoji=v;app.querySelectorAll('.emoji-pick button').forEach(function(b){b.classList.toggle('on',b===el);});break;
+    case 'habit-toggle':var h=find(S.habits,id);if(h){var dd=el.getAttribute('data-d');if(h.log[dd])delete h.log[dd];else h.log[dd]=1;save();render();}break;
+    case 'habit-del':removeWithUndo('habits',id);break;
+    case 'lang':S.lang=v;save();render();break;
+    case 'theme':S.theme=v;save();render();break;
+    case 'export':exportData();break;
+    case 'cloud-up':if(!isPro()){paywall();break;}cloudUpload();break;
+    case 'sync-cloud':var cf=cloud.conflict;cloud.conflict=null;closeSheet(true);if(cf){applyCloud(cf.d,cf.at);toast('☁️ '+t('synced'));}break;
+    case 'sync-device':cloud.conflict=null;closeSheet(true);pushNow().then(function(){toast('☁️ '+t('synced'));});break;
+    case 'auto-sync':if(!isPro()){paywall();break;}S.autoSync=S.autoSync===false;save();render();if(S.autoSync!==false)pullCheck();break;
+    case 'accent':if(!isPro()&&v!=='gold'){paywall();break;}S.accent=v;save();render();break;
+    case 'logo':logoTaps=(Date.now()-logoLast<1500)?logoTaps+1:1;logoLast=Date.now();
+      if(logoTaps>=5){logoTaps=0;try{if(sessionStorage.getItem('hayati_preview')==='1')sessionStorage.removeItem('hayati_preview');else sessionStorage.setItem('hayati_preview','1');}catch(x){}
+        location.href=location.pathname+(sessionStorage.getItem('hayati_preview')==='1'?'?preview=free':'?preview=off');}
+      break;
+    case 'tsize':S.textSize=parseFloat(v)||1;save();render();measureHostBar();break;
+    case 'paywall':e.preventDefault();paywall();break;
+    case 'pro-buy':buyPremium();break;
+    case 'pro-restore':restorePurchases(true);break;
+    case 'cloud-down':cloudRestore();break;
+    case 'del-account':confirmSheet(t('del_confirm'),t('del_account'),function(){
+      if(!cloud.client||!cloud.user)return;
+      cloudBusy(true);
+      cloud.client.functions.invoke('delete-account',{body:{}}).then(function(r){
+        if(r.error||!(r.data&&r.data.ok))throw r.error||new Error('failed');
+        return cloud.client.auth.signOut().catch(function(){});
+      }).then(function(){setSyncMeta({last:0,hash:''});cloud.busy=false;setCloudUser(null);cloud.msg=t('del_done');render();toast(t('del_done'));})
+        .catch(function(){cloud.busy=false;cloud.msg=t('del_fail');render();});
+    });break;
+    case 'cloud-out':if(cloud.client){cloud.client.auth.signOut().then(function(r){if(r.error)throw r.error;setCloudUser(null);cloud.msg=A('signedOut');render();}).catch(function(err){cloudMsg(A('logoutError')+(err&&err.message||''));});}break;
+    case 'import':document.getElementById('importFile').click();break;
+    case 'clear-all':confirmSheet(t('confirm_clear'),t('clear_all'),function(){var keep={lang:S.lang,theme:S.theme,currency:S.currency,premium:S.premium,gift:S.gift,accent:S.accent};S=defaults();S.lang=keep.lang;S.theme=keep.theme;S.currency=keep.currency;S.premium=keep.premium;S.gift=keep.gift;S.accent=keep.accent;save();render();toast(t('cleared'));});break;
+  }
+});
+
+document.addEventListener('submit',function(e){
+  var f=e.target,a=f.getAttribute('data-submit');if(!a)return;
+  e.preventDefault();
+  var fd=new FormData(f);
+  if(a==='task-add'){
+    var title=String(fd.get('title')||'').trim();if(!title)return;
+    var x=newTask(title);x.due=ui.draft.due;x.prio=ui.draft.prio;x.rep=ui.draft.rep;
+    if(x.rep!=='none'&&!x.due)x.due=today();
+    f.reset();S.tasks.push(x);ui.draft={due:'',prio:0,rep:'none'};save();render();
+    var i=app.querySelector('input[name=title]');if(i)i.focus();
+  }else if(a==='task-save'){
+    var id=f.getAttribute('data-id');
+    var tt=String(fd.get('title')||'').trim();if(!tt)return;
+    var task=id?find(S.tasks,id):null;
+    if(!task){task=newTask(tt);S.tasks.push(task);}
+    task.title=tt;task.due=String(fd.get('due')||'');task.rep=fd.get('rep')!=null?String(fd.get('rep')):(task.rep||'none');task.prio=fd.get('prio')?1:0;
+    if(task.rep!=='none'&&!task.due)task.due=today();
+    save();closeSheet(true);render();
+  }else if(a==='tx-add'){
+    var amt=parseFloat(String(fd.get('amount')||'').replace(/[٠-٩]/g,function(d){return '٠١٢٣٤٥٦٧٨٩'.indexOf(d);}).replace(',','.'));
+    if(!(amt>0)){var ai=f.querySelector('[name=amount]');ai.focus();ai.style.borderColor='var(--danger)';return;}
+    S.tx.push({id:uid(),type:ui.txType,amount:Math.round(amt*100)/100,cur:String(fd.get('cur')||S.currency),cat:isPro()?ui.txDraft.cat:(ui.txType==='inc'?'other':'other'),note:String(fd.get('note')||'').trim(),date:ui.txDraft.date||today()});
+    f.reset();ui.month=ym(ui.txDraft.date||today());ui.txDraft.date='';
+    save();render();toast(t('done_msg'));
+  }else if(a==='shop-add'){
+    var nm=String(fd.get('name')||'').trim();if(!nm)return;
+    f.reset();S.shop.push({id:uid(),name:nm,qty:String(fd.get('qty')||'').trim(),done:false});save();render();
+    var si=app.querySelector('input[name=name]');if(si)si.focus();
+  }else if(a==='auth'){
+    var mode=(e.submitter&&e.submitter.value)||'signin';
+    signInOrUp(mode,String(fd.get('email')||'').trim(),String(fd.get('password')||''));
+    return;
+  }else if(a==='habit-add'){
+    if(!isPro()&&S.habits.length>=FREE_HABITS){paywall(t('limit_habits').replace('{n}',FREE_HABITS));return;}
+    var hn=String(fd.get('name')||'').trim();if(!hn)return;
+    f.reset();S.habits.push({id:uid(),name:hn,emoji:ui.habitEmoji,log:{},created:Date.now()});save();render();
+  }
+});
+
+document.addEventListener('change',function(e){
+  var el=e.target,a=el.getAttribute&&el.getAttribute('data-change');if(!a)return;
+  if(a==='draft-due'){ui.draft.due=el.value;render();}
+  else if(a==='sheet-due'){var sp=el.parentNode.querySelector('span');if(sp)sp.textContent=el.value?fmtDate(el.value,{weekday:'long',day:'numeric',month:'long',year:'numeric'}):t('no_date');}
+  else if(a==='tx-date'){ui.txDraft.date=el.value||today();var lab=el.parentNode.querySelector('span');if(lab)lab.textContent=fmtDate(ui.txDraft.date);}
+  else if(a==='currency'){S.currency=el.value;save();toast(t('done_msg'));}
+  else if(a==='budget'){var b=parseFloat(String(el.value).replace(',','.'));S.budget=b>0?Math.round(b*100)/100:0;save();toast(t('done_msg'));}
+});
+
+document.addEventListener('input',function(e){
+  var el=e.target,a=el.getAttribute&&el.getAttribute('data-input');if(!a)return;
+  if(a==='note-q'){ui.noteQ=el.value;var pos=el.selectionStart;render();var n=app.querySelector('[data-input=note-q]');if(n){n.focus();try{n.setSelectionRange(pos,pos);}catch(x){}}}
+  else if(a==='note-title'||a==='note-body'){
+    var note=find(S.notes,el.getAttribute('data-id'));if(!note)return;
+    note[a==='note-title'?'title':'body']=el.value;note.updated=Date.now();save();
+  }
+});
+
+document.addEventListener('keydown',function(e){if(e.key==='Escape')closeSheet();});
+
+/* ---------------- Share / Backup ---------------- */
+function shareShop(){
+  var lines=S.shop.filter(function(x){return !x.done;}).map(function(x){return '• '+x.name+(x.qty?' ×'+x.qty:'');});
+  var text='🛒 '+t('shop_list')+'\n'+lines.join('\n')+'\n\n— HAYATI';
+  if(navigator.share){navigator.share({text:text}).catch(function(){});}
+  else if(navigator.clipboard){navigator.clipboard.writeText(text).then(function(){toast(t('done_msg'));});}
+}
+function exportData(){
+  var L=toLegacy(S);
+  var data=JSON.stringify({format:'hayati-backup',version:2,createdAt:new Date().toISOString(),tasks:L.tasks,expenses:L.expenses,shopping:L.shopping,habits:L.habits,notes:L.notes,app:stripPremium(S)},null,1);
+  var name='hayati-backup-'+today()+'.json';
+  try{
+    var file=new File([data],name,{type:'application/json'});
+    if(navigator.canShare&&navigator.canShare({files:[file]})){navigator.share({files:[file]}).catch(function(){});return;}
+  }catch(e){}
+  var a=document.createElement('a');a.href=URL.createObjectURL(new Blob([data],{type:'application/json'}));a.download=name;document.body.appendChild(a);a.click();
+  setTimeout(function(){URL.revokeObjectURL(a.href);a.remove();},1000);
+}
+function replaceData(d){var keep={lang:S.lang,theme:S.theme,premium:S.premium,gift:S.gift,accent:S.accent};var g=d.gift;S=d;S.lang=keep.lang;S.theme=keep.theme;S.premium=keep.premium;S.gift=keep.gift||g;if(!d.accent)S.accent=keep.accent;save();render();}
+document.getElementById('importFile').addEventListener('change',function(e){
+  var file=e.target.files&&e.target.files[0];if(!file)return;
+  var r=new FileReader();
+  r.onload=function(){
+    var d=null;try{d=dataFromPayload(JSON.parse(r.result));}catch(x){}
+    e.target.value='';
+    if(!d){toast(A('invalidFile'));return;}
+    confirmSheet(A('importConfirm'),t('import'),function(){replaceData(d);toast(A('importSuccess'));});
+  };
+  r.readAsText(file);
+});
+
+/* ---------------- Premium (Google Play Billing via Digital Goods API) ----------------
+   Works only inside the Android app from Google Play (Trusted Web Activity with Play Billing on).
+   Every purchase is verified + acknowledged by the Supabase Edge Function "verify-purchase". */
+var PREMIUM_SKU='hayati_premium';
+var PLAY_PACKAGE='';            // e.g. 'site.nippy.dapper_maple_73.twa' — fill in after publishing, to show a Google Play link on the web
+var FREE_HABITS=3;
+/* Locks only apply where Premium can actually be bought: Android (the Google Play app, or Android
+   browsers that are sent to Google Play). iPhone / desktop get everything until a payment exists there.
+   Add ?preview=free to the address to see the free version on any device. */
+var PREVIEW_FREE=/[?&#]preview=free/.test(location.search+location.hash);
+try{if(PREVIEW_FREE)sessionStorage.setItem('hayati_preview','1');else if(/[?&#]preview=off/.test(location.search+location.hash))sessionStorage.removeItem('hayati_preview');PREVIEW_FREE=PREVIEW_FREE||sessionStorage.getItem('hayati_preview')==='1';}catch(e){}
+var LOCKS_ON=PREVIEW_FREE||/Android/i.test(navigator.userAgent)||('getDigitalGoodsService' in window);
+var billing={service:null,price:'',busy:false};
+function owned(){return !!(S.premium&&S.premium.active);}
+function isPro(){if(PREVIEW_FREE)return false;return !LOCKS_ON||!!S.gift||owned();}
+function stripPremium(d){var c={};for(var k in d)if(k!=='premium'&&k!=='gift'&&k!=='giftNew')c[k]=d[k];return c;}
+function canAddNote(){return true;}
+function setPro(active){
+  var was=isPro();if(PREVIEW_FREE)return;
+  S.premium={active:!!active,checked:Date.now()};save();
+  if(was!==!!active)render();
+}
+function verifyPurchase(token){
+  if(!cloud.client||!cloud.client.functions)return Promise.reject(new Error('offline'));
+  return cloud.client.functions.invoke('verify-purchase',{body:{purchaseToken:token,sku:PREMIUM_SKU}}).then(function(r){
+    if(r.error)throw r.error;
+    return !!(r.data&&r.data.valid);
+  });
+}
+function initBilling(){
+  if(!('getDigitalGoodsService' in window))return;
+  window.getDigitalGoodsService('https://play.google.com/billing').then(function(service){
+    billing.service=service;
+    service.getDetails([PREMIUM_SKU]).then(function(items){
+      var it=items&&items[0];
+      if(it&&it.price){try{billing.price=new Intl.NumberFormat(locale(),{style:'currency',currency:it.price.currency,currencyDisplay:'narrowSymbol'}).format(it.price.value);}catch(e){billing.price=it.price.value+' '+it.price.currency;}}
+      if(sheetRoot.querySelector('.pro-price b'))sheetRoot.querySelector('.pro-price b').textContent=billing.price;
+    }).catch(function(){});
+    restorePurchases(false);
+  }).catch(function(){billing.service=null;});
+}
+function restorePurchases(manual){
+  if(!billing.service){if(manual)toast(t('pro_only_play'));return;}
+  billing.service.listPurchases().then(function(list){
+    var p=(list||[]).filter(function(x){return x.itemId===PREMIUM_SKU;})[0];
+    if(!p){setPro(false);if(manual)toast(t('pro_none'));return;}
+    return verifyPurchase(p.purchaseToken).then(function(ok){
+      setPro(ok);
+      if(manual)toast(ok?t('pro_thanks'):t('pro_fail'));
+    }).catch(function(){
+      // could not reach the server: trust Play's list for now, check again next launch
+      setPro(true);
+    });
+  }).catch(function(){if(manual)toast(t('pro_fail'));});
+}
+function buyPremium(){
+  if(!billing.service||billing.busy)return;
+  if(!window.PaymentRequest){toast(t('pro_fail'));return;}
+  billing.busy=true;
+  var req;
+  try{
+    req=new PaymentRequest([{supportedMethods:'https://play.google.com/billing',data:{sku:PREMIUM_SKU}}],{total:{label:'Total',amount:{currency:'USD',value:'0'}}});
+  }catch(e){billing.busy=false;toast(t('pro_fail'));return;}
+  req.show().then(function(res){
+    var token=res.details&&res.details.purchaseToken;
+    return verifyPurchase(token).then(function(ok){
+      return res.complete(ok?'success':'fail').then(function(){
+        billing.busy=false;
+        if(ok){closeSheet(true);setPro(true);toast(t('pro_thanks'));}
+        else toast(t('pro_fail'));
+      });
+    }).catch(function(){
+      return res.complete('fail').then(function(){billing.busy=false;toast(t('pro_fail'));});
+    });
+  }).catch(function(){billing.busy=false;/* cancelled by the user */});
+}
+function paywall(reason){
+  var benefits=[['☁️',t('pro_b1'),t('pro_b1s')],['📊',t('pro_b2'),t('pro_b2s')],['🔁',t('pro_b4'),t('pro_b4s')],['🎯',t('pro_b3'),t('pro_b3s').replace('{h}',FREE_HABITS)],['🎨',t('pro_b5'),t('pro_b5s')]];
+  var h='<div class="pro-hero"><div class="k">👑</div><h3>HAYATI Premium</h3><p>'+esc(reason||t('pro_sub'))+'</p></div>';
+  h+='<ul class="pro-list">'+benefits.map(function(b){return '<li><span>'+b[0]+'</span><div><b>'+esc(b[1])+'</b><small>'+esc(b[2])+'</small></div></li>';}).join('')+'</ul>';
+  if(isPro()){
+    h+='<div class="pro-price"><span class="pro-badge">'+(S.gift&&!owned()?'🎁 ':'✓ ')+esc(t('pro_active'))+'</span>'+(S.gift&&!owned()?'<small style="margin-top:8px">'+esc(t('pro_gift'))+'</small>':'')+'</div><button class="btn ghost" data-act="sheet-close">'+esc(t('save'))+'</button>';
+  }else if(billing.service){
+    h+='<div class="pro-price"><b>'+esc(billing.price||'…')+'</b><small>'+esc(t('pro_once'))+'</small></div>'+
+      '<button class="btn" data-act="pro-buy">'+esc(t('pro_buy'))+'</button><div class="gap"></div><button class="btn ghost sm" style="width:100%" data-act="pro-restore">'+esc(t('pro_restore'))+'</button>';
+  }else{
+    h+='<div class="pro-price"><small>'+esc(t('pro_once'))+'</small></div><div class="cloud-msg" style="margin-bottom:12px">📱 '+esc(t('pro_only_play'))+'</div>'+
+      (PLAY_PACKAGE?'<a class="btn" style="display:block;text-align:center;text-decoration:none" href="https://play.google.com/store/apps/details?id='+encodeURIComponent(PLAY_PACKAGE)+'" target="_blank" rel="noopener">Google Play</a>':'<button class="btn ghost" data-act="sheet-close">'+esc(t('cancel'))+'</button>');
+  }
+  openSheet(h);
+}
+function premiumCard(){
+  if(!LOCKS_ON)return '';
+  if(S.gift&&!owned())return '<section class="card"><h2>HAYATI Premium <span class="pro-badge">🎁 '+esc(t('pro_active'))+'</span></h2><div class="lbl" style="margin:-6px 0 0">'+esc(t('pro_gift'))+'</div></section>';
+  if(isPro())return '<section class="card"><h2>HAYATI Premium <span class="pro-badge">👑 '+esc(t('pro_active'))+'</span></h2><div class="lbl" style="margin:-6px 0 0">'+esc(t('pro_once'))+'</div></section>';
+  return '<section class="card"><button class="lockrow" data-act="paywall" style="border-style:solid">👑 <span><b style="color:var(--text);font-size:15px">HAYATI Premium</b><br><small style="color:var(--muted)">'+esc(t('pro_sub'))+'</small></span><b>›</b></button></section>';
+}
+
+/* ---------------- Cloud account (Supabase) — manual upload / restore only ---------------- */
+var cloud={client:null,user:null,msg:'',busy:false};
+try{
+  if(window.supabase&&window.supabase.createClient){
+    cloud.client=window.supabase.createClient('https://nwlmoecyepsajayyyugd.supabase.co','sb_publishable_rgaE-hjmqV37RU57_C8JEA_yn-0AcEO',{auth:{persistSession:true,autoRefreshToken:true,detectSessionInUrl:true}});
+  }
+}catch(e){cloud.client=null;}
+function cloudMsg(m){cloud.msg=m;var el=document.getElementById('cloudMsg');if(el)el.textContent=m;else if(m)toast(m);}
+function setCloudUser(u){var changed=(cloud.user&&cloud.user.id)!==(u&&u.id);cloud.user=u||null;if(changed&&ui.tab==='settings')render();if(changed&&u)setTimeout(pullCheck,300);}
+function cloudBusy(b){cloud.busy=b;if(ui.tab==='settings')render();}
+function refreshCloudUser(){
+  if(!cloud.client)return Promise.resolve(null);
+  return cloud.client.auth.getUser().then(function(r){if(r.error)throw r.error;setCloudUser(r.data.user);return r.data.user;})
+    .catch(function(){setCloudUser(null);return null;});
+}
+function signInOrUp(mode,email,password){
+  if(!cloud.client)return cloudMsg(A('unavailable'));
+  if(!email||password.length<6)return cloudMsg(A('credentials'));
+  cloudBusy(true);cloudMsg(A('wait'));
+  var p=mode==='signup'
+    ?cloud.client.auth.signUp({email:email,password:password,options:{emailRedirectTo:location.origin+location.pathname}})
+    :cloud.client.auth.signInWithPassword({email:email,password:password});
+  p.then(function(r){
+    if(r.error)throw r.error;
+    if(mode==='signup'&&!r.data.session){cloud.busy=false;cloudMsg(A('confirmEmail'));render();return;}
+    return refreshCloudUser().then(function(){cloud.busy=false;cloud.msg=A('loginSuccess');render();});
+  }).catch(function(err){cloud.busy=false;cloud.msg=A('loginError')+(err&&err.message||'');render();});
+}
+function cloudPayload(){var L=toLegacy(S);return {format:'hayati-cloud-v1',tasks:L.tasks,expenses:L.expenses,shopping:L.shopping,habits:L.habits,notes:L.notes,app:stripPremium(S)};}
+function pushNow(){
+  if(!autoSyncOn()||cloud.pushing)return Promise.resolve();
+  cloud.pushing=true;
+  var at=new Date().toISOString();
+  return cloud.client.from('hayati_data').upsert({user_id:cloud.user.id,payload:cloudPayload(),updated_at:at},{onConflict:'user_id'}).then(function(r){
+    cloud.pushing=false;if(r.error)throw r.error;
+    setSyncMeta({last:Date.parse(at),hash:dataHash()});
+    var el=document.getElementById('syncState');if(el)el.textContent=syncLabel();
+  }).catch(function(){cloud.pushing=false;});
+}
+function applyCloud(d,at){
+  syncQuiet=true;try{replaceData(d);}finally{syncQuiet=false;}
+  setSyncMeta({last:at,hash:dataHash()});
+  var el=document.getElementById('syncState');if(el)el.textContent=syncLabel();
+}
+function pullCheck(){
+  if(!autoSyncOn()||cloud.pulling)return;
+  cloud.pulling=true;
+  cloud.client.from('hayati_data').select('payload,updated_at').eq('user_id',cloud.user.id).maybeSingle().then(function(r){
+    cloud.pulling=false;
+    if(r.error)return;
+    var m=syncMeta(),dirty=isDirty();
+    if(!r.data){if(!isEmptyData())pushNow();return;}
+    var at=Date.parse(r.data.updated_at)||0;
+    if(at>m.last+1000){
+      var d=dataFromPayload(r.data.payload);if(!d)return;
+      if(!dirty){applyCloud(d,at);toast('☁️ '+t('synced'));}
+      else syncConflict(d,at);
+    }else if(dirty)pushNow();
+  }).catch(function(){cloud.pulling=false;});
+}
+function syncConflict(d,at){
+  openSheet('<h3>☁️ '+esc(t('sync_conflict'))+'</h3><div class="acts" style="flex-direction:column"><button class="btn" data-act="sync-cloud">'+esc(t('keep_cloud'))+'</button><button class="btn ghost" data-act="sync-device">'+esc(t('keep_device'))+'</button></div>');
+  cloud.conflict={d:d,at:at};
+}
+function syncLabel(){
+  var m=syncMeta();
+  if(!m.last)return t('sync_never');
+  var d=new Date(m.last);
+  return t('sync_last')+' '+fmtDate(iso(d),{day:'numeric',month:'short'})+' '+pad(d.getHours())+':'+pad(d.getMinutes());
+}
+function cloudUpload(){
+  refreshCloudUser().then(function(user){
+    if(!user)return cloudMsg(A('signInFirst'));
+    confirmSheet(A('uploadConfirm'),A('upload'),function(){
+      var payload=cloudPayload(),at=new Date().toISOString();
+      cloudBusy(true);cloudMsg(A('uploading'));
+      cloud.client.from('hayati_data').upsert({user_id:user.id,payload:payload,updated_at:at},{onConflict:'user_id'})
+        .then(function(r){if(r.error)throw r.error;setSyncMeta({last:Date.parse(at),hash:dataHash()});cloud.busy=false;cloud.msg=A('uploadSuccess');render();})
+        .catch(function(err){cloud.busy=false;cloud.msg=A('uploadError')+(err&&err.message||'');render();});
+    });
+  });
+}
+function cloudRestore(){
+  refreshCloudUser().then(function(user){
+    if(!user)return cloudMsg(A('signInFirst'));
+    cloudBusy(true);cloudMsg(A('checking'));
+    cloud.client.from('hayati_data').select('payload,updated_at').eq('user_id',user.id).maybeSingle().then(function(r){
+      if(r.error)throw r.error;
+      cloud.busy=false;
+      if(!r.data){cloud.msg=A('noBackup');render();return;}
+      var d=dataFromPayload(r.data.payload);
+      if(!d)throw new Error(A('invalidCloud'));
+      var preview=d.tasks.slice(0,3).map(function(x){return x.title;}).join('، ');
+      cloud.msg='';render();
+      confirmSheet(A('restoreConfirm').replace('{count}',String(d.tasks.length)).replace('{preview}',preview?' ('+preview+')':''),A('restore'),function(){
+        applyCloud(d,Date.parse(r.data.updated_at)||Date.now());cloud.msg=A('restoreSuccess');render();toast(A('restoreSuccess'));
+      });
+    }).catch(function(err){cloud.busy=false;cloud.msg=A('restoreError')+(err&&err.message||'');render();});
+  });
+}
+if(cloud.client){
+  try{cloud.client.auth.onAuthStateChange(function(_e,session){setCloudUser(session&&session.user||null);});}catch(e){}
+  refreshCloudUser();
+}
+
+if(window.matchMedia){try{matchMedia('(prefers-color-scheme: light)').addEventListener('change',function(){if(S.theme==='auto')applyTheme();});}catch(e){}}
+// refresh "today" when app comes back to foreground on a new day
+var lastDay=today();
+document.addEventListener('visibilitychange',function(){if(document.hidden){if(autoSyncOn()&&isDirty()){clearTimeout(syncTimer);pushNow();}return;}if(today()!==lastDay){lastDay=today();render();}pullCheck();});
+window.addEventListener('online',function(){pullCheck();});
+
+/* Keep our bottom bar above any bar the hosting service fixes to the bottom of the page. */
+function measureHostBar(){
+  var mine={app:1,nav:1,sheetRoot:1,toast:1,importFile:1},h=0,vh=window.innerHeight;
+  var els=document.body.querySelectorAll('body > *');
+  for(var i=0;i<els.length;i++){
+    var el=els[i];if(mine[el.id]||el.tagName==='SCRIPT'||el.tagName==='STYLE'||el.tagName==='LINK')continue;
+    var cs=getComputedStyle(el);if(cs.position!=='fixed'&&cs.position!=='sticky')continue;
+    if(cs.display==='none'||cs.visibility==='hidden')continue;
+    var r=el.getBoundingClientRect();
+    if(r.height>0&&r.height<vh*0.5&&r.bottom>=vh-4&&r.top>vh*0.4)h=Math.max(h,Math.round(vh-r.top));
+  }
+  document.documentElement.style.setProperty('--bh',h+'px');
+}
+try{
+  new MutationObserver(function(){measureHostBar();}).observe(document.body,{childList:true,subtree:false,attributes:true,attributeFilter:['style','class']});
+  window.addEventListener('resize',measureHostBar);
+  window.addEventListener('load',function(){measureHostBar();setTimeout(measureHostBar,800);setTimeout(measureHostBar,2500);});
+  measureHostBar();
+}catch(e){}
+
+render();
+initBilling();
+if(PREVIEW_FREE){setTimeout(function(){toast('👀 Preview: free version');},400);}
+if(S.giftNew){S.giftNew=false;lsSet(KEY,JSON.stringify(S));if(LOCKS_ON)setTimeout(function(){openSheet('<div class="pro-hero"><div class="k">🎁</div><h3>'+esc(t('gift_title'))+'</h3><p>'+esc(t('pro_gift'))+'</p></div><div class="gap"></div><button class="btn" data-act="sheet-close">👑 '+esc(t('gift_ok'))+'</button>');},600);}
+
+/* ---------------- Service worker ---------------- */
+if('serviceWorker' in navigator&&location.protocol==='https:'){
+  window.addEventListener('load',function(){
+    navigator.serviceWorker.register('sw.js',{updateViaCache:'none'}).then(function(reg){try{reg.update();}catch(e){}}).catch(function(){});
+  });
+}
+})();
+</script>
+</body>
+</html>
