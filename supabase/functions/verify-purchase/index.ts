@@ -1,18 +1,25 @@
-// HAYATI — verify-purchase
-// Checks a Google Play purchase token for the one-time product "hayati_premium",
+// verify-purchase — shared by HAYATI, Tafawoq, Border Companion and Road Companion
+// Checks a Google Play purchase token for one of the one-time Premium products below,
 // acknowledges it (required within 3 days or Google refunds it), and answers { valid: true/false }.
 //
 // Secrets to add in Supabase → Edge Functions → Secrets:
 //   GOOGLE_SERVICE_ACCOUNT = the whole JSON key file of a Google Cloud service account
 //                            that has access to your app in Google Play Console
-//   PLAY_PACKAGE_NAME      = your Android package name, e.g. site.nippy.dapper_maple_73.twa
+//                            (Play Console → Users and permissions → give it access to all four apps)
+//   PLAY_PACKAGE_NAME      = (optional) HAYATI's package name if it is not app.hayati.organizer
 
 const cors = {
   "Access-Control-Allow-Origin": "*",
   "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
   "Access-Control-Allow-Methods": "POST, OPTIONS",
 };
-const ALLOWED_SKUS = ["hayati_premium"];
+// Premium product id (as created in Play Console → Monetize → In-app products) → Android package
+const PRODUCTS: Record<string, string> = {
+  hayati_premium: Deno.env.get("PLAY_PACKAGE_NAME") || "app.hayati.organizer",
+  tafawoq_premium: "app.tafawoq",
+  border_premium: "app.bordercompanion",
+  roadcompanion_premium: "app.roadcompanion",
+};
 
 function json(body: unknown, status = 200) {
   return new Response(JSON.stringify(body), { status, headers: { ...cors, "Content-Type": "application/json" } });
@@ -63,11 +70,10 @@ Deno.serve(async (req) => {
   if (req.method !== "POST") return json({ valid: false, error: "POST only" }, 405);
   try {
     const { purchaseToken, sku } = await req.json();
-    if (typeof purchaseToken !== "string" || !purchaseToken || !ALLOWED_SKUS.includes(sku)) {
+    if (typeof purchaseToken !== "string" || !purchaseToken || typeof sku !== "string" || !Object.hasOwn(PRODUCTS, sku)) {
       return json({ valid: false, error: "bad request" }, 400);
     }
-    const pkg = Deno.env.get("PLAY_PACKAGE_NAME");
-    if (!pkg) throw new Error("PLAY_PACKAGE_NAME secret is missing");
+    const pkg = PRODUCTS[sku];
     const token = await googleAccessToken();
     const base = `https://androidpublisher.googleapis.com/androidpublisher/v3/applications/${encodeURIComponent(pkg)}/purchases/products/${encodeURIComponent(sku)}/tokens/${encodeURIComponent(purchaseToken)}`;
     const res = await fetch(base, { headers: { Authorization: `Bearer ${token}` } });
