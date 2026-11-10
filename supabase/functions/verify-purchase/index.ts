@@ -1,11 +1,11 @@
-// verify-purchase — shared by HAYATI, Tafawoq, Border Companion and Road Companion
+// verify-purchase — shared by HAYATI, Tafawoq, Tafawoq Prep, Border Companion and Road Companion
 // Checks a Google Play purchase token for one of the one-time Premium products below,
 // acknowledges it (required within 3 days or Google refunds it), and answers { valid: true/false }.
 //
 // Secrets to add in Supabase → Edge Functions → Secrets:
 //   GOOGLE_SERVICE_ACCOUNT = the whole JSON key file of a Google Cloud service account
 //                            that has access to your app in Google Play Console
-//                            (Play Console → Users and permissions → give it access to all four apps)
+//                            (Play Console → Users and permissions → give it access to all five apps)
 //   PLAY_PACKAGE_NAME      = (optional) HAYATI's package name if it is not app.hayati.organizer
 
 const cors = {
@@ -16,7 +16,8 @@ const cors = {
 // Premium product id (as created in Play Console → Monetize → In-app products) → Android package
 const PRODUCTS: Record<string, string> = {
   hayati_premium: Deno.env.get("PLAY_PACKAGE_NAME") || "app.hayati.organizer",
-  tafawoq_premium: "app.tafawoq",
+  tafawoq_plus_2026_2027: "app.tafawoq",
+  tafawoq_prep_plus_2026_2027: "app.tafawoq.prep",
   border_premium: "app.bordercompanion",
   roadcompanion_premium: "app.roadcompanion",
 };

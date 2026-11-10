@@ -1,0 +1,1158 @@
+<!DOCTYPE html>
+<html dir="rtl" lang="ar">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="تفوق">
+<link rel="manifest" href="./manifest.webmanifest?v=1">
+<link rel="icon" href="./icon-192.png?v=1" type="image/png">
+<link rel="apple-touch-icon" sizes="180x180" href="./icon-180.png?v=1">
+<title>تفوق إعدادي</title>
+<meta name="theme-color" content="#6244a9">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+Arabic:wght@400;500;600;700&family=Cairo:wght@600;700;800&display=swap">
+<style>
+/* Layout: phone-first single column (max 600px), sticky screen bar, fixed bottom tab bar. Exam mode hides the tab bar. */
+:root{
+  --bg:#f2f7fa;--surface:#ffffff;--surface-2:#e7f2f8;--line:#d5e5ee;
+  --fg:#15324a;--muted:#5d7486;--accent:#6244a9;--accent-ink:#ffffff;--accent-soft:#ece6f8;--accent-deep:#47308a;
+  --good:#138a55;--good-soft:#e2f5ea;--bad:#c63c3c;--bad-soft:#fcebea;--warn:#a96f12;--warn-soft:#fff3dc;
+  --paper:#fff7f2;--paper-line:#e7b4a2;--paper-ink:#8a3b25;--pencil:#26272c;--shadow:0 2px 10px rgba(16,60,90,.06);
+  --font-body:'Noto Sans Arabic',system-ui,-apple-system,'Segoe UI',Tahoma,sans-serif;
+  --font-display:'Cairo','Noto Sans Arabic',system-ui,-apple-system,sans-serif;
+  --font-math:ui-monospace,'SF Mono',Menlo,Consolas,monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#110f1d;--surface:#1a1729;--surface-2:#241f38;--line:#332c4d;
+  --fg:#e2edf4;--muted:#93aabb;--accent:#a98ef0;--accent-ink:#1b1036;--accent-soft:#2c2350;--accent-deep:#cdbdf7;
+  --good:#4fc88b;--good-soft:#123528;--bad:#f08080;--bad-soft:#3a1c1f;--warn:#e6b45c;--warn-soft:#382b13;
+  --paper:#26211f;--paper-line:#6d4b40;--paper-ink:#f0b9a5;--pencil:#f3ede6;--shadow:none;color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#110f1d;--surface:#1a1729;--surface-2:#241f38;--line:#332c4d;
+  --fg:#e2edf4;--muted:#93aabb;--accent:#a98ef0;--accent-ink:#1b1036;--accent-soft:#2c2350;--accent-deep:#cdbdf7;
+  --good:#4fc88b;--good-soft:#123528;--bad:#f08080;--bad-soft:#3a1c1f;--warn:#e6b45c;--warn-soft:#382b13;
+  --paper:#26211f;--paper-line:#6d4b40;--paper-ink:#f0b9a5;--pencil:#f3ede6;--shadow:none;color-scheme:dark}
+*{box-sizing:border-box}
+html,body{background:var(--bg)}
+body{margin:0;color:var(--fg);font-family:var(--font-body);font-size:17px;line-height:1.7;-webkit-text-size-adjust:100%}
+button,input,select,textarea{font:inherit;color:inherit}
+button{cursor:pointer}
+:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+h1,h2,h3{font-family:var(--font-display);line-height:1.35;text-wrap:balance;margin:0}
+h2{font-size:21px}h3{font-size:18px}
+p{margin:0}
+.app{max-width:600px;margin:0 auto;min-height:100%;padding-bottom:calc(108px + env(safe-area-inset-bottom,0px))}
+body.exam-mode .app{padding-bottom:24px}
+.wrap{padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.screen{display:grid;gap:14px;padding-block:14px 8px}
+.bar{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--bg);display:flex;align-items:center;gap:10px;padding-block:12px;border-bottom:1px solid var(--line)}
+.bar h2{flex:1;min-width:0}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--bg)}
+.icon-btn{border:1px solid var(--line);background:var(--surface);border-radius:12px;width:40px;height:40px;display:grid;place-items:center;font-size:20px;flex:none}
+
+/* Hero */
+.hero{background:var(--accent);color:var(--accent-ink);border-radius:0 0 24px 24px;padding-block:22px 18px;display:grid;gap:14px}
+.hero-top{display:flex;justify-content:space-between;align-items:flex-start;gap:12px}
+.hero h1{font-size:38px;letter-spacing:0}
+.hero .sub{opacity:.9;font-size:15px}
+.seg{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;background:rgba(255,255,255,.16);padding:5px;border-radius:14px}
+.seg button{border:0;background:transparent;color:inherit;border-radius:10px;padding:9px 4px;font-weight:500}
+.seg button[aria-pressed="true"]{background:var(--surface);color:var(--accent-deep);font-weight:700}
+.countdown{background:rgba(255,255,255,.18);border-radius:12px;padding:6px 12px;text-align:center;font-size:13px;flex:none}
+.countdown b{display:block;font-family:var(--font-display);font-size:25px;line-height:1.2}
+
+/* Cards & common */
+.card{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:16px;box-shadow:var(--shadow);display:grid;gap:10px;min-width:0}
+.card>*,.screen>*,.lesson-body>*,.msg>*{min-width:0}
+.row{display:flex;align-items:center;justify-content:space-between;gap:10px;min-width:0}
+.row>*{min-width:0}
+.muted{color:var(--muted);font-size:15px}
+.label{font-size:13px;color:var(--muted);letter-spacing:.02em}
+.pill{display:inline-flex;align-items:center;gap:4px;border-radius:999px;padding:3px 10px;background:var(--accent-soft);color:var(--accent-deep);font-size:13px;font-weight:500;white-space:nowrap}
+.pill.good{background:var(--good-soft);color:var(--good)}.pill.bad{background:var(--bad-soft);color:var(--bad)}.pill.warn{background:var(--warn-soft);color:var(--warn)}
+.btn{border:0;border-radius:13px;padding:12px 16px;background:var(--accent);color:var(--accent-ink);font-weight:700;text-align:center}
+.btn.soft{background:var(--accent-soft);color:var(--accent-deep)}
+.btn.ghost{background:transparent;border:1px solid var(--line);color:var(--fg)}
+.btn.danger{background:var(--bad);color:#fff}
+.btn:disabled{opacity:.45;cursor:default}
+.btn.block{width:100%}
+.btns{display:flex;gap:8px;flex-wrap:wrap}.btns .btn{flex:1 1 140px}
+.note{background:var(--warn-soft);color:var(--fg);border-radius:12px;padding:10px 12px;font-size:15px}
+.section-title{display:flex;justify-content:space-between;align-items:baseline;margin-top:6px}
+.link{background:none;border:0;color:var(--accent);font-weight:700;padding:4px}
+.empty{color:var(--muted);text-align:center;padding:14px 4px;font-size:16px}
+
+/* Home */
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.stat{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:10px 6px;text-align:center;font-size:13px;color:var(--muted)}
+.stat b{display:block;font-family:var(--font-display);font-size:25px;color:var(--fg);font-variant-numeric:tabular-nums}
+.tools{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.tool{border:1px solid var(--line);background:var(--surface);border-radius:16px;padding:14px;text-align:right;display:grid;gap:4px;box-shadow:var(--shadow)}
+.tool .glyph{width:38px;height:38px;border-radius:11px;display:grid;place-items:center;background:var(--accent-soft);color:var(--accent-deep);font-family:var(--font-display);font-weight:700;font-size:19px}
+.tool b{font-size:17px}.tool span{font-size:13px;color:var(--muted)}
+.tool.primary{background:var(--accent);color:var(--accent-ink);border-color:transparent}
+.tool.primary span{color:inherit;opacity:.85}.tool.primary .glyph{background:rgba(255,255,255,.2);color:inherit}
+.subj{display:flex;align-items:center;gap:12px;border:1px solid var(--line);background:var(--surface);border-radius:14px;padding:12px;width:100%;text-align:right}
+.glyph{width:42px;height:42px;border-radius:12px;display:grid;place-items:center;font-family:var(--font-display);font-weight:700;font-size:20px;color:#fff;flex:none}
+.subj .meta{flex:1;min-width:0}.subj .meta b{display:block}
+.list{display:grid;gap:8px}
+
+/* Sessions */
+.session{display:flex;align-items:center;gap:10px;padding:10px 0;border-top:1px solid var(--line)}
+.session:first-child{border-top:0}
+.session .time{font-family:var(--font-display);font-variant-numeric:tabular-nums;direction:ltr;min-width:52px;font-weight:700;color:var(--accent-deep)}
+.session .what{flex:1;min-width:0}
+.session.done .what b{text-decoration:line-through;color:var(--muted)}
+.check{width:26px;height:26px;border-radius:8px;border:2px solid var(--line);background:var(--surface);display:grid;place-items:center;flex:none;color:transparent;font-weight:700}
+.check[aria-pressed="true"]{background:var(--good);border-color:var(--good);color:#fff}
+.days{display:grid;grid-template-columns:repeat(7,1fr);gap:5px}
+.day{border:1px solid var(--line);background:var(--surface);border-radius:12px;padding:7px 2px;font-size:13px;text-align:center;line-height:1.4}
+.day b{display:block;font-size:15px}
+.day[aria-pressed="true"]{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+.day.today:not([aria-pressed="true"]){border-color:var(--accent);color:var(--accent-deep)}
+.day small{display:block;font-size:12px;opacity:.75}
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.form-grid .full{grid-column:1/-1}
+.field{display:grid;gap:4px;font-size:13px;color:var(--muted)}
+.input,select.input{width:100%;border:1px solid var(--line);background:var(--surface);border-radius:11px;padding:10px 12px;font-size:17px;color:var(--fg);min-width:0}
+
+/* Exam setup */
+.choices{display:flex;flex-wrap:wrap;gap:8px}
+.choice{border:1px solid var(--line);background:var(--surface);border-radius:12px;padding:9px 14px;font-weight:500}
+.choice[aria-pressed="true"]{background:var(--accent-soft);border:2px solid var(--accent);color:var(--accent-deep);font-weight:700;padding:8px 13px}
+.modes{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.mode{border:1px solid var(--line);background:var(--surface);border-radius:14px;padding:12px;text-align:right;display:grid;gap:4px}
+.mode[aria-pressed="true"]{border:2px solid var(--accent);background:var(--accent-soft);padding:11px}
+.mode b{font-size:17px}.mode span{font-size:13px;color:var(--muted)}
+.toggle{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.switch{width:50px;height:30px;border-radius:999px;border:0;background:var(--line);position:relative;flex:none}
+.switch::after{content:"";position:absolute;top:3px;right:3px;width:24px;height:24px;border-radius:50%;background:#fff;transition:right .15s}
+.switch[aria-checked="true"]{background:var(--accent)}
+.switch[aria-checked="true"]::after{right:23px}
+
+/* Exam */
+.exam-head{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--bg);padding-block:10px;display:grid;gap:8px;border-bottom:1px solid var(--line)}
+.timer{font-family:var(--font-display);font-variant-numeric:tabular-nums;direction:ltr;background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:4px 10px;font-weight:700;font-size:19px}
+.timer.low{background:var(--bad-soft);color:var(--bad);border-color:var(--bad)}
+.progress{height:6px;background:var(--line);border-radius:9px;overflow:hidden}
+.progress span{display:block;height:100%;background:var(--accent);border-radius:9px;transition:width .2s}
+.qgrid{display:flex;gap:6px;overflow-x:auto;padding-bottom:4px;scrollbar-width:none}
+.qgrid::-webkit-scrollbar{display:none}
+.qdot{flex:none;width:34px;height:34px;border-radius:10px;border:1px solid var(--line);background:var(--surface);font-size:15px;font-variant-numeric:tabular-nums;position:relative}
+.qdot.answered{background:var(--accent-soft);border-color:var(--accent);color:var(--accent-deep);font-weight:700}
+.qdot.current{outline:2px solid var(--accent);outline-offset:1px}
+.qdot.flagged::after{content:"";position:absolute;top:-3px;left:-3px;width:10px;height:10px;border-radius:50%;background:var(--warn)}
+.qtext{font-size:20px;font-weight:700;line-height:1.7}
+.opt{display:flex;gap:10px;align-items:center;width:100%;text-align:right;border:1px solid var(--line);background:var(--surface);border-radius:13px;padding:13px 12px;font-size:18px}
+.opt .k{width:30px;height:30px;border-radius:50%;border:2px solid var(--line);display:grid;place-items:center;font-weight:700;flex:none;font-size:16px}
+.opt[aria-pressed="true"]{border:2px solid var(--accent);background:var(--accent-soft);padding:12px 11px}
+.opt[aria-pressed="true"] .k{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+.flag{border:1px solid var(--line);background:var(--surface);border-radius:10px;padding:5px 10px;font-size:15px}
+.flag[aria-pressed="true"]{background:var(--warn-soft);border-color:var(--warn);color:var(--warn);font-weight:700}
+.exam-foot{display:flex;gap:8px}.exam-foot .btn{flex:1}
+
+/* Bubble sheet */
+.tabs{display:grid;grid-template-columns:1fr 1fr;gap:6px;background:var(--surface-2);padding:4px;border-radius:12px}
+.tabs button{border:0;background:transparent;border-radius:9px;padding:8px;font-weight:500}
+.tabs button[aria-selected="true"]{background:var(--surface);font-weight:700;box-shadow:var(--shadow)}
+.booklet-q{display:grid;gap:6px;padding-block:12px;border-top:1px dashed var(--line)}
+.booklet-q:first-child{border-top:0}
+.booklet-q ol{margin:0;padding:0;list-style:none;display:grid;gap:3px}
+.booklet-q li{display:flex;gap:8px}
+.booklet-q li .k{font-weight:700;color:var(--muted);min-width:20px}
+.sheet{background:var(--paper);border:2px solid var(--paper-line);border-radius:6px;padding:14px 12px;display:grid;gap:12px;color:var(--fg)}
+.sheet-head{border-bottom:2px solid var(--paper-line);padding-bottom:10px;display:grid;gap:8px}
+.sheet-head h3{color:var(--paper-ink);font-size:17px;text-align:center}
+.sheet-fields{display:grid;grid-template-columns:1fr 1fr;gap:8px;font-size:13px;color:var(--paper-ink)}
+.sheet-fields .box{border:1px solid var(--paper-line);border-radius:4px;padding:6px 8px;background:transparent;min-width:0;width:100%;color:var(--fg);font-size:16px;font-variant-numeric:tabular-nums}
+.sheet-rules{font-size:13px;color:var(--paper-ink);line-height:1.6}
+.bubble-cols{display:grid;grid-template-columns:1fr;gap:0 18px}
+@media (min-width:520px){.bubble-cols{grid-template-columns:1fr 1fr}}
+.brow{display:flex;align-items:center;gap:8px;padding:5px 4px;border-bottom:1px solid color-mix(in srgb,var(--paper-line) 45%,transparent)}
+.brow .n{width:26px;font-weight:700;color:var(--paper-ink);font-variant-numeric:tabular-nums;text-align:center;font-size:16px}
+.brow .bubbles{display:flex;gap:8px;flex:1}
+.bub{width:34px;height:34px;border-radius:50%;border:1.6px solid var(--paper-ink);background:transparent;color:var(--paper-ink);font-size:15px;font-weight:700;display:grid;place-items:center;padding:0}
+.bub.on{background:var(--pencil);color:var(--paper);border-color:var(--pencil)}
+.brow.invalid{background:var(--bad-soft)}
+.brow .flagmini{font-size:12px;color:var(--bad);font-weight:700}
+
+/* Result */
+.ring{width:150px;height:150px;margin:0 auto;position:relative}
+.ring svg{width:100%;height:100%;transform:rotate(-90deg)}
+.ring .center{position:absolute;inset:0;display:grid;place-items:center;text-align:center;line-height:1.2}
+.ring .center b{font-family:var(--font-display);font-size:38px;font-variant-numeric:tabular-nums;display:block}
+.verdict{text-align:center;display:grid;gap:4px}
+.verdict .grade{font-family:var(--font-display);font-size:25px}
+.meta4{display:grid;grid-template-columns:repeat(4,1fr);gap:6px}
+.meta4 div{background:var(--surface-2);border-radius:11px;padding:8px 2px;text-align:center;font-size:12px;color:var(--muted)}
+.meta4 b{display:block;font-size:21px;color:var(--fg);font-family:var(--font-display);font-variant-numeric:tabular-nums}
+.meta4 .g b{color:var(--good)}.meta4 .r b{color:var(--bad)}
+.rv{border-inline-start:4px solid var(--line)}
+.rv.ok{border-inline-start-color:var(--good)}.rv.no{border-inline-start-color:var(--bad)}.rv.skip{border-inline-start-color:var(--warn)}
+.ans{font-size:16px}.ans.right{color:var(--good)}.ans.wrong{color:var(--bad)}
+.expl{background:var(--surface-2);border-radius:10px;padding:8px 10px;font-size:16px}
+.bars{display:grid;gap:10px}
+.barrow{display:grid;grid-template-columns:92px 1fr 44px;align-items:center;gap:8px;font-size:15px}
+.barrow .track{height:10px;background:var(--surface-2);border-radius:9px;overflow:hidden}
+.barrow .track span{display:block;height:100%;border-radius:9px;background:var(--accent)}
+.qfig{margin:10px 0;padding:10px;border:1px solid var(--line);border-radius:12px;background:var(--surface);color:var(--fg);display:flex;justify-content:center}.qfig svg{height:auto}.lesson-u summary{gap:8px}.lesson-u .lesson-body{margin:10px 0}.essay-box{width:100%;border:1px solid var(--line);border-radius:12px;padding:10px;background:var(--surface);color:var(--fg);font:inherit;resize:vertical;margin-bottom:10px}.model{border-inline-start:4px solid var(--good);background:var(--good-soft);border-radius:10px;padding:10px 12px;margin:10px 0}
+.weak-row{display:grid;gap:8px;padding:12px 0;border-top:1px solid var(--line)}.weak-row:first-of-type{border-top:0}.weak-row .row{align-items:flex-start;gap:8px}.weak-row .row>span:first-child{min-width:0}.weak-row .pill{flex-shrink:0}.bank-q{display:grid;gap:4px;padding:10px 0;border-top:1px solid var(--line);font-size:16px}details>summary{cursor:pointer;list-style:none}details>summary::-webkit-details-marker{display:none}
+.barrow .v{font-variant-numeric:tabular-nums;text-align:left;direction:ltr;font-weight:700}
+
+/* Lessons */
+.lesson{display:grid;gap:10px}
+.lesson summary{cursor:pointer;list-style:none;display:flex;gap:10px;align-items:center;font-weight:700}
+.lesson summary::-webkit-details-marker{display:none}
+.lesson summary .num{width:28px;height:28px;border-radius:9px;background:var(--accent-soft);color:var(--accent-deep);display:grid;place-items:center;font-size:15px;flex:none}
+.lesson summary .done{margin-inline-start:auto}
+.lesson[open] summary{margin-bottom:8px}
+.lesson-body{display:grid;gap:10px}
+.lesson h4{margin:0;font-size:16px;color:var(--accent-deep)}
+.formula{direction:ltr;text-align:center;background:var(--surface-2);color:var(--fg);border-radius:11px;padding:10px 12px;overflow-x:auto;overflow-y:hidden}
+/* chemical equations stay as upright text */
+.formula.chem{font-family:var(--font-body);font-size:19px;font-weight:500;color:var(--accent-deep)}
+math{font-family:'STIX Two Math','Cambria Math','Latin Modern Math',math,'Times New Roman',serif;font-weight:400;direction:ltr}
+.formula math{font-size:1.3em;margin:0}
+.opt math,.booklet-q math,.ans math,p math,li math{font-size:1.15em}
+.msg.me math{color:inherit}
+.practice{background:var(--surface-2);border-radius:13px;padding:12px;display:grid;gap:8px}
+.popt{border:1px solid var(--line);background:var(--surface);border-radius:10px;padding:10px 12px;text-align:right;width:100%}
+.popt.ok{background:var(--good-soft);border:2px solid var(--good);color:var(--good);font-weight:700}
+.popt.no{background:var(--bad-soft);border:2px solid var(--bad);color:var(--bad)}
+.fb{font-size:16px;display:grid;gap:6px}
+
+/* Tutor */
+.tutor{display:grid;gap:10px}
+.chat{display:grid;gap:10px}
+.msg{max-width:88%;border-radius:16px;padding:10px 13px;display:grid;gap:7px;font-size:17px;min-width:0;overflow-wrap:anywhere}
+.msg.me{justify-self:start;background:var(--accent);color:var(--accent-ink);border-end-start-radius:4px}
+.msg.bot{justify-self:end;background:var(--surface);border:1px solid var(--line);border-end-end-radius:4px}
+.msg .formula{font-size:16px}
+.msg ul{margin:0;padding-inline-start:18px}
+.msg details{background:var(--surface-2);border-radius:10px;padding:8px 10px}
+.msg .src{font-size:13px;color:var(--muted)}
+.inline-math{direction:ltr;unicode-bidi:isolate;font-weight:600}
+.thinking{color:var(--muted);font-size:16px}
+.chips{display:flex;gap:6px;overflow-x:auto;padding-bottom:2px;scrollbar-width:none}
+.chips::-webkit-scrollbar{display:none}
+.chip{flex:none;border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:6px 12px;font-size:15px}
+.chip[aria-pressed="true"]{background:var(--accent-soft);border-color:var(--accent);color:var(--accent-deep);font-weight:700}
+.composer{position:sticky;bottom:calc(92px + env(safe-area-inset-bottom,0px));background:var(--bg);padding-block:8px;display:flex;gap:8px;align-items:flex-end}
+.composer textarea{flex:1;min-width:0;resize:none;border:1px solid var(--line);background:var(--surface);border-radius:14px;padding:10px 12px;max-height:130px;font-size:18px;line-height:1.5}
+.status{display:inline-flex;gap:6px;align-items:center;font-size:13px;color:var(--muted)}
+.status i{width:8px;height:8px;border-radius:50%;background:var(--muted);display:inline-block}
+.status.on i{background:var(--good)}
+
+/* Nav */
+.nav{position:fixed;bottom:0;left:0;right:0;z-index:20;background:var(--surface);border-top:1px solid var(--line);padding-top:6px;padding-bottom:calc(6px + env(safe-area-inset-bottom,0px));padding-left:max(6px,env(safe-area-inset-left,0px));padding-right:max(6px,env(safe-area-inset-right,0px))}
+.nav-in{max-width:600px;margin:0 auto;display:grid;grid-template-columns:repeat(5,1fr)}
+.nav button{border:0;background:none;color:var(--accent);font-size:15px;font-weight:600;display:grid;justify-items:center;gap:3px;padding:7px 2px;margin:0 3px;border-radius:16px}
+.nav svg{width:30px;height:30px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.nav button[aria-current="page"]{color:var(--accent-deep);background:var(--accent-soft);font-weight:800}
+body.exam-mode .nav{display:none}
+
+/* Modal */
+.modal{position:fixed;inset:0;z-index:30;background:rgba(5,20,30,.45);display:grid;place-items:end center;padding:16px;padding-bottom:calc(16px + env(safe-area-inset-bottom,0px))}
+.modal .card{width:100%;max-width:440px}
+.plus-card{display:block;width:100%;text-align:start;border:1.5px solid var(--accent-soft)}
+.plus-cta{background:linear-gradient(135deg,var(--accent-soft),var(--surface));cursor:pointer;color:var(--fg);font:inherit;display:flex;flex-direction:column;gap:4px}
+.plus-k{font-size:12px;letter-spacing:.12em;font-weight:700;color:var(--muted);direction:ltr;text-align:end}
+.plus-lock{text-align:center}
+.plus-sheet{max-height:88vh;overflow:auto}
+.plus-sheet h3{font-size:24px;margin:4px 0}
+.plus-price{margin:8px 0}.plus-price b{font-size:34px}.plus-price span{color:var(--muted)}
+.plus-list,.plus-terms{list-style:none;padding:0;margin:10px 0}
+.plus-list li{display:flex;gap:10px;padding:8px 0;border-bottom:1px solid var(--line)}.plus-list small{display:block;color:var(--muted)}
+.plus-terms li{padding:4px 0;color:var(--good);font-weight:600}
+
+.toast{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(104px + env(safe-area-inset-bottom,0px));z-index:40;background:var(--fg);color:var(--bg);padding:9px 16px;border-radius:12px;font-size:16px;max-width:calc(100% - 32px)}
+bdi{unicode-bidi:isolate}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
+.hero{background:linear-gradient(125deg,#263c86,#6241a9 55%,#0a8b99);color:#fff}
+</style>
+<style>:root{padding-top:env(safe-area-inset-top,0px)}</style>
+<style>
+/* ===== Tablet layout (v1.3.0): wider canvas, multi-column grids, larger type. Phones (<768px) are unchanged. ===== */
+@media (min-width:768px) and (min-height:600px){
+  body{font-size:18px}
+  .app{max-width:1080px;padding-bottom:calc(120px + env(safe-area-inset-bottom,0px))}
+  .wrap{padding-left:max(32px,env(safe-area-inset-left,0px));padding-right:max(32px,env(safe-area-inset-right,0px))}
+  .screen{gap:18px;padding-block:20px 12px}
+  h2{font-size:24px}h3{font-size:21px}
+  .bar{padding-block:16px}
+  .icon-btn{width:46px;height:46px;font-size:22px}
+  .hero{padding-block:30px 24px;gap:18px;border-radius:0 0 32px 32px}
+  .hero h1{font-size:48px}.hero .sub{font-size:17px}
+  .seg{max-width:620px}.seg button{padding:11px 6px;font-size:18px}
+  .countdown{font-size:15px;padding:10px 18px}.countdown b{font-size:30px}
+  .card{padding:22px;border-radius:20px;gap:12px}
+  .muted{font-size:16px}.label,.pill{font-size:14px}
+  .btn{padding:14px 20px;font-size:18px}
+  .note,.empty{font-size:17px}
+  .stats{gap:14px}.stat{padding:16px 8px;font-size:15px;border-radius:18px}.stat b{font-size:32px}
+  .tools{grid-template-columns:repeat(3,1fr);gap:14px}
+  .tool{padding:20px;gap:6px;border-radius:20px}
+  .tool .glyph{width:48px;height:48px;font-size:23px;border-radius:14px}
+  .tool b{font-size:20px}.tool span{font-size:15px}
+  .tool.primary{grid-column:span 2}.tools>.tool:last-child{grid-column:span 2}
+  .list:has(>.subj){grid-template-columns:repeat(2,1fr);gap:12px}
+  .subj{padding:16px;gap:14px;border-radius:18px}
+  .glyph{width:52px;height:52px;font-size:24px;border-radius:14px}
+  .choices{gap:10px}.choice{padding:11px 18px}.choice[aria-pressed="true"]{padding:10px 17px}
+  .modes{gap:14px}.mode{padding:16px}.mode[aria-pressed="true"]{padding:15px}.mode b{font-size:19px}.mode span{font-size:15px}
+  .days{gap:8px}.day{padding:10px 2px;font-size:15px}.day b{font-size:17px}
+  .input,select.input{font-size:18px;padding:12px 14px}.field{font-size:15px}
+  .exam-head{padding-block:14px;gap:10px}
+  .timer{font-size:22px;padding:6px 14px}
+  .qdot{width:42px;height:42px;font-size:17px;border-radius:12px}
+  .qtext{font-size:25px;line-height:1.8}
+  .list:has(>.opt){grid-template-columns:repeat(2,1fr);gap:12px}
+  .opt{padding:18px 16px;font-size:21px;border-radius:16px;min-height:76px}
+  .opt[aria-pressed="true"]{padding:17px 15px}
+  .opt .k{width:38px;height:38px;font-size:18px}
+  .exam-foot{max-width:720px;margin-inline:auto;width:100%}
+  .bub{width:40px;height:40px;font-size:17px}.brow .n{font-size:18px;width:32px}
+  .sheet{padding:20px 22px}.sheet-head h3{font-size:20px}.sheet-fields,.sheet-rules{font-size:15px}
+  .ring{width:190px;height:190px}.ring .center b{font-size:46px}
+  .verdict .grade{font-size:30px}
+  .meta4{gap:10px}.meta4 div{font-size:14px;padding:12px 4px}.meta4 b{font-size:26px}
+  .expl,.ans,.fb{font-size:18px}
+  .barrow{grid-template-columns:150px 1fr 52px;font-size:17px}
+  .formula.chem{font-size:21px}
+  .msg{font-size:19px;max-width:75%}
+  .chip{font-size:16px;padding:8px 14px}
+  .composer{bottom:calc(100px + env(safe-area-inset-bottom,0px))}
+  .composer textarea{font-size:19px}
+  .nav{padding-top:8px;padding-bottom:calc(8px + env(safe-area-inset-bottom,0px))}
+  .nav-in{max-width:1080px}
+  .nav button{font-size:17px;gap:4px;padding:8px 2px}
+  .nav svg{width:34px;height:34px}
+  .modal{place-items:center}
+  .modal .card{max-width:560px}
+  .toast{bottom:calc(120px + env(safe-area-inset-bottom,0px));font-size:18px}
+}
+/* Landscape tablets and larger */
+@media (min-width:1100px) and (min-height:600px){
+  .app,.nav-in{max-width:1240px}
+  .tools{grid-template-columns:repeat(4,1fr)}.tools>.tool:last-child{grid-column:auto}
+  .list:has(>.subj){grid-template-columns:repeat(3,1fr)}
+  .stats{grid-template-columns:repeat(3,1fr);max-width:none}
+}
+</style>
+</head>
+<body>
+<div class="app" id="app" dir="rtl" lang="ar"></div>
+<nav class="nav" dir="rtl" aria-label="التنقل الرئيسي">
+  <div class="nav-in">
+    <button type="button" data-nav="home"><svg viewBox="0 0 24 24"><path d="M3 11.5 12 4l9 7.5"/><path d="M5.5 10v9.5h13V10"/><path d="M10 19.5v-5h4v5"/></svg>الرئيسية</button>
+    <button type="button" data-nav="subjects"><svg viewBox="0 0 24 24"><path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H20v15H6.5A2.5 2.5 0 0 0 4 20.5z"/><path d="M4 20.5A2.5 2.5 0 0 0 6.5 23H20v-5"/></svg>المواد</button>
+    <button type="button" data-nav="exams"><svg viewBox="0 0 24 24"><rect x="5" y="4" width="14" height="17" rx="2"/><path d="M9 4V2.8h6V4"/><path d="m9 12 2 2 4-4"/><path d="M9 17.5h6"/></svg>الامتحانات</button>
+    <button type="button" data-nav="tutor"><svg viewBox="0 0 24 24"><path d="M20 15a2 2 0 0 1-2 2H8l-4 4V6a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2z"/><path d="M9 9.5h6M9 12.5h4"/></svg>المدرس</button>
+    <button type="button" data-nav="plan"><svg viewBox="0 0 24 24"><rect x="3.5" y="5" width="17" height="15.5" rx="2"/><path d="M3.5 9.5h17M8 3v4M16 3v4"/><path d="M8 13.5h3M8 16.5h6"/></svg>جدولي</button>
+  </div>
+</nav>
+<div id="modal-root"></div>
+<script>
+/* ===== Tafawoq Prep content (generated by tools/tafawoq-prep/build.py). a[0] is the correct answer; options are shuffled at exam time. ===== */
+const SUBJECTS={"arabic": {"name": "اللغة العربية", "glyph": "ع", "color": "#b5523b"}, "english": {"name": "اللغة الإنجليزية", "glyph": "E", "color": "#6b5bb5"}, "math": {"name": "الرياضيات", "glyph": "∑", "color": "#3c5fc4"}, "science": {"name": "العلوم", "glyph": "⚗", "color": "#2f8a4e"}, "social": {"name": "الدراسات الاجتماعية", "glyph": "د", "color": "#8f5a2e"}};
+const BRANCHES={"prep": {"name": "الصف الثالث الإعدادي", "subjects": ["arabic", "english", "math", "science", "social"]}};
+const CHAPTER_WORD={"arabic": "الوحدة", "english": "الوحدة", "math": "الوحدة", "science": "الوحدة", "social": "الوحدة"};
+const CHAPTER_PLURAL={"arabic": "وحدات", "english": "وحدات", "math": "وحدات", "science": "وحدات", "social": "وحدات"};
+const chPlural=s=>CHAPTER_PLURAL[s]||'وحدات';
+const chSingle=s=>(CHAPTER_WORD[s]||'الوحدة').replace(/^ال/,'');
+const CHAPTERS={"arabic": ["تدريبات عامة (قبل المطابقة مع كتاب الوزارة)"], "english": ["تدريبات عامة (قبل المطابقة مع كتاب الوزارة)"], "math": ["تدريبات عامة (قبل المطابقة مع كتاب الوزارة)"], "science": ["تدريبات عامة (قبل المطابقة مع كتاب الوزارة)"], "social": ["تدريبات عامة (قبل المطابقة مع كتاب الوزارة)"]};
+const BANK={"arabic": [{"q": "ما نوع كلمة «الطالب» في جملة «حضر الطالب»؟", "a": ["اسم", "فعل", "حرف", "ظرف"], "e": "الطالب اسم يدل على شخص.", "ch": 0}, {"q": "ما علامة رفع الفاعل المفرد في الأصل؟", "a": ["الضمة", "الفتحة", "الكسرة", "السكون"], "e": "يرفع الفاعل المفرد بالضمة في الأصل.", "ch": 0}, {"q": "في جملة «نجح الطالبُ»، ما إعراب «الطالبُ»؟", "a": ["فاعل مرفوع", "مفعول به", "مبتدأ", "خبر"], "e": "الطالب هو الذي قام بالفعل، لذلك فهو فاعل مرفوع.", "ch": 0}, {"q": "في جملة «حضر المعلمون»، ما علامة رفع الفاعل؟", "a": ["الواو", "الألف", "الفتحة", "الياء"], "e": "المعلمون جمع مذكر سالم، وعلامة رفعه الواو.", "ch": 0}, {"q": "في جملة «قرأ التلميذُ الكتابَ»، ما إعراب «الكتابَ»؟", "a": ["مفعول به منصوب", "فاعل", "مبتدأ", "خبر"], "e": "الكتاب وقع عليه فعل القراءة، لذلك هو مفعول به منصوب.", "ch": 0}, {"q": "أي الكلمات مفعول به في «زرع الفلاحُ الشجرةَ»؟", "a": ["الشجرة", "زرع", "الفلاح", "لا يوجد"], "e": "الشجرة هي التي وقع عليها فعل الزراعة.", "ch": 0}, {"q": "ما الخبر في «العلمُ نورٌ»؟", "a": ["نور", "العلم", "العلم نور", "لا يوجد"], "e": "نور خبر مرفوع يتمم معنى المبتدأ العلم.", "ch": 0}, {"q": "ما المبتدأ في «الصدقُ فضيلةٌ»؟", "a": ["الصدق", "فضيلة", "الجملة كلها", "لا يوجد"], "e": "الصدق مبتدأ مرفوع في بداية الجملة الاسمية.", "ch": 0}, {"q": "في جملة «شاركَ المهندسانِ في المشروعِ»، ما علامة رفع الفاعل؟", "a": ["الألف", "الضمة", "الواو", "الياء"], "e": "المهندسان فاعل مثنى مرفوع وعلامة رفعه الألف.", "ch": 0}, {"q": "أي جملة تحتوي على مفعول به منصوب بالياء؟", "a": ["شاهدتُ المعلمَيْنِ", "حضر المعلمون", "نجح الطالبان", "العلم مفيد"], "e": "المعلمَيْنِ مفعول به مثنى منصوب وعلامة نصبه الياء.", "ch": 0}, {"q": "في «الطالبانِ مجتهدانِ»، ما نوع الخبر وعلامة رفعه؟", "a": ["مفرد مرفوع بالألف", "جملة فعلية", "مفرد مرفوع بالواو", "شبه جملة"], "e": "مجتهدان خبر مفرد (ليس جملة) وهو مثنى مرفوع بالألف.", "ch": 0}, {"q": "في الجملة «حضر الطالبُ»، ما الموقع الإعرابي لكلمة «الطالب»؟", "a": ["فاعل مرفوع", "مفعول به منصوب", "مبتدأ مرفوع", "خبر مرفوع"], "e": "الاسم الذي قام بالفعل بعد الفعل المبني للمعلوم يعرب فاعلًا.", "ch": 0}, {"q": "في الجملة «حضر المعلمُ»، ما الموقع الإعرابي لكلمة «المعلم»؟", "a": ["فاعل مرفوع", "مفعول به منصوب", "مبتدأ مرفوع", "خبر مرفوع"], "e": "الاسم الذي قام بالفعل بعد الفعل المبني للمعلوم يعرب فاعلًا.", "ch": 0}, {"q": "في الجملة «حضر الطبيبُ»، ما الموقع الإعرابي لكلمة «الطبيب»؟", "a": ["فاعل مرفوع", "مبتدأ مرفوع", "خبر مرفوع", "مفعول به منصوب"], "e": "الاسم الذي قام بالفعل بعد الفعل المبني للمعلوم يعرب فاعلًا.", "ch": 0}, {"q": "في الجملة «حضر المهندسُ»، ما الموقع الإعرابي لكلمة «المهندس»؟", "a": ["فاعل مرفوع", "خبر مرفوع", "مفعول به منصوب", "مبتدأ مرفوع"], "e": "الاسم الذي قام بالفعل بعد الفعل المبني للمعلوم يعرب فاعلًا.", "ch": 0}, {"q": "في الجملة «حضر الفلاحُ»، ما الموقع الإعرابي لكلمة «الفلاح»؟", "a": ["فاعل مرفوع", "مفعول به منصوب", "مبتدأ مرفوع", "خبر مرفوع"], "e": "الاسم الذي قام بالفعل بعد الفعل المبني للمعلوم يعرب فاعلًا.", "ch": 0}, {"q": "في الجملة «حضر العاملُ»، ما الموقع الإعرابي لكلمة «العامل»؟", "a": ["فاعل مرفوع", "مفعول به منصوب", "مبتدأ مرفوع", "خبر مرفوع"], "e": "الاسم الذي قام بالفعل بعد الفعل المبني للمعلوم يعرب فاعلًا.", "ch": 0}, {"q": "في الجملة «حضر الكاتبُ»، ما الموقع الإعرابي لكلمة «الكاتب»؟", "a": ["فاعل مرفوع", "مبتدأ مرفوع", "خبر مرفوع", "مفعول به منصوب"], "e": "الاسم الذي قام بالفعل بعد الفعل المبني للمعلوم يعرب فاعلًا.", "ch": 0}, {"q": "في الجملة «حضر اللاعبُ»، ما الموقع الإعرابي لكلمة «اللاعب»؟", "a": ["فاعل مرفوع", "خبر مرفوع", "مفعول به منصوب", "مبتدأ مرفوع"], "e": "الاسم الذي قام بالفعل بعد الفعل المبني للمعلوم يعرب فاعلًا.", "ch": 0}, {"q": "في الجملة «حضر الطفلُ»، ما الموقع الإعرابي لكلمة «الطفل»؟", "a": ["فاعل مرفوع", "مفعول به منصوب", "مبتدأ مرفوع", "خبر مرفوع"], "e": "الاسم الذي قام بالفعل بعد الفعل المبني للمعلوم يعرب فاعلًا.", "ch": 0}, {"q": "في الجملة «حضر الباحثُ»، ما الموقع الإعرابي لكلمة «الباحث»؟", "a": ["فاعل مرفوع", "مفعول به منصوب", "مبتدأ مرفوع", "خبر مرفوع"], "e": "الاسم الذي قام بالفعل بعد الفعل المبني للمعلوم يعرب فاعلًا.", "ch": 0}, {"q": "في الجملة «نجح الطالبُ»، ما الموقع الإعرابي لكلمة «الطالب»؟", "a": ["فاعل مرفوع", "مبتدأ مرفوع", "خبر مرفوع", "مفعول به منصوب"], "e": "الاسم الذي قام بالفعل بعد الفعل المبني للمعلوم يعرب فاعلًا.", "ch": 0}, {"q": "في الجملة «نجح المعلمُ»، ما الموقع الإعرابي لكلمة «المعلم»؟", "a": ["فاعل مرفوع", "خبر مرفوع", "مفعول به منصوب", "مبتدأ مرفوع"], "e": "الاسم الذي قام بالفعل بعد الفعل المبني للمعلوم يعرب فاعلًا.", "ch": 0}, {"q": "في الجملة «نجح الطبيبُ»، ما الموقع الإعرابي لكلمة «الطبيب»؟", "a": ["فاعل مرفوع", "مفعول به منصوب", "مبتدأ مرفوع", "خبر مرفوع"], "e": "الاسم الذي قام بالفعل بعد الفعل المبني للمعلوم يعرب فاعلًا.", "ch": 0}, {"q": "في الجملة «نجح المهندسُ»، ما الموقع الإعرابي لكلمة «المهندس»؟", "a": ["فاعل مرفوع", "مفعول به منصوب", "مبتدأ مرفوع", "خبر مرفوع"], "e": "الاسم الذي قام بالفعل بعد الفعل المبني للمعلوم يعرب فاعلًا.", "ch": 0}, {"q": "في الجملة «نجح الفلاحُ»، ما الموقع الإعرابي لكلمة «الفلاح»؟", "a": ["فاعل مرفوع", "مبتدأ مرفوع", "خبر مرفوع", "مفعول به منصوب"], "e": "الاسم الذي قام بالفعل بعد الفعل المبني للمعلوم يعرب فاعلًا.", "ch": 0}, {"q": "في الجملة «نجح العاملُ»، ما الموقع الإعرابي لكلمة «العامل»؟", "a": ["فاعل مرفوع", "خبر مرفوع", "مفعول به منصوب", "مبتدأ مرفوع"], "e": "الاسم الذي قام بالفعل بعد الفعل المبني للمعلوم يعرب فاعلًا.", "ch": 0}, {"q": "في الجملة «نجح الكاتبُ»، ما الموقع الإعرابي لكلمة «الكاتب»؟", "a": ["فاعل مرفوع", "مفعول به منصوب", "مبتدأ مرفوع", "خبر مرفوع"], "e": "الاسم الذي قام بالفعل بعد الفعل المبني للمعلوم يعرب فاعلًا.", "ch": 0}, {"q": "في الجملة «نجح اللاعبُ»، ما الموقع الإعرابي لكلمة «اللاعب»؟", "a": ["فاعل مرفوع", "مفعول به منصوب", "مبتدأ مرفوع", "خبر مرفوع"], "e": "الاسم الذي قام بالفعل بعد الفعل المبني للمعلوم يعرب فاعلًا.", "ch": 0}, {"q": "في الجملة «نجح الطفلُ»، ما الموقع الإعرابي لكلمة «الطفل»؟", "a": ["فاعل مرفوع", "مبتدأ مرفوع", "خبر مرفوع", "مفعول به منصوب"], "e": "الاسم الذي قام بالفعل بعد الفعل المبني للمعلوم يعرب فاعلًا.", "ch": 0}, {"q": "في الجملة «نجح الباحثُ»، ما الموقع الإعرابي لكلمة «الباحث»؟", "a": ["فاعل مرفوع", "خبر مرفوع", "مفعول به منصوب", "مبتدأ مرفوع"], "e": "الاسم الذي قام بالفعل بعد الفعل المبني للمعلوم يعرب فاعلًا.", "ch": 0}, {"q": "في الجملة «وصل الطالبُ»، ما الموقع الإعرابي لكلمة «الطالب»؟", "a": ["فاعل مرفوع", "مفعول به منصوب", "مبتدأ مرفوع", "خبر مرفوع"], "e": "الاسم الذي قام بالفعل بعد الفعل المبني للمعلوم يعرب فاعلًا.", "ch": 0}, {"q": "في الجملة «وصل المعلمُ»، ما الموقع الإعرابي لكلمة «المعلم»؟", "a": ["فاعل مرفوع", "مفعول به منصوب", "مبتدأ مرفوع", "خبر مرفوع"], "e": "الاسم الذي قام بالفعل بعد الفعل المبني للمعلوم يعرب فاعلًا.", "ch": 0}, {"q": "في الجملة «وصل الطبيبُ»، ما الموقع الإعرابي لكلمة «الطبيب»؟", "a": ["فاعل مرفوع", "مبتدأ مرفوع", "خبر مرفوع", "مفعول به منصوب"], "e": "الاسم الذي قام بالفعل بعد الفعل المبني للمعلوم يعرب فاعلًا.", "ch": 0}, {"q": "في الجملة «وصل المهندسُ»، ما الموقع الإعرابي لكلمة «المهندس»؟", "a": ["فاعل مرفوع", "خبر مرفوع", "مفعول به منصوب", "مبتدأ مرفوع"], "e": "الاسم الذي قام بالفعل بعد الفعل المبني للمعلوم يعرب فاعلًا.", "ch": 0}, {"q": "في الجملة «وصل الفلاحُ»، ما الموقع الإعرابي لكلمة «الفلاح»؟", "a": ["فاعل مرفوع", "مفعول به منصوب", "مبتدأ مرفوع", "خبر مرفوع"], "e": "الاسم الذي قام بالفعل بعد الفعل المبني للمعلوم يعرب فاعلًا.", "ch": 0}, {"q": "في الجملة «وصل العاملُ»، ما الموقع الإعرابي لكلمة «العامل»؟", "a": ["فاعل مرفوع", "مفعول به منصوب", "مبتدأ مرفوع", "خبر مرفوع"], "e": "الاسم الذي قام بالفعل بعد الفعل المبني للمعلوم يعرب فاعلًا.", "ch": 0}, {"q": "في الجملة «وصل الكاتبُ»، ما الموقع الإعرابي لكلمة «الكاتب»؟", "a": ["فاعل مرفوع", "مبتدأ مرفوع", "خبر مرفوع", "مفعول به منصوب"], "e": "الاسم الذي قام بالفعل بعد الفعل المبني للمعلوم يعرب فاعلًا.", "ch": 0}, {"q": "في الجملة «وصل اللاعبُ»، ما الموقع الإعرابي لكلمة «اللاعب»؟", "a": ["فاعل مرفوع", "خبر مرفوع", "مفعول به منصوب", "مبتدأ مرفوع"], "e": "الاسم الذي قام بالفعل بعد الفعل المبني للمعلوم يعرب فاعلًا.", "ch": 0}, {"q": "في الجملة «وصل الطفلُ»، ما الموقع الإعرابي لكلمة «الطفل»؟", "a": ["فاعل مرفوع", "مفعول به منصوب", "مبتدأ مرفوع", "خبر مرفوع"], "e": "الاسم الذي قام بالفعل بعد الفعل المبني للمعلوم يعرب فاعلًا.", "ch": 0}, {"q": "في الجملة «وصل الباحثُ»، ما الموقع الإعرابي لكلمة «الباحث»؟", "a": ["فاعل مرفوع", "مفعول به منصوب", "مبتدأ مرفوع", "خبر مرفوع"], "e": "الاسم الذي قام بالفعل بعد الفعل المبني للمعلوم يعرب فاعلًا.", "ch": 0}, {"q": "في الجملة «تحدث الطالبُ»، ما الموقع الإعرابي لكلمة «الطالب»؟", "a": ["فاعل مرفوع", "مبتدأ مرفوع", "خبر مرفوع", "مفعول به منصوب"], "e": "الاسم الذي قام بالفعل بعد الفعل المبني للمعلوم يعرب فاعلًا.", "ch": 0}, {"q": "في الجملة «تحدث المعلمُ»، ما الموقع الإعرابي لكلمة «المعلم»؟", "a": ["فاعل مرفوع", "خبر مرفوع", "مفعول به منصوب", "مبتدأ مرفوع"], "e": "الاسم الذي قام بالفعل بعد الفعل المبني للمعلوم يعرب فاعلًا.", "ch": 0}, {"q": "في الجملة «تحدث الطبيبُ»، ما الموقع الإعرابي لكلمة «الطبيب»؟", "a": ["فاعل مرفوع", "مفعول به منصوب", "مبتدأ مرفوع", "خبر مرفوع"], "e": "الاسم الذي قام بالفعل بعد الفعل المبني للمعلوم يعرب فاعلًا.", "ch": 0}, {"q": "في الجملة «تحدث المهندسُ»، ما الموقع الإعرابي لكلمة «المهندس»؟", "a": ["فاعل مرفوع", "مفعول به منصوب", "مبتدأ مرفوع", "خبر مرفوع"], "e": "الاسم الذي قام بالفعل بعد الفعل المبني للمعلوم يعرب فاعلًا.", "ch": 0}, {"q": "في الجملة «تحدث الفلاحُ»، ما الموقع الإعرابي لكلمة «الفلاح»؟", "a": ["فاعل مرفوع", "مبتدأ مرفوع", "خبر مرفوع", "مفعول به منصوب"], "e": "الاسم الذي قام بالفعل بعد الفعل المبني للمعلوم يعرب فاعلًا.", "ch": 0}, {"q": "في الجملة «تحدث العاملُ»، ما الموقع الإعرابي لكلمة «العامل»؟", "a": ["فاعل مرفوع", "خبر مرفوع", "مفعول به منصوب", "مبتدأ مرفوع"], "e": "الاسم الذي قام بالفعل بعد الفعل المبني للمعلوم يعرب فاعلًا.", "ch": 0}, {"q": "في الجملة «تحدث الكاتبُ»، ما الموقع الإعرابي لكلمة «الكاتب»؟", "a": ["فاعل مرفوع", "مفعول به منصوب", "مبتدأ مرفوع", "خبر مرفوع"], "e": "الاسم الذي قام بالفعل بعد الفعل المبني للمعلوم يعرب فاعلًا.", "ch": 0}, {"q": "في الجملة «تحدث اللاعبُ»، ما الموقع الإعرابي لكلمة «اللاعب»؟", "a": ["فاعل مرفوع", "مفعول به منصوب", "مبتدأ مرفوع", "خبر مرفوع"], "e": "الاسم الذي قام بالفعل بعد الفعل المبني للمعلوم يعرب فاعلًا.", "ch": 0}, {"q": "في الجملة «تحدث الطفلُ»، ما الموقع الإعرابي لكلمة «الطفل»؟", "a": ["فاعل مرفوع", "مبتدأ مرفوع", "خبر مرفوع", "مفعول به منصوب"], "e": "الاسم الذي قام بالفعل بعد الفعل المبني للمعلوم يعرب فاعلًا.", "ch": 0}], "english": [{"q": "Choose the correct sentence.", "a": ["She goes to school.", "She go to school.", "She going to school.", "She gone to school."], "e": "With she in the present simple, use goes.", "ch": 0}, {"q": "What is the opposite of “early”?", "a": ["late", "small", "fast", "short"], "e": "Late is the opposite of early.", "ch": 0}, {"q": "Choose: I ___ my homework already.", "a": ["have finished", "finish", "finished", "finishing"], "e": "Already is commonly used with the present perfect: have finished.", "ch": 0}, {"q": "Choose: He ___ football every Friday.", "a": ["plays", "play", "playing", "played"], "e": "With he, use plays in the present simple.", "ch": 0}, {"q": "Choose: They ___ to Cairo yesterday.", "a": ["went", "go", "gone", "going"], "e": "Yesterday signals the past simple: went.", "ch": 0}, {"q": "Choose: This book is ___ than that one.", "a": ["more interesting", "interesting", "most interesting", "interest"], "e": "Long adjectives use more + adjective + than.", "ch": 0}, {"q": "Choose: If it rains, we ___ at home.", "a": ["will stay", "stay", "stayed", "staying"], "e": "First conditional: if + present, will + base verb.", "ch": 0}, {"q": "Choose: The letter was ___ yesterday.", "a": ["written", "write", "wrote", "writing"], "e": "Passive past: was + past participle (written).", "ch": 0}, {"q": "What does “protect” mean?", "a": ["keep safe", "damage", "forget", "borrow"], "e": "Protect means to keep someone or something safe.", "ch": 0}, {"q": "Choose: She is interested ___ science.", "a": ["in", "at", "on", "to"], "e": "The correct collocation is interested in.", "ch": 0}, {"q": "Choose the correct form: Ali ____ every weekend. (play)", "a": ["plays", "play", "playing", "to play"], "e": "With a singular third-person subject in the present simple, use plays.", "ch": 0}, {"q": "Choose the correct form: Mona ____ every weekend. (play)", "a": ["plays", "play", "playing", "to play"], "e": "With a singular third-person subject in the present simple, use plays.", "ch": 0}, {"q": "Choose the correct form: Sara ____ every weekend. (play)", "a": ["plays", "playing", "to play", "play"], "e": "With a singular third-person subject in the present simple, use plays.", "ch": 0}, {"q": "Choose the correct form: Omar ____ every weekend. (play)", "a": ["plays", "to play", "play", "playing"], "e": "With a singular third-person subject in the present simple, use plays.", "ch": 0}, {"q": "Choose the correct form: Nour ____ every weekend. (play)", "a": ["plays", "play", "playing", "to play"], "e": "With a singular third-person subject in the present simple, use plays.", "ch": 0}, {"q": "Choose the correct form: Hana ____ every weekend. (play)", "a": ["plays", "play", "playing", "to play"], "e": "With a singular third-person subject in the present simple, use plays.", "ch": 0}, {"q": "Choose the correct form: Youssef ____ every weekend. (play)", "a": ["plays", "playing", "to play", "play"], "e": "With a singular third-person subject in the present simple, use plays.", "ch": 0}, {"q": "Choose the correct form: Laila ____ every weekend. (play)", "a": ["plays", "to play", "play", "playing"], "e": "With a singular third-person subject in the present simple, use plays.", "ch": 0}, {"q": "Choose the correct form: Ali ____ every weekend. (read)", "a": ["reads", "read", "reading", "to read"], "e": "With a singular third-person subject in the present simple, use reads.", "ch": 0}, {"q": "Choose the correct form: Mona ____ every weekend. (read)", "a": ["reads", "read", "reading", "to read"], "e": "With a singular third-person subject in the present simple, use reads.", "ch": 0}, {"q": "Choose the correct form: Sara ____ every weekend. (read)", "a": ["reads", "reading", "to read", "read"], "e": "With a singular third-person subject in the present simple, use reads.", "ch": 0}, {"q": "Choose the correct form: Omar ____ every weekend. (read)", "a": ["reads", "to read", "read", "reading"], "e": "With a singular third-person subject in the present simple, use reads.", "ch": 0}, {"q": "Choose the correct form: Nour ____ every weekend. (read)", "a": ["reads", "read", "reading", "to read"], "e": "With a singular third-person subject in the present simple, use reads.", "ch": 0}, {"q": "Choose the correct form: Hana ____ every weekend. (read)", "a": ["reads", "read", "reading", "to read"], "e": "With a singular third-person subject in the present simple, use reads.", "ch": 0}, {"q": "Choose the correct form: Youssef ____ every weekend. (read)", "a": ["reads", "reading", "to read", "read"], "e": "With a singular third-person subject in the present simple, use reads.", "ch": 0}, {"q": "Choose the correct form: Laila ____ every weekend. (read)", "a": ["reads", "to read", "read", "reading"], "e": "With a singular third-person subject in the present simple, use reads.", "ch": 0}, {"q": "Choose the correct form: Ali ____ every weekend. (watch)", "a": ["watches", "watch", "watching", "to watch"], "e": "With a singular third-person subject in the present simple, use watches.", "ch": 0}, {"q": "Choose the correct form: Mona ____ every weekend. (watch)", "a": ["watches", "watch", "watching", "to watch"], "e": "With a singular third-person subject in the present simple, use watches.", "ch": 0}, {"q": "Choose the correct form: Sara ____ every weekend. (watch)", "a": ["watches", "watching", "to watch", "watch"], "e": "With a singular third-person subject in the present simple, use watches.", "ch": 0}, {"q": "Choose the correct form: Omar ____ every weekend. (watch)", "a": ["watches", "to watch", "watch", "watching"], "e": "With a singular third-person subject in the present simple, use watches.", "ch": 0}, {"q": "Choose the correct form: Nour ____ every weekend. (watch)", "a": ["watches", "watch", "watching", "to watch"], "e": "With a singular third-person subject in the present simple, use watches.", "ch": 0}, {"q": "Choose the correct form: Hana ____ every weekend. (watch)", "a": ["watches", "watch", "watching", "to watch"], "e": "With a singular third-person subject in the present simple, use watches.", "ch": 0}, {"q": "Choose the correct form: Youssef ____ every weekend. (watch)", "a": ["watches", "watching", "to watch", "watch"], "e": "With a singular third-person subject in the present simple, use watches.", "ch": 0}, {"q": "Choose the correct form: Laila ____ every weekend. (watch)", "a": ["watches", "to watch", "watch", "watching"], "e": "With a singular third-person subject in the present simple, use watches.", "ch": 0}, {"q": "Choose the correct form: Ali ____ every weekend. (visit)", "a": ["visits", "visit", "visiting", "to visit"], "e": "With a singular third-person subject in the present simple, use visits.", "ch": 0}, {"q": "Choose the correct form: Mona ____ every weekend. (visit)", "a": ["visits", "visit", "visiting", "to visit"], "e": "With a singular third-person subject in the present simple, use visits.", "ch": 0}, {"q": "Choose the correct form: Sara ____ every weekend. (visit)", "a": ["visits", "visiting", "to visit", "visit"], "e": "With a singular third-person subject in the present simple, use visits.", "ch": 0}, {"q": "Choose the correct form: Omar ____ every weekend. (visit)", "a": ["visits", "to visit", "visit", "visiting"], "e": "With a singular third-person subject in the present simple, use visits.", "ch": 0}, {"q": "Choose the correct form: Nour ____ every weekend. (visit)", "a": ["visits", "visit", "visiting", "to visit"], "e": "With a singular third-person subject in the present simple, use visits.", "ch": 0}, {"q": "Choose the correct form: Hana ____ every weekend. (visit)", "a": ["visits", "visit", "visiting", "to visit"], "e": "With a singular third-person subject in the present simple, use visits.", "ch": 0}, {"q": "Choose the correct form: Youssef ____ every weekend. (visit)", "a": ["visits", "visiting", "to visit", "visit"], "e": "With a singular third-person subject in the present simple, use visits.", "ch": 0}, {"q": "Choose the correct form: Laila ____ every weekend. (visit)", "a": ["visits", "to visit", "visit", "visiting"], "e": "With a singular third-person subject in the present simple, use visits.", "ch": 0}, {"q": "Choose the correct form: Ali ____ every weekend. (clean)", "a": ["cleans", "clean", "cleaning", "to clean"], "e": "With a singular third-person subject in the present simple, use cleans.", "ch": 0}, {"q": "Choose the correct form: Mona ____ every weekend. (clean)", "a": ["cleans", "clean", "cleaning", "to clean"], "e": "With a singular third-person subject in the present simple, use cleans.", "ch": 0}, {"q": "Choose the correct form: Sara ____ every weekend. (clean)", "a": ["cleans", "cleaning", "to clean", "clean"], "e": "With a singular third-person subject in the present simple, use cleans.", "ch": 0}, {"q": "Choose the correct form: Omar ____ every weekend. (clean)", "a": ["cleans", "to clean", "clean", "cleaning"], "e": "With a singular third-person subject in the present simple, use cleans.", "ch": 0}, {"q": "Choose the correct form: Nour ____ every weekend. (clean)", "a": ["cleans", "clean", "cleaning", "to clean"], "e": "With a singular third-person subject in the present simple, use cleans.", "ch": 0}, {"q": "Choose the correct form: Hana ____ every weekend. (clean)", "a": ["cleans", "clean", "cleaning", "to clean"], "e": "With a singular third-person subject in the present simple, use cleans.", "ch": 0}, {"q": "Choose the correct form: Youssef ____ every weekend. (clean)", "a": ["cleans", "cleaning", "to clean", "clean"], "e": "With a singular third-person subject in the present simple, use cleans.", "ch": 0}, {"q": "Choose the correct form: Laila ____ every weekend. (clean)", "a": ["cleans", "to clean", "clean", "cleaning"], "e": "With a singular third-person subject in the present simple, use cleans.", "ch": 0}], "math": [{"q": "إذا كان س + 5 = 12، فما قيمة س؟", "a": ["7", "5", "6", "8"], "e": "نطرح 5 من الطرفين: س = 7.", "ch": 0}, {"q": "ما مساحة مستطيل طوله 6 سم وعرضه 4 سم؟", "a": ["24 سم²", "10 سم²", "20 سم²", "28 سم²"], "e": "المساحة = الطول × العرض = 24 سم².", "ch": 0}, {"q": "إذا كان 3س + 4 = 19، فإن س = ؟", "a": ["5", "3", "4", "6"], "e": "3س = 15، إذن س = 5.", "ch": 0}, {"q": "حل المعادلة 2(س − 3) = 10 هو؟", "a": ["8", "5", "10", "13"], "e": "س − 3 = 5، إذن س = 8.", "ch": 0}, {"q": "إذا كان س² = 49 وس موجب، فما قيمة س؟", "a": ["7", "6", "−7", "49"], "e": "الجذر التربيعي الموجب لـ49 هو 7.", "ch": 0}, {"q": "مجموع الزوايا الداخلية للمثلث يساوي؟", "a": ["180°", "90°", "270°", "360°"], "e": "مجموع زوايا أي مثلث 180 درجة.", "ch": 0}, {"q": "مثلث قائم ضلعاه القائمان 3 و4 سم؛ الوتر يساوي؟", "a": ["5 سم", "6 سم", "7 سم", "12 سم"], "e": "باستخدام فيثاغورس: جذر(9+16)=5.", "ch": 0}, {"q": "المتوسط الحسابي للأعداد 2، 4، 6، 8 هو؟", "a": ["5", "4", "6", "8"], "e": "المجموع 20 ÷ 4 = 5.", "ch": 0}, {"q": "ما وسيط القيم 1، 3، 7، 9، 11؟", "a": ["7", "3", "9", "11"], "e": "القيمة الوسطى بعد الترتيب هي 7.", "ch": 0}, {"q": "إذا كان ثمن 3 أقلام 18 جنيهًا، فثمن 5 أقلام بالسعر نفسه؟", "a": ["30", "20", "25", "35"], "e": "ثمن القلم 6 جنيهات، وخمسة أقلام 30.", "ch": 0}, {"q": "إذا كان س + 3 = 7، فما قيمة س؟", "a": ["4", "5", "3", "6"], "e": "نطرح 3 من الطرفين فنحصل على س = 4.", "ch": 0}, {"q": "إذا كان س + 4 = 9، فما قيمة س؟", "a": ["5", "6", "4", "7"], "e": "نطرح 4 من الطرفين فنحصل على س = 5.", "ch": 0}, {"q": "إذا كان س + 5 = 11، فما قيمة س؟", "a": ["6", "5", "8", "7"], "e": "نطرح 5 من الطرفين فنحصل على س = 6.", "ch": 0}, {"q": "إذا كان س + 6 = 13، فما قيمة س؟", "a": ["7", "9", "8", "6"], "e": "نطرح 6 من الطرفين فنحصل على س = 7.", "ch": 0}, {"q": "إذا كان س + 7 = 15، فما قيمة س؟", "a": ["8", "9", "7", "10"], "e": "نطرح 7 من الطرفين فنحصل على س = 8.", "ch": 0}, {"q": "إذا كان س + 8 = 17، فما قيمة س؟", "a": ["9", "10", "8", "11"], "e": "نطرح 8 من الطرفين فنحصل على س = 9.", "ch": 0}, {"q": "إذا كان س + 9 = 19، فما قيمة س؟", "a": ["10", "9", "12", "11"], "e": "نطرح 9 من الطرفين فنحصل على س = 10.", "ch": 0}, {"q": "إذا كان س + 10 = 21، فما قيمة س؟", "a": ["11", "13", "12", "10"], "e": "نطرح 10 من الطرفين فنحصل على س = 11.", "ch": 0}, {"q": "إذا كان س + 2 = 14، فما قيمة س؟", "a": ["12", "13", "11", "14"], "e": "نطرح 2 من الطرفين فنحصل على س = 12.", "ch": 0}, {"q": "إذا كان س + 3 = 16، فما قيمة س؟", "a": ["13", "14", "12", "15"], "e": "نطرح 3 من الطرفين فنحصل على س = 13.", "ch": 0}, {"q": "إذا كان س + 4 = 18، فما قيمة س؟", "a": ["14", "13", "16", "15"], "e": "نطرح 4 من الطرفين فنحصل على س = 14.", "ch": 0}, {"q": "إذا كان س + 5 = 20، فما قيمة س؟", "a": ["15", "17", "16", "14"], "e": "نطرح 5 من الطرفين فنحصل على س = 15.", "ch": 0}, {"q": "إذا كان س + 6 = 22، فما قيمة س؟", "a": ["16", "17", "15", "18"], "e": "نطرح 6 من الطرفين فنحصل على س = 16.", "ch": 0}, {"q": "إذا كان س + 7 = 24، فما قيمة س؟", "a": ["17", "18", "16", "19"], "e": "نطرح 7 من الطرفين فنحصل على س = 17.", "ch": 0}, {"q": "إذا كان س + 8 = 26، فما قيمة س؟", "a": ["18", "17", "20", "19"], "e": "نطرح 8 من الطرفين فنحصل على س = 18.", "ch": 0}, {"q": "إذا كان س + 9 = 28، فما قيمة س؟", "a": ["19", "21", "20", "18"], "e": "نطرح 9 من الطرفين فنحصل على س = 19.", "ch": 0}, {"q": "إذا كان س + 10 = 30، فما قيمة س؟", "a": ["20", "21", "19", "22"], "e": "نطرح 10 من الطرفين فنحصل على س = 20.", "ch": 0}, {"q": "إذا كان س + 2 = 23، فما قيمة س؟", "a": ["21", "22", "20", "23"], "e": "نطرح 2 من الطرفين فنحصل على س = 21.", "ch": 0}, {"q": "إذا كان س + 3 = 25، فما قيمة س؟", "a": ["22", "21", "24", "23"], "e": "نطرح 3 من الطرفين فنحصل على س = 22.", "ch": 0}, {"q": "إذا كان س + 4 = 27، فما قيمة س؟", "a": ["23", "25", "24", "22"], "e": "نطرح 4 من الطرفين فنحصل على س = 23.", "ch": 0}, {"q": "إذا كان س + 5 = 29، فما قيمة س؟", "a": ["24", "25", "23", "26"], "e": "نطرح 5 من الطرفين فنحصل على س = 24.", "ch": 0}, {"q": "إذا كان س + 6 = 31، فما قيمة س؟", "a": ["25", "26", "24", "27"], "e": "نطرح 6 من الطرفين فنحصل على س = 25.", "ch": 0}, {"q": "إذا كان س + 7 = 33، فما قيمة س؟", "a": ["26", "25", "28", "27"], "e": "نطرح 7 من الطرفين فنحصل على س = 26.", "ch": 0}, {"q": "إذا كان س + 8 = 35، فما قيمة س؟", "a": ["27", "29", "28", "26"], "e": "نطرح 8 من الطرفين فنحصل على س = 27.", "ch": 0}, {"q": "إذا كان س + 9 = 37، فما قيمة س؟", "a": ["28", "29", "27", "30"], "e": "نطرح 9 من الطرفين فنحصل على س = 28.", "ch": 0}, {"q": "ما الوسيط للقيم 3، 7، 9، 12، 15؟", "a": ["9", "7", "12", "15"], "e": "الوسيط هو القيمة الوسطى بعد ترتيب القيم.", "ch": 0}, {"q": "ما المنوال للقيم 2، 4، 4، 6، 8؟", "a": ["4", "2", "6", "8"], "e": "المنوال هو الأكثر تكرارًا.", "ch": 0}, {"q": "ما المتوسط الحسابي للأعداد 4، 6، 8؟", "a": ["6", "5", "7", "8"], "e": "المجموع 18 مقسومًا على 3 يساوي 6.", "ch": 0}, {"q": "عند إلقاء قطعة نقود عادلة، ما احتمال ظهور الصورة؟", "a": ["نصف", "ربع", "ثلث", "واحد"], "e": "هناك نتيجتان متساويتان في الاحتمال.", "ch": 0}, {"q": "ما مجموع الزوايا الداخلية للمثلث؟", "a": ["180°", "90°", "270°", "360°"], "e": "مجموع زوايا أي مثلث 180 درجة.", "ch": 0}, {"q": "ما مساحة مثلث قاعدته 10 سم وارتفاعه 6 سم؟", "a": ["30 سم²", "16 سم²", "60 سم²", "120 سم²"], "e": "نصف القاعدة في الارتفاع = 30 سم².", "ch": 0}, {"q": "مثلث قائم ضلعاه القائمان 3 سم و4 سم؛ كم طول الوتر؟", "a": ["5 سم", "6 سم", "7 سم", "12 سم"], "e": "بنظرية فيثاغورس: جذر (9 + 16) = 5.", "ch": 0}, {"q": "إذا كان ثمن 3 دفاتر 24 جنيهًا، فما ثمن 5 دفاتر بالسعر نفسه؟", "a": ["40", "30", "35", "45"], "e": "سعر الدفتر 8 جنيهات؛ ثمن 5 دفاتر 40.", "ch": 0}, {"q": "حل المعادلة 3س = 21.", "a": ["7", "6", "8", "9"], "e": "بقسمة الطرفين على 3 نحصل على س = 7.", "ch": 0}, {"q": "ما ناتج تحليل س² − 9؟", "a": ["(س−3)(س+3)", "(س−9)(س+1)", "(س−3)²", "س(س−9)"], "e": "فرق مربعين: س² − 3².", "ch": 0}, {"q": "أي نقطة تقع على محور الصادات؟", "a": ["(0،5)", "(2،3)", "(4،0)", "(1،1)"], "e": "إحداثي السينات يساوي صفرًا على محور الصادات.", "ch": 0}, {"q": "ما محيط مربع طول ضلعه 7 سم؟", "a": ["28 سم", "14 سم", "21 سم", "49 سم"], "e": "محيط المربع = 4 × طول الضلع.", "ch": 0}, {"q": "ما مدى البيانات 5، 8، 12، 19؟", "a": ["14", "11", "12", "19"], "e": "المدى = أكبر قيمة − أصغر قيمة = 14.", "ch": 0}, {"q": "ما قيمة 2³ × 2²؟", "a": ["32", "16", "64", "8"], "e": "نجمع الأسين عند ضرب قوتين لهما الأساس نفسه: 2⁵ = 32.", "ch": 0}, {"q": "ما قياس الزاوية المكملة لزاوية 65°؟", "a": ["115°", "25°", "65°", "125°"], "e": "الزاويتان المتكاملتان مجموعهما 180°.", "ch": 0}], "science": [{"q": "ما العضو المسؤول أساسًا عن ضخ الدم في جسم الإنسان؟", "a": ["القلب", "الكبد", "الرئة", "المعدة"], "e": "القلب يضخ الدم عبر الأوعية الدموية.", "ch": 0}, {"q": "أي مما يلي يعد تغيرًا فيزيائيًا؟", "a": ["انصهار الجليد", "احتراق الخشب", "صدأ الحديد", "تعفن الطعام"], "e": "الانصهار يغير حالة المادة دون تكوين مادة جديدة.", "ch": 0}, {"q": "ما المقصود بالسرعة المتوسطة؟", "a": ["المسافة الكلية ÷ الزمن الكلي", "الزمن ÷ المسافة", "القوة ÷ المساحة", "الكتلة × الحجم"], "e": "السرعة المتوسطة تساوي المسافة الكلية المقطوعة مقسومة على الزمن الكلي.", "ch": 0}, {"q": "قطع جسم مسافة 100 متر في 20 ثانية، فما سرعته المتوسطة؟", "a": ["5 م/ث", "2 م/ث", "20 م/ث", "2000 م/ث"], "e": "100 ÷ 20 = 5 أمتار لكل ثانية.", "ch": 0}, {"q": "أي مما يأتي يعد كمية قياسية؟", "a": ["السرعة القياسية", "الإزاحة", "القوة", "العجلة المتجهة"], "e": "السرعة القياسية تحدد بالمقدار فقط، دون اتجاه.", "ch": 0}, {"q": "ما وحدة قياس القوة في النظام الدولي؟", "a": ["النيوتن", "الجول", "الوات", "المتر"], "e": "تقاس القوة بوحدة النيوتن.", "ch": 0}, {"q": "أي الأدوات يستخدم لقياس درجة الحرارة؟", "a": ["الترمومتر", "الميزان", "الساعة", "المسطرة"], "e": "الترمومتر أداة قياس درجة الحرارة.", "ch": 0}, {"q": "عند انصهار الجليد يتحول من الحالة ...", "a": ["الصلبة إلى السائلة", "الغازية إلى السائلة", "السائلة إلى الصلبة", "الصلبة إلى الغازية"], "e": "الانصهار تحول المادة من صلب إلى سائل.", "ch": 0}, {"q": "ما الوظيفة الأساسية للقلب؟", "a": ["ضخ الدم", "هضم الغذاء", "تنقية الهواء", "تخزين الأكسجين"], "e": "يضخ القلب الدم خلال الأوعية الدموية.", "ch": 0}, {"q": "أي من الآتي يمثل تغيرًا كيميائيًا؟", "a": ["صدأ الحديد", "تبخر الماء", "انصهار الشمع", "تقطيع الورق"], "e": "يتكون عند صدأ الحديد مواد جديدة، ولذلك فهو تغير كيميائي.", "ch": 0}, {"q": "ما العضو المسؤول عن تبادل الغازات في الجهاز التنفسي؟", "a": ["الحويصلات الهوائية في الرئتين", "المعدة", "الكبد", "القلب"], "e": "يحدث تبادل الأكسجين وثاني أكسيد الكربون في الحويصلات الهوائية.", "ch": 0}, {"q": "أي مما يأتي مصدر طبيعي للضوء؟", "a": ["الشمس", "القمر", "المرآة", "الكتاب"], "e": "الشمس تصدر ضوءًا من ذاتها، بينما القمر يعكس ضوء الشمس.", "ch": 0}, {"q": "تحرك جسم مسافة 150 مترًا خلال 30 ثانية. ما سرعته المتوسطة؟", "a": ["5 م/ث", "3 م/ث", "30 م/ث", "180 م/ث"], "e": "السرعة المتوسطة = المسافة ÷ الزمن = 150 ÷ 30 = 5 م/ث.", "ch": 0}, {"q": "أي رسم بياني للمسافة والزمن يدل على سرعة ثابتة؟", "a": ["خط مستقيم مائل بميل ثابت", "خط متعرج", "منحنى يتغير ميله", "خط رأسي"], "e": "عندما تكون السرعة ثابتة، تتغير المسافة بمعدل ثابت مع الزمن.", "ch": 0}, {"q": "إذا تضاعفت المسافة في نفس الزمن، ماذا يحدث للسرعة المتوسطة؟", "a": ["تتضاعف", "تنخفض للنصف", "لا تتغير", "تصبح صفرًا"], "e": "السرعة = المسافة ÷ الزمن؛ وعند مضاعفة المسافة مع ثبات الزمن تتضاعف السرعة.", "ch": 0}, {"q": "ما وحدة السرعة في النظام الدولي؟", "a": ["متر/ثانية", "متر", "ثانية", "متر/ثانية²"], "e": "تقاس السرعة بوحدة متر لكل ثانية.", "ch": 0}, {"q": "قطع جسم 120 مترًا في 20 ثانية ثم 80 مترًا في 20 ثانية أخرى. ما متوسط سرعته خلال الرحلة كلها؟", "a": ["5 م/ث", "4 م/ث", "6 م/ث", "10 م/ث"], "e": "المسافة الكلية 200 متر والزمن الكلي 40 ثانية؛ متوسط السرعة = 200 ÷ 40 = 5 م/ث.", "ch": 0}, {"q": "تحرك جسم بسرعة ثابتة 6 م/ث لمدة 15 ثانية. ما المسافة التي قطعها؟", "a": ["90 مترًا", "21 مترًا", "60 مترًا", "120 مترًا"], "e": "المسافة = السرعة × الزمن = 6 × 15 = 90 مترًا.", "ch": 0}, {"q": "سيارتان تقطعان المسافة نفسها؛ الأولى تستغرق 30 دقيقة والثانية 45 دقيقة. أيهما أعلى متوسط سرعة؟", "a": ["الأولى", "الثانية", "متساويتان", "لا يمكن المقارنة"], "e": "عند ثبات المسافة، تقل السرعة المتوسطة بزيادة الزمن؛ لذلك الأولى أسرع.", "ch": 0}, {"q": "جسم يتحرك بسرعة ثابتة 3 م/ث لمدة 3 ثوانٍ؛ كم مترًا يقطع؟", "a": ["9 مترًا", "309 مترًا", "109 مترًا", "209 مترًا"], "e": "المسافة = السرعة × الزمن = 3 × 3 = 9 مترًا.", "ch": 0}, {"q": "جسم يتحرك بسرعة ثابتة 4 م/ث لمدة 4 ثوانٍ؛ كم مترًا يقطع؟", "a": ["16 مترًا", "116 مترًا", "216 مترًا", "316 مترًا"], "e": "المسافة = السرعة × الزمن = 4 × 4 = 16 مترًا.", "ch": 0}, {"q": "جسم يتحرك بسرعة ثابتة 5 م/ث لمدة 5 ثوانٍ؛ كم مترًا يقطع؟", "a": ["25 مترًا", "125 مترًا", "225 مترًا", "325 مترًا"], "e": "المسافة = السرعة × الزمن = 5 × 5 = 25 مترًا.", "ch": 0}, {"q": "جسم يتحرك بسرعة ثابتة 6 م/ث لمدة 6 ثوانٍ؛ كم مترًا يقطع؟", "a": ["36 مترًا", "236 مترًا", "336 مترًا", "136 مترًا"], "e": "المسافة = السرعة × الزمن = 6 × 6 = 36 مترًا.", "ch": 0}, {"q": "جسم يتحرك بسرعة ثابتة 7 م/ث لمدة 7 ثوانٍ؛ كم مترًا يقطع؟", "a": ["49 مترًا", "349 مترًا", "149 مترًا", "249 مترًا"], "e": "المسافة = السرعة × الزمن = 7 × 7 = 49 مترًا.", "ch": 0}, {"q": "جسم يتحرك بسرعة ثابتة 8 م/ث لمدة 8 ثوانٍ؛ كم مترًا يقطع؟", "a": ["64 مترًا", "164 مترًا", "264 مترًا", "364 مترًا"], "e": "المسافة = السرعة × الزمن = 8 × 8 = 64 مترًا.", "ch": 0}, {"q": "جسم يتحرك بسرعة ثابتة 9 م/ث لمدة 9 ثوانٍ؛ كم مترًا يقطع؟", "a": ["81 مترًا", "181 مترًا", "281 مترًا", "381 مترًا"], "e": "المسافة = السرعة × الزمن = 9 × 9 = 81 مترًا.", "ch": 0}, {"q": "جسم يتحرك بسرعة ثابتة 10 م/ث لمدة 2 ثوانٍ؛ كم مترًا يقطع؟", "a": ["20 مترًا", "220 مترًا", "320 مترًا", "120 مترًا"], "e": "المسافة = السرعة × الزمن = 10 × 2 = 20 مترًا.", "ch": 0}, {"q": "جسم يتحرك بسرعة ثابتة 11 م/ث لمدة 3 ثوانٍ؛ كم مترًا يقطع؟", "a": ["33 مترًا", "333 مترًا", "133 مترًا", "233 مترًا"], "e": "المسافة = السرعة × الزمن = 11 × 3 = 33 مترًا.", "ch": 0}, {"q": "جسم يتحرك بسرعة ثابتة 12 م/ث لمدة 4 ثوانٍ؛ كم مترًا يقطع؟", "a": ["48 مترًا", "148 مترًا", "248 مترًا", "348 مترًا"], "e": "المسافة = السرعة × الزمن = 12 × 4 = 48 مترًا.", "ch": 0}, {"q": "جسم يتحرك بسرعة ثابتة 13 م/ث لمدة 5 ثوانٍ؛ كم مترًا يقطع؟", "a": ["65 مترًا", "165 مترًا", "265 مترًا", "365 مترًا"], "e": "المسافة = السرعة × الزمن = 13 × 5 = 65 مترًا.", "ch": 0}, {"q": "جسم يتحرك بسرعة ثابتة 14 م/ث لمدة 6 ثوانٍ؛ كم مترًا يقطع؟", "a": ["84 مترًا", "284 مترًا", "384 مترًا", "184 مترًا"], "e": "المسافة = السرعة × الزمن = 14 × 6 = 84 مترًا.", "ch": 0}, {"q": "جسم يتحرك بسرعة ثابتة 15 م/ث لمدة 7 ثوانٍ؛ كم مترًا يقطع؟", "a": ["105 مترًا", "405 مترًا", "205 مترًا", "305 مترًا"], "e": "المسافة = السرعة × الزمن = 15 × 7 = 105 مترًا.", "ch": 0}, {"q": "جسم يتحرك بسرعة ثابتة 16 م/ث لمدة 8 ثوانٍ؛ كم مترًا يقطع؟", "a": ["128 مترًا", "228 مترًا", "328 مترًا", "428 مترًا"], "e": "المسافة = السرعة × الزمن = 16 × 8 = 128 مترًا.", "ch": 0}, {"q": "جسم يتحرك بسرعة ثابتة 17 م/ث لمدة 9 ثوانٍ؛ كم مترًا يقطع؟", "a": ["153 مترًا", "253 مترًا", "353 مترًا", "453 مترًا"], "e": "المسافة = السرعة × الزمن = 17 × 9 = 153 مترًا.", "ch": 0}, {"q": "جسم يتحرك بسرعة ثابتة 18 م/ث لمدة 2 ثوانٍ؛ كم مترًا يقطع؟", "a": ["36 مترًا", "236 مترًا", "336 مترًا", "136 مترًا"], "e": "المسافة = السرعة × الزمن = 18 × 2 = 36 مترًا.", "ch": 0}, {"q": "أي نوع من المرايا يعطي صورة تقديرية معتدلة مساوية للجسم؟", "a": ["المستوية", "المقعرة دائمًا", "المحدبة مساوية دائمًا", "لا توجد"], "e": "المرآة المستوية تعطي صورة تقديرية معتدلة مساوية للحجم.", "ch": 0}, {"q": "ما الظاهرة المسؤولة عن تغير اتجاه الضوء عند انتقاله بين وسطين شفافين؟", "a": ["الانكسار", "الانعكاس", "التوصيل", "التبخر"], "e": "الانكسار تغير اتجاه الضوء نتيجة تغير سرعته بين وسطين.", "ch": 0}, {"q": "ما وحدة قياس شدة التيار الكهربي؟", "a": ["الأمبير", "الفولت", "الأوم", "الوات"], "e": "شدة التيار تقاس بالأمبير.", "ch": 0}, {"q": "ما وظيفة المفتاح في الدائرة الكهربية البسيطة؟", "a": ["فتح وغلق مسار التيار", "تغيير لون المصباح", "زيادة كتلة السلك", "توليد ضوء الشمس"], "e": "المفتاح يتحكم في اكتمال الدائرة.", "ch": 0}, {"q": "أين توجد الجينات عادة داخل الخلية حقيقية النواة؟", "a": ["في الكروموسومات", "في الجدار فقط", "في الفجوات فقط", "خارج الخلية"], "e": "الجينات مقاطع من DNA موجودة على الكروموسومات.", "ch": 0}, {"q": "ما المادة التي تحمل المعلومات الوراثية في معظم الكائنات الحية؟", "a": ["DNA", "الماء", "النشا", "الدهون"], "e": "DNA يحمل المعلومات الوراثية.", "ch": 0}, {"q": "ما النجم الأقرب إلى الأرض؟", "a": ["الشمس", "الشعرى اليمانية", "النجم القطبي", "منكب الجوزاء"], "e": "الشمس أقرب نجم إلى الأرض.", "ch": 0}, {"q": "ما سبب تعاقب الليل والنهار على الأرض؟", "a": ["دوران الأرض حول محورها", "دوران القمر حول الشمس", "تغير الفصول", "كسوف الشمس"], "e": "تدور الأرض حول محورها فيتعاقب الليل والنهار.", "ch": 0}, {"q": "ما الدليل المحتمل على حدوث تفاعل كيميائي؟", "a": ["تكون راسب جديد", "تغير شكل الورقة فقط", "تقطيع الخشب", "انصهار الجليد"], "e": "تكون راسب جديد قد يدل على تكون مادة جديدة.", "ch": 0}, {"q": "أي المحاليل يكون رقمه الهيدروجيني أقل من 7 عادة؟", "a": ["حمضي", "قاعدي", "متعادل دائمًا", "ماء نقي دائمًا"], "e": "المحاليل الحمضية لها pH أقل من 7.", "ch": 0}, {"q": "ما العضو الذي يعد مركز التحكم الرئيسي للجهاز العصبي؟", "a": ["الدماغ", "المعدة", "الكبد", "الكلى"], "e": "الدماغ يستقبل المعلومات وينظم الاستجابات.", "ch": 0}, {"q": "ما دور حبوب اللقاح في النباتات الزهرية؟", "a": ["حمل الخلايا الذكرية", "امتصاص الماء", "تكوين الجذور", "تخزين النشا"], "e": "تحمل حبوب اللقاح الخلايا التناسلية الذكرية.", "ch": 0}, {"q": "ما أثر قوة محصلة غير متزنة على جسم؟", "a": ["قد تغير سرعته أو اتجاهه", "لا يمكن تغيير حركته", "تلغي كتلته", "توقف الزمن"], "e": "القوة المحصلة غير المتزنة تسبب تسارعًا.", "ch": 0}, {"q": "أي التحولات يحدث في المصباح الكهربائي عند تشغيله؟", "a": ["كهربية إلى ضوئية وحرارية", "ضوئية إلى كهربية", "حرارية إلى نووية", "حركية إلى كيميائية فقط"], "e": "يحول المصباح الطاقة الكهربية إلى ضوء وحرارة.", "ch": 0}, {"q": "ما دور المحللات في النظام البيئي؟", "a": ["تفكيك بقايا الكائنات وإعادة المواد", "تصنيع الضوء", "منع نمو النباتات", "إنتاج الصخور"], "e": "تحلل البقايا العضوية وتعيد المغذيات إلى البيئة.", "ch": 0}], "social": [{"q": "ما عاصمة جمهورية مصر العربية؟", "a": ["القاهرة", "أسوان", "طنطا", "الإسكندرية"], "e": "القاهرة عاصمة مصر.", "ch": 0}, {"q": "في أي قارة تقع مصر؟", "a": ["أفريقيا مع امتداد في آسيا", "أوروبا فقط", "أمريكا الجنوبية", "أستراليا"], "e": "معظم مصر في أفريقيا وشبه جزيرة سيناء في آسيا.", "ch": 0}, {"q": "في أي قارة يقع معظم أراضي مصر؟", "a": ["أفريقيا", "آسيا", "أوروبا", "أمريكا"], "e": "معظم أراضي مصر تقع في قارة أفريقيا.", "ch": 0}, {"q": "ما البحر الذي يحد مصر شمالًا؟", "a": ["المتوسط", "الأحمر", "العربي", "الأسود"], "e": "يحد مصر من الشمال البحر المتوسط.", "ch": 0}, {"q": "تقع شبه جزيرة سيناء في قارة؟", "a": ["آسيا", "أفريقيا", "أوروبا", "أستراليا"], "e": "سيناء الجزء الآسيوي من مصر.", "ch": 0}, {"q": "أي مسطح مائي يقع شرق مصر؟", "a": ["البحر الأحمر", "المحيط الأطلسي", "البحر الأسود", "بحر قزوين"], "e": "يقع البحر الأحمر شرق الأراضي المصرية.", "ch": 0}, {"q": "ما الاتجاه المقابل للشمال؟", "a": ["الجنوب", "الشرق", "الغرب", "الشمال الشرقي"], "e": "الجنوب هو الاتجاه المقابل للشمال.", "ch": 0}, {"q": "ما وظيفة مفتاح الخريطة؟", "a": ["تفسير الرموز", "تحديد التاريخ", "تحديد السكان", "قياس الحرارة"], "e": "يوضح مفتاح الخريطة مدلولات الرموز والألوان.", "ch": 0}, {"q": "من بنى مدينة الإسكندرية القديمة؟", "a": ["الإسكندر الأكبر", "صلاح الدين", "محمد علي", "أحمس"], "e": "أسس الإسكندر الأكبر مدينة الإسكندرية عام 331 ق.م.", "ch": 0}, {"q": "ما اسم القناة التي تربط البحرين الأحمر والمتوسط؟", "a": ["قناة السويس", "قناة بنما", "قناة كورنث", "القناة الإنجليزية"], "e": "تربط قناة السويس البحر المتوسط بالبحر الأحمر.", "ch": 0}, {"q": "في أي قارة تقع دولة مصر؟", "a": ["أفريقيا", "آسيا", "أمريكا الجنوبية", "أوروبا"], "e": "تقع مصر في قارة أفريقيا.", "ch": 0}, {"q": "في أي قارة تقع دولة فرنسا؟", "a": ["أوروبا", "أمريكا الجنوبية", "أفريقيا", "آسيا"], "e": "تقع فرنسا في قارة أوروبا.", "ch": 0}, {"q": "في أي قارة تقع دولة البرازيل؟", "a": ["أمريكا الجنوبية", "أفريقيا", "أوروبا", "آسيا"], "e": "تقع البرازيل في قارة أمريكا الجنوبية.", "ch": 0}, {"q": "في أي قارة تقع دولة اليابان؟", "a": ["آسيا", "أفريقيا", "أوروبا", "أمريكا الجنوبية"], "e": "تقع اليابان في قارة آسيا.", "ch": 0}, {"q": "في أي قارة تقع دولة كندا؟", "a": ["أمريكا الشمالية", "أوروبا", "آسيا", "أفريقيا"], "e": "تقع كندا في قارة أمريكا الشمالية.", "ch": 0}, {"q": "في أي قارة تقع دولة أستراليا؟", "a": ["أستراليا", "آسيا", "أفريقيا", "أوروبا"], "e": "تقع أستراليا في قارة أستراليا.", "ch": 0}, {"q": "في أي قارة تقع دولة الأرجنتين؟", "a": ["أمريكا الجنوبية", "أفريقيا", "أوروبا", "آسيا"], "e": "تقع الأرجنتين في قارة أمريكا الجنوبية.", "ch": 0}, {"q": "في أي قارة تقع دولة الهند؟", "a": ["آسيا", "أفريقيا", "أوروبا", "أمريكا الجنوبية"], "e": "تقع الهند في قارة آسيا.", "ch": 0}, {"q": "في أي قارة تقع دولة ألمانيا؟", "a": ["أوروبا", "آسيا", "أمريكا الجنوبية", "أفريقيا"], "e": "تقع ألمانيا في قارة أوروبا.", "ch": 0}, {"q": "في أي قارة تقع دولة المغرب؟", "a": ["أفريقيا", "أمريكا الجنوبية", "أوروبا", "آسيا"], "e": "تقع المغرب في قارة أفريقيا.", "ch": 0}, {"q": "في أي قارة تقع دولة الصين؟", "a": ["آسيا", "أفريقيا", "أوروبا", "أمريكا الجنوبية"], "e": "تقع الصين في قارة آسيا.", "ch": 0}, {"q": "في أي قارة تقع دولة إيطاليا؟", "a": ["أوروبا", "أفريقيا", "آسيا", "أمريكا الجنوبية"], "e": "تقع إيطاليا في قارة أوروبا.", "ch": 0}, {"q": "في أي قارة تقع دولة المكسيك؟", "a": ["أمريكا الشمالية", "أوروبا", "آسيا", "أفريقيا"], "e": "تقع المكسيك في قارة أمريكا الشمالية.", "ch": 0}, {"q": "في أي قارة تقع دولة نيجيريا؟", "a": ["أفريقيا", "أمريكا الجنوبية", "أوروبا", "آسيا"], "e": "تقع نيجيريا في قارة أفريقيا.", "ch": 0}, {"q": "في أي قارة تقع دولة إسبانيا؟", "a": ["أوروبا", "أفريقيا", "آسيا", "أمريكا الجنوبية"], "e": "تقع إسبانيا في قارة أوروبا.", "ch": 0}, {"q": "في أي قارة تقع دولة كوريا الجنوبية؟", "a": ["آسيا", "أفريقيا", "أوروبا", "أمريكا الجنوبية"], "e": "تقع كوريا الجنوبية في قارة آسيا.", "ch": 0}, {"q": "في أي قارة تقع دولة كينيا؟", "a": ["أفريقيا", "آسيا", "أمريكا الجنوبية", "أوروبا"], "e": "تقع كينيا في قارة أفريقيا.", "ch": 0}, {"q": "في أي قارة تقع دولة تشيلي؟", "a": ["أمريكا الجنوبية", "آسيا", "أفريقيا", "أوروبا"], "e": "تقع تشيلي في قارة أمريكا الجنوبية.", "ch": 0}, {"q": "في أي قارة تقع دولة الولايات المتحدة؟", "a": ["أمريكا الشمالية", "أفريقيا", "أوروبا", "آسيا"], "e": "تقع الولايات المتحدة في قارة أمريكا الشمالية.", "ch": 0}, {"q": "في أي قارة تقع دولة تايلاند؟", "a": ["آسيا", "أفريقيا", "أوروبا", "أمريكا الجنوبية"], "e": "تقع تايلاند في قارة آسيا.", "ch": 0}, {"q": "في أي قارة تقع دولة الجزائر؟", "a": ["أفريقيا", "آسيا", "أمريكا الجنوبية", "أوروبا"], "e": "تقع الجزائر في قارة أفريقيا.", "ch": 0}, {"q": "في أي قارة تقع دولة السويد؟", "a": ["أوروبا", "أمريكا الجنوبية", "أفريقيا", "آسيا"], "e": "تقع السويد في قارة أوروبا.", "ch": 0}, {"q": "في أي قارة تقع دولة بيرو؟", "a": ["أمريكا الجنوبية", "أفريقيا", "أوروبا", "آسيا"], "e": "تقع بيرو في قارة أمريكا الجنوبية.", "ch": 0}, {"q": "في أي قارة تقع دولة فيتنام؟", "a": ["آسيا", "أفريقيا", "أوروبا", "أمريكا الجنوبية"], "e": "تقع فيتنام في قارة آسيا.", "ch": 0}, {"q": "في أي قارة تقع دولة تونس؟", "a": ["أفريقيا", "آسيا", "أمريكا الجنوبية", "أوروبا"], "e": "تقع تونس في قارة أفريقيا.", "ch": 0}, {"q": "ماذا يدل مقياس الرسم على الخريطة؟", "a": ["العلاقة بين المسافة على الخريطة والمسافة الحقيقية", "عدد السكان", "اتجاه الرياح", "ارتفاع الحرارة"], "e": "يوضح نسبة المسافة المرسومة إلى المسافة الحقيقية.", "ch": 0}, {"q": "إذا كان الشمال أعلى الخريطة، فأين يقع الشرق؟", "a": ["يمينًا", "يسارًا", "أسفل", "أعلى"], "e": "الشرق يقع يمين الخريطة التقليدية.", "ch": 0}, {"q": "ما العامل الأساسي في تكوين دلتا النهر؟", "a": ["ترسيب الرواسب قرب المصب", "البراكين فقط", "تجمد المياه", "الرياح وحدها"], "e": "تتراكم الرواسب عند مصب النهر لتكون الدلتا.", "ch": 0}, {"q": "أي التضاريس أكثر ارتفاعًا عادة من السهل؟", "a": ["الجبل", "الوادي", "الدلتا", "الشاطئ"], "e": "الجبل شكل تضاريسي مرتفع.", "ch": 0}, {"q": "ما المقصود بالمناخ؟", "a": ["متوسط أحوال الطقس خلال مدة طويلة", "حالة الجو ساعة واحدة", "سرعة الرياح فقط", "درجة الحرارة يومًا واحدًا"], "e": "المناخ وصف طويل الأمد لأحوال الطقس.", "ch": 0}, {"q": "أي أداة تقيس كمية المطر؟", "a": ["مقياس المطر", "البارومتر", "البوصلة", "الترمومتر"], "e": "يستخدم مقياس المطر لقياس كمية الهطول.", "ch": 0}, {"q": "ما المقصود بالكثافة السكانية؟", "a": ["عدد السكان ÷ المساحة", "المساحة ÷ عدد السكان", "عدد المواليد فقط", "عدد المدن فقط"], "e": "الكثافة السكانية هي عدد السكان بالنسبة لوحدة المساحة.", "ch": 0}, {"q": "أي مما يأتي عامل جذب سكاني؟", "a": ["توفر فرص العمل والخدمات", "نقص فرص العمل", "الجفاف الشديد", "غياب المياه"], "e": "توفر الوظائف والخدمات يجذب السكان.", "ch": 0}, {"q": "أي نشاط ينتمي إلى القطاع الأولي للاقتصاد؟", "a": ["الزراعة", "التأمين", "البرمجة", "التسويق"], "e": "الزراعة نشاط أولي يعتمد على الموارد الطبيعية.", "ch": 0}, {"q": "لماذا تعد المياه موردًا أساسيًا للزراعة؟", "a": ["لنمو النباتات وعملياتها الحيوية", "لأنها تلغي الحاجة للتربة", "لأنها تزيد طول النهار", "لأنها تمنع ضوء الشمس"], "e": "المياه ضرورية لنمو النبات.", "ch": 0}, {"q": "ما الهدف الأساسي من دراسة المصادر التاريخية المتعددة؟", "a": ["مقارنة الروايات والتحقق من الوقائع", "تجاهل الاختلافات", "حفظ التواريخ دون فهم", "استبدال الأدلة بالتخمين"], "e": "مقارنة المصادر تساعد على تقييم دقة المعلومات.", "ch": 0}, {"q": "ما المقصود بالمصدر التاريخي الأولي؟", "a": ["وثيقة أو أثر من زمن الحدث", "تفسير حديث فقط", "ملخص مدرسي حديث", "رأي بلا دليل"], "e": "المصدر الأولي نشأ في فترة الحدث أو على يد شاهد مباشر.", "ch": 0}, {"q": "ما مثال المشاركة المجتمعية الإيجابية؟", "a": ["التطوع لخدمة الحي", "إتلاف الممتلكات", "نشر الشائعات", "إهدار المياه"], "e": "التطوع يسهم في خدمة المجتمع.", "ch": 0}, {"q": "ما أهمية المحافظة على الآثار؟", "a": ["حماية التراث للأجيال القادمة", "إخفاء التاريخ", "منع البحث العلمي", "تقليل المعرفة"], "e": "الآثار توثق تاريخ المجتمع وثقافته.", "ch": 0}, {"q": "أين يصب نهر النيل في مصر؟", "a": ["البحر المتوسط", "البحر الأحمر", "المحيط الهندي", "الخليج العربي"], "e": "ينتهي نهر النيل في دلتا تصب في البحر المتوسط.", "ch": 0}]};
+const PHYSICS_LESSONS=[];
+const FIGS={};
+const LESSONS={};
+const ESSAYS={};
+const NOTES={"arabic": [], "english": [], "math": [], "science": [], "social": []};
+
+/* ---------- MathML typesetting: turns "I = 40 / 10 = 4 A" into a real stacked fraction ---------- */
+const MSUB={'₀':'0','₁':'1','₂':'2','₃':'3','₄':'4','₅':'5','₆':'6','₇':'7','₈':'8','₉':'9','ₑ':'e','ₙ':'n','₊':'+','₋':'−','ₓ':'x','ᵢ':'i','ₘ':'m'};
+const MSUP={'⁰':'0','¹':'1','²':'2','³':'3','⁴':'4','⁵':'5','⁶':'6','⁷':'7','⁸':'8','⁹':'9','ⁿ':'n','⁺':'+','⁻':'−','ˣ':'x','ᵗ':'t'};
+const MFUNCS=/^(sin|cos|tan|ln|log|lim|max|min|mol)$/;
+const MUNITS=new Set(['A','V','Ω','C','s','N','W','J','mol','m','g','kg','Hz']);
+function mTokens(src){
+  const out=[];let i=0;const s=String(src);
+  while(i<s.length){
+    const c=s[i];
+    if(/\s/.test(c)){i++;continue}
+    if(c==='_'&&out.length&&/[A-Za-z0-9]/.test(s[i+1]||'')){i++;let t='';while(i<s.length&&/[A-Za-z0-9]/.test(s[i]))t+=s[i++];const p=out[out.length-1];p.sub=(p.sub||'')+t;continue}
+    if(c==='^'&&out.length&&i+1<s.length){i++;let t='';if(s[i]==='('){let d=0;i++;while(i<s.length&&!(s[i]===')'&&d===0)){if(s[i]==='(')d++;if(s[i]===')')d--;t+=s[i++]}i++}else t=s[i++];const p=out[out.length-1];p.sup=(p.sup||'')+t;continue}
+    if(MSUB[c]!==undefined||MSUP[c]!==undefined){const k=MSUB[c]!==undefined?'sub':'sup',map=k==='sub'?MSUB:MSUP;let t='';while(i<s.length&&map[s[i]]!==undefined)t+=map[s[i++]];const p=out[out.length-1]||(out.push({t:'mi',v:''}),out[out.length-1]);p[k]=(p[k]||'')+t;continue}
+    if(/[0-9]/.test(c)||(c==='.'&&/[0-9]/.test(s[i+1]||''))){let t='';while(i<s.length&&/[0-9.]/.test(s[i]))t+=s[i++];out.push({t:'mn',v:t});continue}
+    if(/[A-Za-zα-ωΑ-ΩΔΩρμσ]/.test(c)&&c!=='Σ'){let t='';while(i<s.length&&(/[A-Za-zα-ωΑ-Ω]/.test(s[i])&&s[i]!=='Σ'||/[̀-ͯ]/.test(s[i])))t+=s[i++];out.push({t:'mi',v:t});continue}
+    out.push({t:'mo',v:c==='-'?'−':c==='*'?'×':c});i++;
+  }
+  return out;
+}
+function mGroup(toks){
+  const stack=[{kids:[]}];
+  for(const tk of toks){
+    if(tk.t==='mo'&&(tk.v==='('||tk.v==='[')){stack.push({t:'grp',open:tk.v,kids:[]});continue}
+    if(tk.t==='mo'&&(tk.v===')'||tk.v===']')&&stack.length>1){const g=stack.pop();g.close=tk.v;g.sub=tk.sub;g.sup=tk.sup;stack[stack.length-1].kids.push(g);continue}
+    stack[stack.length-1].kids.push(tk);
+  }
+  while(stack.length>1){const g=stack.pop();g.close='';stack[stack.length-1].kids.push(g)}
+  return mFrac(stack[0].kids);
+}
+function mFrac(nodes){
+  nodes=nodes.map(n=>n.t==='grp'?{...n,kids:mFrac(n.kids)}:n);
+  const out=[];
+  for(let i=0;i<nodes.length;i++){
+    const n=nodes[i];
+    if(n.t==='mo'&&n.v==='√'&&nodes[i+1]){out.push({t:'sqrt',x:nodes[++i]});continue}
+    if(n.t==='mo'&&n.v==='/'&&out.length&&nodes[i+1]&&!(out[out.length-1].t==='mo')){
+      const a=out.pop(),b=nodes[++i];
+      if(a.t==='mi'&&a.unit&&b.t==='mi')b.unit=true;
+      out.push({t:'frac',a,b});continue}
+    if(n.t==='mi'&&MUNITS.has(n.v)&&out.length&&out[out.length-1].t==='mn'&&(i===nodes.length-1||nodes[i+1].t==='mo')){n.unit=true;out.push({t:'sp'})}
+    out.push(n);
+  }
+  return out;
+}
+const mEsc=s=>String(s).replace(/[&<>]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]));
+function mScript(base,n){
+  const sb=n.sub?mRow(mGroup(mTokens(n.sub))):'',sp=n.sup?mRow(mGroup(mTokens(n.sup))):'';
+  if(n.sub&&n.sup)return `<msubsup>${base}${sb}${sp}</msubsup>`;
+  if(n.sub)return `<msub>${base}${sb}</msub>`;
+  if(n.sup)return `<msup>${base}${sp}</msup>`;
+  return base;
+}
+function mNode(n,bare){
+  switch(n.t){
+    case 'mn':return mScript(`<mn>${mEsc(n.v)}</mn>`,n);
+    case 'mi':{
+      if(/^d[a-z]$/.test(n.v)&&!n.sub&&!n.sup)return `${bare?"":"<mspace width=\"0.17em\"></mspace>"}<mi>d</mi><mi>${n.v[1]}</mi>`;
+      const normal=n.unit||MFUNCS.test(n.v)||n.v.length>1;
+      const fn=MFUNCS.test(n.v)&&n.v!=='mol';
+      return mScript(`<mi${normal?' mathvariant="normal"':''}>${mEsc(n.v)}</mi>`,n)+(fn?'<mspace width="0.2em"></mspace>':'');}
+    case 'mo':{
+      const big=n.v==='∫'||n.v==='Σ';
+      const base=`<mo${big?' largeop="true"':''}>${mEsc(n.v)}</mo>`;
+      if(big&&(n.sub||n.sup))return mScript(base,n);
+      return mScript(base,n);}
+    case 'grp':{const inner=mRow(n.kids);if(bare&&n.open==='('&&n.close===')'&&!n.sub&&!n.sup)return inner;return mScript(`<mrow><mo>${n.open}</mo>${inner}<mo>${n.close}</mo></mrow>`,n)}
+    case 'frac':return `<mfrac>${mWrap(n.a)}${mWrap(n.b)}</mfrac>`;
+    case 'sp':return '<mspace width="0.3em"></mspace>';
+    case 'sqrt':return `<msqrt>${mWrap(n.x)}</msqrt>`;
+  }
+  return '';
+}
+const mWrap=n=>`<mrow>${mNode(n,true)}</mrow>`;
+const mRow=ns=>`<mrow>${ns.map(n=>mNode(n)).join('')}</mrow>`;
+function mathml(src,display){
+  try{return `<math dir="ltr" display="${display?'block':'inline'}">${mRow(mGroup(mTokens(src)))}</math>`}
+  catch(e){return `<bdi dir="ltr">${mEsc(src)}</bdi>`}
+}
+/* A formula block, and a check for short option texts that are maths (3x², 1 / x, 10 m/s). */
+const fm=s=>`<div class="formula">${mathml(s,true)}</div>`;
+const looksMath=s=>/^K_c = /.test(s)||!/[؀-ۿ]/.test(s)&&!/[a-z]{2,}/i.test(s.replace(/sin|cos|tan|ln|lim|dx|mol/g,''))&&/[=\/x∫√ⁿ²³]/.test(s);
+const optHtml=s=>looksMath(s)?mathml(s,false):`<bdi>${esc(s)}</bdi>`;
+const inlineMath=s=>/[=\/∫x]|lim/.test(s)?mathml(s,false):`<bdi class="inline-math" dir="ltr">${esc(s)}</bdi>`;
+
+/* ===== Tafawoq app logic (v0.5.0) ===== */
+document.documentElement.lang='ar';document.documentElement.dir='rtl';
+const VERSION='1.4.0';
+const LETTERS=['أ','ب','ج','د'];
+const DAYS=['السبت','الأحد','الاثنين','الثلاثاء','الأربعاء','الخميس','الجمعة'];
+const PASS=50, SEC_PER_Q=90;
+const appEl=document.getElementById('app');
+const unesc=s=>s.replace(/&lt;/g,'<').replace(/&gt;/g,'>').replace(/&quot;/g,'"').replace(/&#39;/g,"'").replace(/&amp;/g,'&');
+const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+function load(k,f){try{const v=JSON.parse(localStorage.getItem('tafawoqprep_'+k));return v??f}catch(e){return f}}
+function save(k,v){for(let x=v;;){try{localStorage.setItem('tafawoqprep_'+k,JSON.stringify(x));return true}catch(e){if(!Array.isArray(x)||x.length<2)return false;x=x.slice(0,Math.ceil(x.length/2))}}}
+const shuffle=a=>{a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a};
+const uid=()=>Math.random().toString(36).slice(2,9);
+const qCount=n=>n===1?'سؤال واحد':n===2?'سؤالان':n<=10?n+' أسئلة':n+' سؤالاً';
+const pad=n=>String(n).padStart(2,'0');
+const fmtTime=s=>`${pad(Math.floor(Math.max(0,s)/60))}:${pad(Math.max(0,s)%60)}`;
+const todayIdx=()=>(new Date().getDay()+1)%7; // Saturday = 0
+function weekKey(){const d=new Date();d.setHours(0,0,0,0);d.setDate(d.getDate()-todayIdx());return d.toISOString().slice(0,10)}
+
+let state={
+  screen:'home',branch:load('branch','science'),
+  subject:null,setup:{subject:null,ch:null,count:10,mode:'normal',strict:true},
+  planDay:todayIdx(),tutorSubject:'general',resultFilter:'mistakes'
+};
+if(!BRANCHES[state.branch])state.branch=Object.keys(BRANCHES)[0];
+let exam=null,lastResult=null,tick=null;
+
+/* ---------- helpers ---------- */
+function branchSubjects(){return BRANCHES[state.branch].subjects}
+function subjGlyph(id,size){const s=SUBJECTS[id];return `<span class="glyph" style="background:${s.color}">${esc(s.glyph)}</span>`}
+function history(){return load('history',[]).filter(h=>h&&typeof h==='object')}
+function hPercent(h){return typeof h.percent==='number'?h.percent:Math.round((h.correct||0)/(h.total||1)*100)}
+function gradeOf(p){if(p>=85)return'ممتاز';if(p>=75)return'جيد جداً';if(p>=65)return'جيد';if(p>=PASS)return'مقبول';return'دون مستوى النجاح'}
+function toast(msg){const t=document.createElement('div');t.className='toast';t.setAttribute('role','status');t.textContent=msg;document.body.appendChild(t);setTimeout(()=>t.remove(),2200)}
+function modal({title,body,ok,cancel,danger,onOk}){
+  const root=document.getElementById('modal-root');
+  root.innerHTML=`<div class="modal" role="dialog" aria-modal="true" aria-labelledby="m-title"><div class="card"><h3 id="m-title">${esc(title)}</h3><p class="muted" style="font-size:16px">${body}</p><div class="btns"><button type="button" class="btn ${danger?'danger':''}" id="m-ok">${esc(ok)}</button><button type="button" class="btn ghost" id="m-cancel">${esc(cancel||'إلغاء')}</button></div></div></div>`;
+  const close=()=>root.innerHTML='';
+  root.querySelector('#m-ok').onclick=()=>{close();onOk&&onOk()};
+  root.querySelector('#m-cancel').onclick=close;
+  root.querySelector('.modal').onclick=e=>{if(e.target.classList.contains('modal'))close()};
+  root.querySelector('#m-ok').focus();
+}
+/* Render text that mixes Arabic with LTR maths: lines in `backticks` or pure-maths lines become LTR formula blocks. */
+function rich(text){
+  const lines=String(text).replace(/\r/g,'').split('\n');let html='',list=false;
+  const inline=s=>esc(s).replace(/`([^`]+)`/g,(_,m)=>inlineMath(unesc(m))).replace(/\*\*([^*]+)\*\*/g,'<strong>$1</strong>');
+  for(let raw of lines){
+    const l=raw.trim();
+    if(!l){if(list){html+='</ul>';list=false}continue}
+    const m=l.match(/^`([^`]+)`$/);
+    const pureMath=!/[؀-ۿ]/.test(l)&&/[=+×÷/−\-^√∫Σ≤≥⇒]/.test(l)&&/[0-9a-zA-Zα-ωΩρ]/.test(l)&&l.length<120&&!/[A-Za-z]{4,}[,.:;]?\s+[A-Za-z]{4,}/.test(l);
+    if(m||pureMath){if(list){html+='</ul>';list=false}const f=m?m[1]:l;html+=isChem(f)?`<div class="formula chem" dir="ltr">${esc(f)}</div>`:fm(f);continue}
+    if(/^[-•*]\s+/.test(l)){if(!list){html+='<ul>';list=true}html+=`<li>${inline(l.replace(/^[-•*]\s+/,''))}</li>`;continue}
+    if(list){html+='</ul>';list=false}
+    html+=`<p>${inline(l.replace(/^#+\s*/,''))}</p>`;
+  }
+  if(list)html+='</ul>';return html;
+}
+
+const isChem=s=>!/^(KE|PE)\b/.test(s)&&(/[⇌]/.test(s)||/[A-Z][a-z]?[₀-₉⁺⁻]*[A-Z]/.test(s)||/^(Kw|Ksp|pH|pOH)\b/.test(s)||(/→/.test(s)&&/[A-Z][a-z]?[₀-₉]/.test(s)));
+const qh=s=>/^[\x00-\x7F_]+$/.test(s)?`<bdi dir="ltr">${esc(s)}</bdi>`:esc(s).replace(/`([^`]+)`/g,(_,m)=>inlineMath(unesc(m)));
+/* ---------- navigation ---------- */
+function go(screen,opts={}){
+  if(state.screen==='exam'&&exam&&!exam.done&&screen!=='exam'){confirmLeaveExam(()=>go(screen,opts));return}
+  Object.assign(state,opts);state.screen=screen;render();window.scrollTo(0,0);
+}
+document.querySelectorAll('[data-nav]').forEach(b=>b.onclick=()=>go(b.dataset.nav));
+function render(){
+  document.body.classList.toggle('exam-mode',state.screen==='exam');
+  const navKey={home:'home',subjects:'subjects',subject:'subjects',exams:'exams',exam:'exams',result:'exams',history:'exams',tutor:'tutor',plan:'plan',weak:'home',mistakes:'home',essay:'exams'}[state.screen];
+  document.querySelectorAll('[data-nav]').forEach(b=>b.dataset.nav===navKey?b.setAttribute('aria-current','page'):b.removeAttribute('aria-current'));
+  ({home:renderHome,subjects:renderSubjects,subject:renderSubject,exams:renderExamSetup,exam:renderExam,result:renderResult,history:renderHistory,tutor:renderTutor,plan:renderPlan,weak:renderWeak,mistakes:renderMistakes,essay:renderEssay})[state.screen]();
+}
+function bar(title,back){return `<div class="bar wrap">${back?`<button type="button" class="icon-btn" aria-label="رجوع" onclick="go('${back}')">→</button>`:''}<h2>${esc(title)}</h2></div>`}
+
+/* ---------- home ---------- */
+function examCountdown(){const d=load('examDate','');if(!d)return null;const t=new Date(d+'T00:00:00');const now=new Date();now.setHours(0,0,0,0);const n=Math.round((t-now)/864e5);return n>=0?n:null}
+function sessionsFor(day){return load('sessions',[]).filter(s=>s.day===day).sort((a,b)=>a.time.localeCompare(b.time))}
+function isDone(s){return (s.doneWeeks||[]).includes(weekKey())}
+function renderHome(){
+  const h=history(),avg=h.length?Math.round(h.reduce((a,x)=>a+hPercent(x),0)/h.length):null;
+  const last=h[0],cd=examCountdown(),today=sessionsFor(todayIdx());
+  appEl.innerHTML=`
+  <header class="hero wrap">
+    <div class="hero-top">
+      <div><div class="sub">مساعدك للشهادة الإعدادية المصرية</div><h1>تفوق <small style="font-size:.55em;opacity:.85">إعدادي</small></h1><div class="sub">الصف الثالث الإعدادي • 2026–2027</div></div>
+      ${cd!==null?`<div class="countdown"><b>${cd}</b>يوماً على الامتحانات</div>`:''}
+    </div>
+    <div class="seg" role="group" aria-label="اختر شعبتك" style="${Object.keys(BRANCHES).length>1?'':'display:none'}">${Object.entries(BRANCHES).map(([k,b])=>`<button type="button" aria-pressed="${k===state.branch}" onclick="setBranch('${k}')">${esc(b.name)}</button>`).join('')}</div>
+  </header>
+  <div class="screen wrap">
+    <div class="stats">
+      <div class="stat"><b>${h.length}</b>امتحان</div>
+      <div class="stat"><b>${avg===null?'—':avg+'٪'}</b>متوسط درجاتك</div>
+      <div class="stat"><b>${last?hPercent(last)+'٪':'—'}</b>آخر نتيجة</div>
+    </div>
+    <div class="tools">
+      <button type="button" class="tool primary" onclick="go('exams',{setup:{...state.setup,mode:'normal'}})"><span class="glyph">✓</span><b>امتحان تجريبي</b><span>بمؤقت وأسئلة اختيار من متعدد</span></button>
+      <button type="button" class="tool" onclick="if(!plusGate())return;go('exams',{setup:{...state.setup,mode:'bubble'}})"><span class="glyph">◉</span><b>${isPlus()?'':'🔒 '}البابل شيت</b><span>محاكاة ورقة الإجابة الحقيقية</span></button>
+      <button type="button" class="tool" onclick="if(!plusGate())return;go('tutor')"><span class="glyph">؟</span><b>${isPlus()?'':'🔒 '}المدرس الذكي</b><span>اشرح لي درساً أو حل مسألة</span></button>
+      <button type="button" class="tool" onclick="go('history')"><span class="glyph">٪</span><b>نتائجي</b><span>الدرجات والأخطاء السابقة</span></button>
+      <button type="button" class="tool" onclick="openEssays(null)"><span class="glyph">✎</span><b>أسئلة مقالية</b><span>اكتب إجابتك وقارنها بالنموذجية</span></button>
+      <button type="button" class="tool" onclick="go('weak')"><span class="glyph">!</span><b>نقاط ضعفي</b><span>أضعف الوحدات وماذا تذاكر</span></button>
+      <button type="button" class="tool" onclick="go('mistakes')"><span class="glyph">↺</span><b>بنك أخطائي</b><span>${(()=>{seedFromHistory();const d=dueItems().length;return d?qCount(d)+' للمراجعة الآن':'راجع أخطاءك على فترات'})()}</span></button>
+    </div>
+    <div class="card">
+      <div class="row"><h3>مذاكرة اليوم • ${DAYS[todayIdx()]}</h3><button type="button" class="link" onclick="go('plan',{planDay:todayIdx()})">الجدول</button></div>
+      ${today.length?`<div>${today.map(sessionRow).join('')}</div>`:`<p class="empty">لا توجد جلسات اليوم. أضف جلسات من «جدولي» أو اطلب جدولاً مقترحاً.</p>`}
+    </div>
+    ${plusCard()}
+    <div class="section-title"><h2>مواد ${esc(BRANCHES[state.branch].name)}</h2><button type="button" class="link" onclick="go('subjects')">الكل</button></div>
+    <div class="list">${branchSubjects().map(subjButton).join('')}</div>
+    <p class="note">نسخة تعليمية تجريبية ${VERSION}. الأسئلة الحالية تدريبات عامة على منهج الصف الثالث الإعدادي، وستُطابق مع كتب الوزارة 2026–2027 وحدة بوحدة.</p>
+  </div>`;
+}
+function setBranch(b){state.branch=b;save('branch',b);if(!branchSubjects().includes(state.setup.subject))state.setup.subject=null;render()}
+function subjButton(id){
+  const n=BANK[id].length,h=history().filter(x=>x.subject===id),avg=h.length?Math.round(h.reduce((a,x)=>a+hPercent(x),0)/h.length):null;
+  const extra=CHAPTERS[id]?` • ${CHAPTERS[id].length} ${chPlural(id)}`:'';
+  return `<button type="button" class="subj" onclick="go('subject',{subject:'${id}'})">${subjGlyph(id)}<span class="meta"><b>${esc(SUBJECTS[id].name)}</b><span class="muted">${qCount(n)}${extra}</span></span>${avg!==null?`<span class="pill ${avg>=PASS?'good':'bad'}">${avg}٪</span>`:'<span class="pill">ابدأ</span>'}</button>`;
+}
+
+/* ---------- subjects ---------- */
+function renderSubjects(){
+  appEl.innerHTML=bar('المواد الدراسية')+`<div class="screen wrap"><p class="muted">شعبة ${esc(BRANCHES[state.branch].name)}. يمكنك تغيير الشعبة من الصفحة الرئيسية.</p><div class="list">${branchSubjects().map(subjButton).join('')}</div></div>`;
+}
+function renderSubject(){
+  const id=state.subject,s=SUBJECTS[id];
+  const progress=load('practice_progress',{});
+  let content='';
+  const chCard=CHAPTERS[id]?`<div class="card"><h3>${chPlural(id)} المنهج</h3><div class="list">${CHAPTERS[id].map((c,k)=>{const n=BANK[id].filter(q=>q.ch===k).length;return `<div class="row"><span>${k+1}. ${esc(c)}</span><button type="button" class="pill" onclick="if(${k}>0&&!plusGate())return;state.setup={...state.setup,subject:'${id}',ch:${k},mode:'normal'};go('exams')">${k>0&&!isPlus()?'🔒 ':''}${qCount(n)} ←</button></div>`}).join('')}</div></div>`:'';
+  if(id==='physics'){
+    content=chCard+`<h2>الفصل الأول: الدروس</h2>`+
+    PHYSICS_LESSONS.map((L,i)=>`<details class="card lesson" id="lesson-${i+1}" ${i===0?'open':''}><summary><span class="num">${i+1}</span><span>${esc(L.t)}</span>${progress[i+1]?'<span class="pill good done">تم</span>':''}</summary><div class="lesson-body">
+      <h4>الفكرة الأساسية</h4><p>${esc(L.idea)}</p>
+      ${L.f.map(fm).join('')}
+      <h4>مثال محلول</h4><p>${esc(L.ex)}</p>${fm(L.calc)}
+      <div class="practice"><b>تدرّب بنفسك</b><p>${esc(L.p.q)}</p>${L.p.a.map((a,j)=>`<button type="button" class="popt" data-l="${i}" data-j="${j}" onclick="answerPractice(${i},${j})">${esc(a)}</button>`).join('')}<div class="fb" id="fb-${i}" aria-live="polite"></div></div>
+      <div class="btns"><button type="button" class="btn soft" onclick="askTutorAbout('physics','اشرح لي درس «${esc(L.t)}» بأسلوب مبسط مع مثال جديد.')">اسأل المدرس عن الدرس</button></div>
+    </div></details>`).join('')+lessonsHtml('physics')+`<h2>ملخصات الفصول 2 إلى 8</h2>`+(NOTES.physics||[]).map(n=>`<div class="card"><h3>${esc(n.t)}</h3><div>${rich(n.b)}</div></div>`).join('');
+  }else{
+    content=chCard+lessonsHtml(id)+`<h2>${CHAPTERS[id]?(['arabic','english','appliedmath'].includes(id)?'ملخصات':'ملخص كل '+chSingle(id)):'ملخصات سريعة'}</h2>`+(NOTES[id]||[]).map(n=>`<div class="card"><h3>${esc(n.t)}</h3><div>${rich(n.b)}</div></div>`).join('');
+  }
+  appEl.innerHTML=bar(s.name,'subjects')+`<div class="screen wrap">
+    <div class="card"><div class="row">${subjGlyph(id)}<div style="flex:1"><b>${esc(s.name)}</b><div class="muted">${qCount(BANK[id].length)} في بنك الأسئلة</div></div></div>
+      <div class="btns"><button type="button" class="btn" onclick="quickExam('${id}','normal')">امتحان بمؤقت</button><button type="button" class="btn soft" onclick="quickExam('${id}','bubble')">بابل شيت</button></div>
+      <button type="button" class="btn ghost block" onclick="go('tutor',{tutorSubject:'${id}'})">اسأل المدرس الذكي في ${esc(s.name)}</button>
+    </div>
+    ${content}
+  </div>`;
+}
+function answerPractice(i,j){
+  const P=PHYSICS_LESSONS[i].p,ok=j===P.c;
+  document.querySelectorAll(`.popt[data-l="${i}"]`).forEach((b,k)=>{b.classList.toggle('ok',k===P.c&&(ok||k===P.c));b.classList.toggle('no',k===j&&!ok)});
+  document.getElementById('fb-'+i).innerHTML=`<b style="color:var(--${ok?'good':'bad'})">${ok?'✓ إجابة صحيحة.':'✗ إجابة غير صحيحة. الصحيحة: '+esc(P.a[P.c])}</b><span>${esc(P.why)}</span>${fm(P.math)}`;
+  if(ok){const p=load('practice_progress',{});p[i+1]=true;save('practice_progress',p)}
+}
+function quickExam(id,mode){state.setup={...state.setup,subject:id,ch:null,mode};go('exams')}
+
+/* ---------- exam setup ---------- */
+function renderExamSetup(){
+  const S=state.setup;if(!S.subject||!branchSubjects().includes(S.subject))S.subject=branchSubjects().find(x=>x==='physics')||branchSubjects()[0];
+  const chs=CHAPTERS[S.subject];if(!chs)S.ch=null;if(!isPlus()){if(chs)S.ch=0;if(S.mode==='bubble')S.mode='normal'}
+  const max=examPool().length,count=Math.min(S.count,max),mins=Math.ceil(count*SEC_PER_Q/60);
+  appEl.innerHTML=bar('الامتحانات')+`<div class="screen wrap">
+    <div class="card"><span class="label">المادة</span><div class="choices">${branchSubjects().map(id=>`<button type="button" class="choice" aria-pressed="${id===S.subject}" onclick="state.setup.subject='${id}';state.setup.ch=null;render()">${esc(SUBJECTS[id].name)}</button>`).join('')}</div></div>
+    ${chs?`<div class="card"><span class="label">${chWord(S.subject)}</span><div class="choices"><button type="button" class="choice" aria-pressed="${S.ch===null}" onclick="if(!plusGate())return;state.setup.ch=null;render()">${isPlus()?'':'🔒 '}كل ال${chPlural(S.subject)}</button>${chs.map((c,k)=>`<button type="button" class="choice" aria-pressed="${S.ch===k}" onclick="if(${k}>0&&!plusGate())return;state.setup.ch=${k};render()">${k>0&&!isPlus()?'🔒 ':''}${k+1}. ${esc(c)}</button>`).join('')}</div></div>`:''}
+    <div class="card"><span class="label">عدد الأسئلة</span><div class="choices">${[5,10,20,max].filter((v,i,a)=>v<=max&&a.indexOf(v)===i).map(n=>`<button type="button" class="choice" aria-pressed="${n===count}" onclick="state.setup.count=${n};render()">${n===max?'كل الأسئلة ('+max+')':n+' أسئلة'}</button>`).join('')}</div></div>
+    <div class="card"><span class="label">نوع الامتحان</span><div class="modes">
+      <button type="button" class="mode" aria-pressed="${S.mode==='normal'}" onclick="state.setup.mode='normal';render()"><b>امتحان عادي</b><span>سؤال في كل شاشة، مع إمكانية الرجوع ووضع علامة للمراجعة.</span></button>
+      <button type="button" class="mode" aria-pressed="${S.mode==='bubble'}" onclick="if(!plusGate())return;state.setup.mode='bubble';render()"><b>${isPlus()?'':'🔒 '}بابل شيت</b><span>كراسة أسئلة وورقة إجابة منفصلة تظلّل فيها الدوائر.</span></button>
+    </div>
+    ${S.mode==='bubble'?`<div class="toggle"><div><b style="font-size:16px">تظليل نهائي كالامتحان الحقيقي</b><div class="muted">تظليل دائرتين في نفس السؤال يلغي إجابته.</div></div><button type="button" class="switch" role="switch" aria-checked="${S.strict}" aria-label="تظليل نهائي" onclick="state.setup.strict=!state.setup.strict;render()"></button></div>`:''}
+    </div>
+    <div class="card"><div class="row"><span>الزمن المتاح</span><b class="pill">${mins} دقيقة</b></div><div class="row"><span>درجة النجاح</span><b class="pill">${PASS}٪</b></div>
+    <button type="button" class="btn block" onclick="startExam()">ابدأ الامتحان</button></div>
+    <button type="button" class="btn ghost" onclick="openEssays(state.setup.subject)">الأسئلة المقالية</button><button type="button" class="btn ghost" onclick="go('history')">نتائجي السابقة</button>
+  </div>`;
+}
+
+/* ---------- exam engine ---------- */
+function makeItems(list){return list.map(q=>{const perm=shuffle([...q.a.keys()]);return{q:q.q,opts:perm.map(i=>q.a[i]),c:perm.indexOf(0),e:q.e,ch:q.ch,src:q}})}
+function examPool(){const S=state.setup;return BANK[S.subject].filter(q=>(S.ch===null||S.ch===undefined||q.ch===S.ch)&&plusOk(q))}
+const chWord=subject=>CHAPTER_WORD[subject]||'الفصل';
+function chName(subject,ch){return CHAPTERS[subject]&&ch!=null?`${chWord(subject)} ${ch+1}: ${CHAPTERS[subject][ch]}`:''}
+function startExam(pool){
+  if(!isPlus()){if(state.setup.mode==='bubble')state.setup.mode='normal';if(pool){const was=pool.length;pool=pool.filter(plusOk);if(was&&!pool.length){paywall();return}}}
+  const S=state.setup,all=examPool();
+  const qs=pool||shuffle(all).slice(0,Math.min(S.count,all.length));
+  const n=qs.length,seconds=n*SEC_PER_Q;
+  if(!n){toast('لا توجد أسئلة متاحة لهذا الاختيار');return}
+  exam={subject:S.subject,ch:pool?null:S.ch,mode:S.mode,strict:S.mode==='bubble'&&S.strict,items:makeItems(qs),answers:Array(n).fill(null),second:Array(n).fill(null),flags:Array(n).fill(false),idx:0,tab:'booklet',seconds,startedAt:Date.now(),endsAt:Date.now()+seconds*1000,done:false,seat:''};
+  clearInterval(tick);tick=setInterval(tickTimer,1000);
+  state.screen='exam';render();window.scrollTo(0,0);
+}
+function remaining(){return Math.max(0,Math.round((exam.endsAt-Date.now())/1000))}
+function tickTimer(){if(!exam||exam.done)return;const r=remaining();const el=document.getElementById('timer');if(el){el.textContent=fmtTime(r);el.classList.toggle('low',r<=60)}if(r<=0)finishExam(true)}
+function answeredCount(){return exam.answers.filter(a=>a!==null).length}
+function renderExam(){
+  const E=exam,n=E.items.length,r=remaining();
+  const head=`<div class="exam-head wrap"><div class="row"><div><b>${esc(SUBJECTS[E.subject].name)}</b><div class="muted">${E.mode==='bubble'?'محاكاة البابل شيت':'امتحان تجريبي'} • أجبت ${answeredCount()} من ${n}</div></div><div class="row" style="gap:8px"><span class="timer ${r<=60?'low':''}" id="timer" aria-label="الوقت المتبقي">${fmtTime(r)}</span><button type="button" class="btn soft" style="padding:8px 12px" onclick="askSubmit()">تسليم</button></div></div><div class="progress"><span style="width:${answeredCount()/n*100}%"></span></div>`;
+  if(E.mode==='bubble'){
+    appEl.innerHTML=head+`<div class="tabs" role="tablist"><button type="button" role="tab" aria-selected="${E.tab==='booklet'}" onclick="exam.tab='booklet';render();window.scrollTo(0,0)">كراسة الأسئلة</button><button type="button" role="tab" aria-selected="${E.tab==='sheet'}" onclick="exam.tab='sheet';render();window.scrollTo(0,0)">ورقة الإجابة (${answeredCount()}/${n})</button></div></div><div class="screen wrap">${E.tab==='booklet'?bookletHtml():sheetHtml()}</div>`;
+    return;
+  }
+  const it=E.items[E.idx];
+  appEl.innerHTML=head+`<div class="qgrid" aria-label="الأسئلة">${E.items.map((x,i)=>`<button type="button" class="qdot ${E.answers[i]!==null?'answered':''} ${i===E.idx?'current':''} ${E.flags[i]?'flagged':''}" aria-label="السؤال ${i+1}" onclick="exam.idx=${i};render()">${i+1}</button>`).join('')}</div></div>
+  <div class="screen wrap">
+    <div class="card">${chName(E.subject,it.ch)?`<span class="muted">${esc(chName(E.subject,it.ch))}</span>`:''}<div class="row"><span class="pill">السؤال ${E.idx+1} من ${n}</span><button type="button" class="flag" aria-pressed="${E.flags[E.idx]}" onclick="exam.flags[exam.idx]=!exam.flags[exam.idx];render()">⚑ ${E.flags[E.idx]?'معلَّم للمراجعة':'علّم للمراجعة'}</button></div>
+      <p class="qtext">${qh(it.q)}</p>${figHtml(it.src)}
+      <div class="list">${it.opts.map((o,i)=>`<button type="button" class="opt" aria-pressed="${E.answers[E.idx]===i}" onclick="chooseAnswer(${i})"><span class="k">${LETTERS[i]}</span>${optHtml(o)}</button>`).join('')}</div>
+    </div>
+    <div class="exam-foot"><button type="button" class="btn ghost" ${E.idx===0?'disabled':''} onclick="exam.idx--;render()">→ السابق</button>${E.idx<n-1?`<button type="button" class="btn" onclick="exam.idx++;render()">التالي ←</button>`:`<button type="button" class="btn" onclick="askSubmit()">تسليم الامتحان</button>`}</div>
+    <p class="muted" style="text-align:center">يمكنك الرجوع وتعديل إجاباتك قبل التسليم.</p>
+  </div>`;
+}
+function chooseAnswer(i){exam.answers[exam.idx]=i;render()}
+function bookletHtml(){
+  return `<div class="card"><p class="muted">اقرأ الأسئلة هنا، ثم ظلّل إجابتك في «ورقة الإجابة». رقم السؤال في الكراسة هو رقم الصف في الورقة.</p>${exam.items.map((it,i)=>`<div class="booklet-q"><div class="row"><b>${i+1}. ${qh(it.q)}</b>${exam.answers[i]!==null?'<span class="pill good">مظلَّل</span>':''}</div>${figHtml(it.src)}<ol>${it.opts.map((o,k)=>`<li><span class="k">${LETTERS[k]})</span>${optHtml(o)}</li>`).join('')}</ol></div>`).join('')}
+  <button type="button" class="btn block" onclick="exam.tab='sheet';render();window.scrollTo(0,0)">انتقل إلى ورقة الإجابة</button></div>`;
+}
+function sheetHtml(){
+  const E=exam,rows=E.items.map((it,i)=>{
+    const inv=E.second[i]!==null;
+    return `<div class="brow ${inv?'invalid':''}"><span class="n">${i+1}</span><span class="bubbles">${LETTERS.map((L,k)=>`<button type="button" class="bub ${E.answers[i]===k||E.second[i]===k?'on':''}" aria-label="السؤال ${i+1} الاختيار ${L}" aria-pressed="${E.answers[i]===k||E.second[i]===k}" onclick="shade(${i},${k})">${L}</button>`).join('')}</span>${inv?'<span class="flagmini">ملغاة</span>':''}</div>`}).join('');
+  return `<div class="sheet"><div class="sheet-head"><h3>ورقة الإجابة • امتحان ${esc(SUBJECTS[E.subject].name)} التجريبي</h3>
+    <div class="sheet-fields"><label>رقم الجلوس<input class="box" id="seat" inputmode="numeric" maxlength="8" value="${esc(E.seat)}" oninput="exam.seat=this.value" dir="ltr"></label><label>الشعبة<input class="box" value="${esc(BRANCHES[state.branch].name)}" readonly></label></div>
+    <p class="sheet-rules">ظلّل دائرة واحدة فقط لكل سؤال تظليلاً كاملاً.${E.strict?' التظليل نهائي: تظليل دائرة ثانية في السؤال نفسه يلغي إجابته.':' يمكنك تغيير التظليل في هذا التدريب.'}</p></div>
+    <div class="bubble-cols">${rows}</div></div>
+    <button type="button" class="btn block" onclick="askSubmit()">تسليم ورقة الإجابة</button>`;
+}
+function shade(i,k){
+  const E=exam;
+  if(E.second[i]!==null)return toast('هذه الإجابة ملغاة بسبب التظليل المزدوج');
+  if(E.answers[i]===null)E.answers[i]=k;
+  else if(E.answers[i]===k){if(!E.strict)E.answers[i]=null;else return toast('التظليل نهائي ولا يمكن مسحه')}
+  else if(E.strict)E.second[i]=k;
+  else E.answers[i]=k;
+  const y=window.scrollY;render();window.scrollTo(0,y);
+}
+function askSubmit(){
+  const left=exam.items.length-answeredCount(),fl=exam.flags.filter(Boolean).length;
+  modal({title:'تسليم الامتحان؟',body:(left?`لم تُجب عن <b>${left}</b> ${left===1?'سؤال':'أسئلة'}. `:'أجبت عن كل الأسئلة. ')+(fl?`وعندك ${fl} معلَّمة للمراجعة. `:'')+'لا يمكن تعديل الإجابات بعد التسليم.',ok:'سلّم الآن',cancel:'ارجع للامتحان',onOk:()=>finishExam(false)});
+}
+function confirmLeaveExam(){modal({title:'إنهاء الامتحان؟',body:'سيتم تسليم إجاباتك الحالية وحساب النتيجة.',ok:'سلّم وأنهِ',cancel:'أكمل الامتحان',onOk:()=>{finishExam(false);}})}
+function finishExam(auto){
+  if(!exam||exam.done)return;exam.done=true;clearInterval(tick);tick=null;
+  const E=exam,n=E.items.length;
+  const rows=E.items.map((it,i)=>{const invalid=E.second[i]!==null,a=E.answers[i];const status=invalid?'invalid':a===null?'skip':a===it.c?'ok':'no';return{...it,a,second:E.second[i],status}});
+  const correct=rows.filter(r=>r.status==='ok').length,skipped=rows.filter(r=>r.status==='skip').length,invalid=rows.filter(r=>r.status==='invalid').length,wrong=n-correct-skipped-invalid;
+  const secs=Math.min(E.seconds,Math.round((Date.now()-E.startedAt)/1000)),percent=Math.round(correct/n*100);
+  seedFromHistory();const added=trackResult(E.subject,rows);
+  lastResult={subject:E.subject,ch:E.ch,mode:E.mode,strict:E.strict,rows,correct,wrong,skipped,invalid,total:n,percent,secs,auto,added};
+  const h=history();h.unshift({date:new Date().toISOString(),subject:E.subject,ch:E.ch,mode:E.mode,correct,total:n,percent,wrong,skipped,invalid,secs,branch:BRANCHES[state.branch].name,mistakes:rows.filter(r=>r.status!=='ok').map(r=>r.src.q)});save('history',h.slice(0,150));
+  state.resultFilter='mistakes';state.screen='result';render();window.scrollTo(0,0);
+  if(auto)toast('انتهى الوقت وتم تسليم الامتحان تلقائياً');
+}
+
+/* ---------- result ---------- */
+function renderResult(){
+  const R=lastResult;if(!R){go('exams');return}
+  const pass=R.percent>=PASS,C=2*Math.PI*62,off=C*(1-R.percent/100);
+  const list=R.rows.map((r,i)=>({...r,i})).filter(r=>state.resultFilter==='all'||r.status!=='ok');
+  appEl.innerHTML=bar('نتيجة الامتحان')+`<div class="screen wrap">
+  <div class="card">
+    <div class="ring"><svg viewBox="0 0 140 140" aria-hidden="true"><circle cx="70" cy="70" r="62" stroke="var(--surface-2)" stroke-width="12" fill="none"/><circle cx="70" cy="70" r="62" stroke="var(--${pass?'good':'bad'})" stroke-width="12" fill="none" stroke-linecap="round" stroke-dasharray="${C}" stroke-dashoffset="${off}"/></svg><div class="center"><div><b>${R.percent}٪</b><span class="muted">${R.correct} من ${R.total}</span></div></div></div>
+    <div class="verdict"><span class="pill ${pass?'good':'bad'}" style="justify-self:center">${pass?'ناجح':'لم تصل لدرجة النجاح'} • النجاح من ${PASS}٪</span><span class="grade">${gradeOf(R.percent)}</span><span class="muted">${esc(SUBJECTS[R.subject].name)}${R.ch!=null?' • '+esc(chName(R.subject,R.ch)):''} • ${R.mode==='bubble'?'بابل شيت':'امتحان عادي'} • المدة ${fmtTime(R.secs)}</span></div>
+    <div class="meta4"><div class="g">صحيحة<b>${R.correct}</b></div><div class="r">خاطئة<b>${R.wrong}</b></div><div>متروكة<b>${R.skipped}</b></div><div class="r">ملغاة<b>${R.invalid}</b></div></div>
+    ${R.added?`<p class="note">أُضيف ${qCount(R.added)} إلى «بنك أخطائي» لتراجعها على فترات. <button type="button" class="link" onclick="go('mistakes')">افتح البنك</button></p>`:''}
+    ${R.invalid?`<p class="note">${R.invalid} ${R.invalid===1?'إجابة أُلغيت':'إجابات أُلغيت'} بسبب تظليل أكثر من دائرة. في الامتحان الحقيقي تُحسب هذه الأسئلة بلا درجة.</p>`:''}
+    <div class="btns">${R.rows.some(r=>r.status!=='ok')?`<button type="button" class="btn" onclick="retryMistakes()">أعد الأسئلة الخاطئة</button>`:''}<button type="button" class="btn soft" onclick="state.setup.subject='${R.subject}';state.setup.ch=${R.ch==null?'null':R.ch};state.setup.mode='${R.mode}';startExam()">امتحان جديد</button></div>
+  </div>
+  <div class="row"><h2>${state.resultFilter==='all'?'كل الأسئلة':'أخطاؤك'}</h2><div class="choices"><button type="button" class="choice" aria-pressed="${state.resultFilter==='mistakes'}" onclick="state.resultFilter='mistakes';render()">الأخطاء</button><button type="button" class="choice" aria-pressed="${state.resultFilter==='all'}" onclick="state.resultFilter='all';render()">الكل</button></div></div>
+  ${list.length?list.map(r=>`<div class="card rv ${r.status==='ok'?'ok':r.status==='skip'?'skip':'no'}">
+     ${figHtml(r.src)}<div class="row"><b>${r.i+1}. ${qh(r.q)}</b><span class="pill ${r.status==='ok'?'good':r.status==='skip'?'warn':'bad'}">${{ok:'صحيحة',no:'خاطئة',skip:'متروكة',invalid:'ملغاة'}[r.status]}</span></div>
+     ${r.status!=='ok'?`<p class="ans wrong">إجابتك: ${r.status==='skip'?'لم تُجب':r.status==='invalid'?'تظليل مزدوج ('+LETTERS[r.a]+' و '+LETTERS[r.second]+')':optHtml(r.opts[r.a])}</p>`:''}
+     ${chName(R.subject,r.ch)?`<span class="muted">${esc(chName(R.subject,r.ch))}</span>`:''}
+     <p class="ans right">الإجابة الصحيحة: ${optHtml(r.opts[r.c])}</p>
+     <div class="expl"${R.subject==='english'?' dir="ltr"':''}>${rich(r.e)}</div>
+     ${r.status!=='ok'?`<button type="button" class="btn ghost" onclick="explainMistake(${r.i})">اشرح لي هذا السؤال</button>`:''}
+  </div>`).join(''):'<div class="card empty">لا أخطاء. أحسنت!</div>'}
+  </div>`;
+}
+function retryMistakes(){const R=lastResult;state.setup.subject=R.subject;state.setup.mode=R.mode;startExam(R.rows.filter(r=>r.status!=='ok').map(r=>r.src))}
+function explainMistake(i){
+  const r=lastResult.rows[i];
+  const mine=r.status==='skip'?'لم أُجب عنه':r.status==='invalid'?'ظلّلت إجابتين':'اخترت «'+r.opts[r.a]+'»';
+  askTutorAbout(lastResult.subject,`في سؤال: «${r.q}» ${mine}، والإجابة الصحيحة «${r.opts[r.c]}». اشرح لي لماذا، وأين الخطأ في تفكيري.`,{q:r.src});
+}
+
+
+/* ---------- weak areas & mistakes bank (v1.0.0) ---------- */
+const qKey=(s,q)=>{let h=5381;const t=s+'|'+q.q;for(let i=0;i<t.length;i++)h=((h<<5)+h+t.charCodeAt(i))|0;return s+':'+(h>>>0).toString(36)};
+let QINDEX=null;
+function qIndex(){if(!QINDEX){QINDEX={};for(const[s,qs] of Object.entries(BANK))qs.forEach(q=>{QINDEX[qKey(s,q)]={s,q}})}return QINDEX}
+const DAY=864e5,REVIEW_GAP=[0,1,3,7]; // box -> days until next review; a correct answer at box 3 = mastered
+function bankData(){const v=load('mbank',{});return v&&typeof v==='object'?v:{}}
+function chData(){const v=load('chstats',{});return v&&typeof v==='object'?v:{}}
+function seedFromHistory(){
+  if(load('mbankSeeded',false))return;
+  const bank=bankData(),cs=chData(),idx=qIndex(),h=history();
+  h.slice().reverse().forEach(x=>{
+    if(!BANK[x.subject])return;
+    (x.mistakes||[]).forEach(t=>{const q=BANK[x.subject].find(q=>q.q===t);if(!q)return;const k=qKey(x.subject,q);bank[k]={s:x.subject,box:0,due:Date.parse(x.date)||Date.now(),w:((bank[k]||{}).w||0)+1}});
+    if(x.ch!=null&&x.total){const c=(cs[x.subject]=cs[x.subject]||{});const e=(c[x.ch]=c[x.ch]||{n:0,c:0});e.n+=x.total;e.c+=x.correct||0}
+  });
+  save('mbank',bank);save('chstats',cs);save('mbankSeeded',true);
+}
+/* called once per finished exam */
+function trackResult(subject,rows){
+  const bank=bankData(),cs=chData(),now=Date.now();let added=0;
+  rows.forEach(r=>{
+    const q=r.src;if(!q)return;const ok=r.status==='ok';
+    if(q.ch!=null){const c=(cs[subject]=cs[subject]||{});const e=(c[q.ch]=c[q.ch]||{n:0,c:0});e.n++;if(ok)e.c++}
+    const k=qKey(subject,q),b=bank[k];
+    if(!ok){if(!b||b.box>=4)added++;bank[k]={s:subject,box:0,due:now,w:((b||{}).w||0)+1,last:now}}
+    else if(b&&b.box<4&&b.due<=now){b.box++;b.last=now;if(b.box>=4)b.done=now;else b.due=now+REVIEW_GAP[b.box]*DAY}
+  });
+  save('mbank',bank);save('chstats',cs);return added;
+}
+function bankItems(subject){const idx=qIndex();return Object.entries(bankData()).filter(([k,b])=>idx[k]&&(!subject||b.s===subject)).map(([k,b])=>({k,...b,q:idx[k].q}))}
+function dueItems(subject){const now=Date.now();return bankItems(subject).filter(x=>x.box<4&&x.due<=now)}
+function chLevel(acc){return acc<50?['ضعيف','bad']:acc<75?['متوسط','warn']:['جيد','good']}
+function weakRows(){
+  const cs=chData(),out=[];
+  branchSubjects().forEach(s=>{if(!CHAPTERS[s])return;Object.entries(cs[s]||{}).forEach(([ch,e])=>{ch=+ch;if(e.n>=3&&CHAPTERS[s][ch]!==undefined)out.push({s,ch,n:e.n,acc:Math.round(e.c/e.n*100)})})});
+  return out.sort((a,b)=>a.acc-b.acc||b.n-a.n);
+}
+function practiceChapter(s,ch){if(ch>0&&!plusGate())return;state.setup={...state.setup,subject:s,ch,mode:'normal',count:10};go('exams')}
+function reviewBank(s,ch){
+  const items=dueItems(s).filter(x=>ch==null||x.q.ch===ch);if(!items.length){toast('لا توجد أسئلة مستحقة للمراجعة الآن');return}
+  state.setup={...state.setup,subject:s,mode:'normal'};startExam(shuffle(items).slice(0,20).map(x=>x.q));
+}
+function fmtDue(t){const d=Math.ceil((t-Date.now())/DAY);return d<=0?'الآن':d===1?'غداً':'بعد '+d+' أيام'}
+function renderWeak(){
+  seedFromHistory();
+  const rows=weakRows(),weak=rows.filter(r=>r.acc<75).slice(0,5),cs=chData();
+  const bySubj=branchSubjects().filter(s=>CHAPTERS[s]).map(s=>{const rs=rows.filter(r=>r.s===s).sort((a,b)=>a.ch-b.ch);const tested=rs.length;return{s,rs,untested:CHAPTERS[s].length-tested}});
+  const rowHtml=r=>{const[l,c]=chLevel(r.acc);const due=dueItems(r.s).filter(x=>x.q.ch===r.ch).length;return `<div class="weak-row"><div class="row"><span><b>${esc(SUBJECTS[r.s].name)}</b> • ${chWord(r.s)} ${r.ch+1}: ${esc(CHAPTERS[r.s][r.ch])}</span><span class="pill ${c}">${l} ${r.acc}٪</span></div><div class="barrow"><span class="muted">${qCount(r.n)}</span><span class="track"><span style="width:${r.acc}%;background:var(--${c})"></span></span><span class="v">${r.acc}%</span></div><div class="btns"><button type="button" class="btn soft" onclick="practiceChapter('${r.s}',${r.ch})">امتحن فيها</button>${due?`<button type="button" class="btn ghost" onclick="reviewBank('${r.s}',${r.ch})">راجع أخطاءها (${due})</button>`:''}</div></div>`};
+  appEl.innerHTML=bar('نقاط ضعفي','home')+`<div class="screen wrap">
+    <div class="card"><h3>أضعف الوحدات عندك</h3>
+      ${rows.length?(weak.length?weak.map(rowHtml).join(''):'<p class="empty">ممتاز! كل الوحدات التي امتحنت فيها مستواك فيها جيد (75٪ فأكثر).</p>'):'<p class="empty">لم يكتمل التحليل بعد. امتحن في الوحدات (3 أسئلة على الأقل في الوحدة) وسيظهر هنا ترتيب أضعف وحداتك.</p>'}
+      <p class="muted">ضعيف: أقل من 50٪ • متوسط: 50–74٪ • جيد: 75٪ فأكثر. يُحسب من كل إجاباتك في الامتحانات.</p>
+    </div>
+    ${bySubj.map(x=>`<details class="card"${x.rs.length?'':''}><summary class="row"><b>${esc(SUBJECTS[x.s].name)}</b><span class="muted">${x.rs.length?'امتحنت في '+x.rs.length+' من '+CHAPTERS[x.s].length:'لم تمتحن فيها بعد'}</span></summary>
+      ${x.rs.map(rowHtml).join('')}
+      ${x.untested?`<p class="muted">${x.untested} من ${CHAPTERS[x.s].length} ${chPlural(x.s)} لم تمتحن فيها بعد.</p>`:''}
+    </details>`).join('')}
+    <button type="button" class="btn block" onclick="go('mistakes')">افتح بنك أخطائي</button>
+  </div>`;
+}
+function renderMistakes(){
+  seedFromHistory();
+  const all=bankItems(),active=all.filter(x=>x.box<4),mastered=all.filter(x=>x.box>=4).length,due=active.filter(x=>x.due<=Date.now());
+  const subs=branchSubjects().map(s=>({s,act:active.filter(x=>x.s===s),due:due.filter(x=>x.s===s)})).filter(x=>x.act.length);
+  appEl.innerHTML=bar('بنك أخطائي','home')+`<div class="screen wrap">
+    <div class="stats"><div class="stat"><b>${due.length}</b>مستحقة الآن</div><div class="stat"><b>${active.length}</b>في البنك</div><div class="stat"><b>${mastered}</b>أتقنتها</div></div>
+    <div class="card"><h3>كيف يعمل؟</h3><p class="muted">كل سؤال تخطئ فيه أو تتركه في أي امتحان يدخل البنك. تراجعه الآن، ثم بعد يوم، ثم بعد 3 أيام، ثم بعد أسبوع. إذا أجبته صحيحاً في المراجعات الأربع يخرج من البنك، وإذا أخطأت يعود للبداية.</p></div>
+    ${subs.length?subs.map(x=>`<div class="card"><div class="row"><b>${esc(SUBJECTS[x.s].name)}</b><span class="pill ${x.due.length?'bad':'good'}">${x.due.length} مستحقة • ${x.act.length} في البنك</span></div>
+      ${x.due.length?`<button type="button" class="btn block" onclick="reviewBank('${x.s}')">راجع الآن (${x.due.length>20?'20 من '+x.due.length:x.due.length})</button>`:`<p class="muted">لا توجد مراجعة مستحقة الآن. أقرب مراجعة ${fmtDue(Math.min(...x.act.map(a=>a.due)))}.</p>`}
+      <details><summary class="link">عرض الأسئلة</summary>${x.act.sort((a,b)=>a.due-b.due).map(a=>`<div class="bank-q"><div>${qh(a.q.q)}</div>${figHtml(a.q)}<div class="muted">الإجابة: <bdi>${optHtml(a.q.a[0])}</bdi> • أخطأت فيه ${a.w} ${a.w===1?'مرة':'مرات'} • المراجعة ${fmtDue(a.due)}</div></div>`).join('')}</details>
+    </div>`).join(''):'<div class="card"><p class="empty">البنك فارغ. أخطاؤك في الامتحانات القادمة ستُجمع هنا تلقائياً لتراجعها.</p></div>'}
+    <button type="button" class="btn ghost block" onclick="go('weak')">نقاط ضعفي</button>
+  </div>`;
+}
+
+
+/* ---------- figures, unit lessons, essay practice (v1.0.0) ---------- */
+const figHtml=q=>q&&q.fig&&FIGS[q.fig]?`<div class="qfig">${FIGS[q.fig]}</div>`:'';
+function lessonsHtml(id){
+  const ls=LESSONS[id];if(!ls||!CHAPTERS[id])return '';
+  const items=ls.map((b,k)=>b?`<details class="card lesson-u"><summary class="row"><b>${k>0&&!isPlus()?'🔒 ':''}${chWord(id)} ${k+1}: ${esc(CHAPTERS[id][k])}</b><span class="pill">اشرح</span></summary><div class="lesson-body"${id==='english'?' dir="ltr"':''}>${k>0&&!isPlus()?`<div class="plus-lock"><p class="muted">شرح هذه ال${chWord(id).replace(/^ال/,'')} ضمن تفوق بلس. الوحدة الأولى مجانية.</p><button type="button" class="btn" onclick="paywall()">👑 تفوق بلس</button></div>`:rich(b)}</div><div class="btns"><button type="button" class="btn soft" onclick="practiceChapter('${id}',${k})">امتحن في هذه ${id==='chemistry'?'الباب':id==='biology'||id==='history'||id==='physics'?'الفصل':'الوحدة'}</button>${ESSAYS[id]&&ESSAYS[id].some(e=>e.ch===k)?`<button type="button" class="btn ghost" onclick="openEssays('${id}',${k})">أسئلة مقالية</button>`:''}</div></details>`:'').join('');
+  return items?`<h2>شرح ال${chPlural(id)}</h2>${items}`:'';
+}
+let essay={subject:null,ch:null,idx:0,shown:false};
+function essayList(){const s=essay.subject;return (ESSAYS[s]||[]).filter(e=>essay.ch==null||e.ch===essay.ch)}
+function openEssays(s,ch){if(!isPlus()&&ch!==0){if(ch==null)ch=0;else{paywall();return}}essay={subject:s,ch:ch??null,idx:0,shown:false};go('essay')}
+function essayKey(s,e){return qKey(s,{q:e.q})}
+function setEssayMark(m){const list=essayList(),e=list[essay.idx];const k=essayKey(essay.subject,e);const all=load('essayMarks',{});all[k]=m;save('essayMarks',all);if(essay.idx<list.length-1){essay.idx++;essay.shown=false}render();window.scrollTo(0,0)}
+function saveEssayDraft(v){const list=essayList(),e=list[essay.idx];const d=load('essayDrafts',{});d[essayKey(essay.subject,e)]=v;save('essayDrafts',d)}
+function renderEssay(){
+  const subs=branchSubjects().filter(s=>(ESSAYS[s]||[]).length);
+  if(!essay.subject||!subs.includes(essay.subject)){essay={subject:subs[0],ch:null,idx:0,shown:false}}
+  const list=essayList(),marks=load('essayMarks',{}),drafts=load('essayDrafts',{});
+  const e=list[Math.min(essay.idx,list.length-1)];const s=essay.subject;
+  const done=list.filter(x=>marks[essayKey(s,x)]).length,ok=list.filter(x=>marks[essayKey(s,x)]==='ok').length;
+  const k=e?essayKey(s,e):'';const m=marks[k];
+  const chs=[...new Set((ESSAYS[s]||[]).map(x=>x.ch))].sort((a,b)=>a-b);
+  appEl.innerHTML=bar('الأسئلة المقالية','exams')+`<div class="screen wrap">
+    <div class="card"><span class="label">المادة</span><div class="choices">${subs.map(id=>`<button type="button" class="choice" aria-pressed="${id===s}" onclick="essay={subject:'${id}',ch:null,idx:0,shown:false};render()">${esc(SUBJECTS[id].name)}</button>`).join('')}</div>
+    ${CHAPTERS[s]?`<span class="label">${chWord(s)}</span><div class="choices"><button type="button" class="choice" aria-pressed="${essay.ch===null}" onclick="essay.ch=null;essay.idx=0;essay.shown=false;render()">الكل</button>${chs.map(c=>`<button type="button" class="choice" aria-pressed="${essay.ch===c}" onclick="essay.ch=${c};essay.idx=0;essay.shown=false;render()">${c+1}</button>`).join('')}</div>`:''}</div>
+    <div class="stats"><div class="stat"><b>${list.length}</b>سؤالاً</div><div class="stat"><b>${done}</b>قيّمت إجابتها</div><div class="stat"><b>${ok}</b>إجابة كاملة</div></div>
+    ${e?`<div class="card">
+      <div class="row"><span class="pill">سؤال ${essay.idx+1} من ${list.length}</span>${m?`<span class="pill ${m==='ok'?'good':m==='part'?'warn':'bad'}">${{ok:'كاملة',part:'ناقصة',no:'خاطئة'}[m]}</span>`:''}</div>
+      ${CHAPTERS[s]?`<div class="muted">${esc(chName(s,e.ch))}</div>`:''}
+      <div class="qtext"${s==='english'?' dir="ltr"':''}>${rich(e.q)}</div>
+      <label class="label" for="essay-ans">إجابتك</label>
+      <textarea id="essay-ans" class="essay-box"${s==='english'?' dir="ltr"':''} rows="5" placeholder="اكتب إجابتك هنا ثم قارنها بالإجابة النموذجية" oninput="saveEssayDraft(this.value)">${esc(drafts[k]||'')}</textarea>
+      ${essay.shown?`<div class="model"><b>الإجابة النموذجية</b><div${s==='english'?' dir="ltr"':''}>${rich(e.a)}</div></div>
+        <span class="label">قيّم إجابتك بأمانة</span>
+        <div class="btns"><button type="button" class="btn" onclick="setEssayMark('ok')">كاملة</button><button type="button" class="btn soft" onclick="setEssayMark('part')">ناقصة</button><button type="button" class="btn ghost" onclick="setEssayMark('no')">خاطئة</button></div>`
+      :`<button type="button" class="btn block" onclick="essay.shown=true;render()">اعرض الإجابة النموذجية</button>`}
+      <div class="btns" style="justify-content:space-between"><button type="button" class="btn ghost" ${essay.idx===0?'disabled':''} onclick="essay.idx--;essay.shown=false;render()">→ السابق</button><button type="button" class="btn ghost" ${essay.idx>=list.length-1?'disabled':''} onclick="essay.idx++;essay.shown=false;render()">التالي ←</button></div>
+      <button type="button" class="link" onclick="askTutorAbout('${s}',${JSON.stringify('اشرح لي إجابة هذا السؤال المقالي: '+(e.q||'')).replace(/"/g,'&quot;')},null)">اسأل المدرس الذكي عن هذا السؤال</button>
+    </div>`:'<p class="empty">لا توجد أسئلة مقالية هنا بعد.</p>'}
+    <p class="note">في امتحان الوزارة أسئلة مقالية إلى جانب الاختيار من متعدد. اكتب إجابتك كاملة قبل أن تنظر إلى الإجابة النموذجية.</p>
+  </div>`;
+}
+
+/* ---------- history ---------- */
+function renderHistory(){
+  const h=history();
+  const per=branchSubjects().map(id=>{const xs=h.filter(x=>x.subject===id);return{id,n:xs.length,avg:xs.length?Math.round(xs.reduce((a,x)=>a+hPercent(x),0)/xs.length):null}});
+  appEl.innerHTML=bar('نتائجي','exams')+`<div class="screen wrap">
+    <div class="card"><h3>متوسطك في كل مادة</h3><div class="bars">${per.map(p=>`<div class="barrow"><span>${esc(SUBJECTS[p.id].name)}</span><span class="track"><span style="width:${p.avg??0}%;background:${p.avg===null?'transparent':p.avg>=PASS?'var(--good)':'var(--bad)'}"></span></span><span class="v">${p.avg===null?'—':p.avg+'%'}</span></div>`).join('')}</div><p class="muted">الخط الفاصل للنجاح ${PASS}٪.</p></div>
+    <h2>كل المحاولات</h2>
+    ${h.length?h.map(x=>{const p=hPercent(x),d=new Date(x.date);const ds=isNaN(d)?esc(x.date):d.toLocaleDateString('ar-EG',{day:'numeric',month:'long'})+' • '+d.toLocaleTimeString('ar-EG',{hour:'numeric',minute:'2-digit'});return `<div class="card"><div class="row"><b>${esc(SUBJECTS[x.subject]?.name||(x.subject==='math'?'الرياضيات':'الفيزياء'))}</b>${x.ch!=null&&CHAPTERS[x.subject]?`<span class="muted">${chWord(x.subject)} ${x.ch+1}</span>`:''}<span class="pill ${p>=PASS?'good':'bad'}">${p}٪</span></div><div class="muted">${x.correct} من ${x.total} • ${x.mode==='bubble'?'بابل شيت':'امتحان عادي'} • ${ds}</div></div>`}).join(''):'<div class="card empty">لم تُجرِ أي امتحان بعد.</div>'}
+    ${h.length?`<button type="button" class="btn ghost" onclick="modal({title:'مسح كل النتائج؟',body:'سيُحذف سجل الامتحانات من هذا الجهاز.',ok:'امسح',danger:true,onOk:()=>{save('history',[]);render()}})">مسح السجل</button>`:''}
+  </div>`;
+}
+
+/* ---------- study plan ---------- */
+function sessionRow(s){const done=isDone(s);const name=s.subject==='review'?'مراجعة عامة':SUBJECTS[s.subject]?.name||'';return `<div class="session ${done?'done':''}"><button type="button" class="check" aria-pressed="${done}" aria-label="تم" onclick="toggleSession('${s.id}')">✓</button><span class="time">${esc(s.time)}</span><span class="what"><b>${esc(name)}</b><div class="muted">${s.minutes} دقيقة${s.note?' • '+esc(s.note):''}</div></span>${state.screen==='plan'?`<button type="button" class="icon-btn" aria-label="حذف" onclick="deleteSession('${s.id}')">×</button>`:''}</div>`}
+function toggleSession(id){const all=load('sessions',[]);const s=all.find(x=>x.id===id);if(!s)return;const w=weekKey();s.doneWeeks=s.doneWeeks||[];s.doneWeeks=s.doneWeeks.includes(w)?s.doneWeeks.filter(x=>x!==w):[...s.doneWeeks.filter(x=>x>=w).slice(-3),w];save('sessions',all);const y=window.scrollY;render();window.scrollTo(0,y)}
+function deleteSession(id){save('sessions',load('sessions',[]).filter(x=>x.id!==id));render()}
+function addSession(){
+  const subject=document.getElementById('ps-subject').value,time=document.getElementById('ps-time').value||'17:00',minutes=+document.getElementById('ps-min').value,note=document.getElementById('ps-note').value.trim().slice(0,60);
+  const all=load('sessions',[]);all.push({id:uid(),day:state.planDay,subject,time,minutes,note,doneWeeks:[]});save('sessions',all);toast('أُضيفت الجلسة');render();
+}
+function suggestPlan(){
+  const go2=()=>{const subs=branchSubjects(),out=[];let k=0;for(let d=0;d<6;d++){for(const t of ['16:00','18:30']){out.push({id:uid(),day:d,subject:subs[k%subs.length],time:t,minutes:90,note:'',doneWeeks:[]});k++}}out.push({id:uid(),day:6,subject:'review',time:'17:00',minutes:120,note:'حل امتحان بابل شيت كامل',doneWeeks:[]});save('sessions',out);toast('تم إنشاء جدول أسبوعي مقترح');render()};
+  if(load('sessions',[]).length)modal({title:'استبدال الجدول الحالي؟',body:'سيُستبدل جدولك بجدول مقترح: جلستان يومياً لمواد شعبتك، ويوم الجمعة للمراجعة.',ok:'استبدل',onOk:go2});else go2();
+}
+function renderPlan(){
+  const all=load('sessions',[]),day=state.planDay,list=sessionsFor(day),tasks=load('tasks',[]),cd=examCountdown();
+  appEl.innerHTML=bar('جدول المذاكرة')+`<div class="screen wrap">
+    <div class="card"><div class="row"><div><b>موعد الامتحانات</b><div class="muted">${cd!==null?`باقي ${cd} يوماً`:'حدد التاريخ لترى العد التنازلي'}</div></div><input type="date" class="input" style="max-width:170px" id="exam-date" value="${esc(load('examDate',''))}" onchange="save('examDate',this.value);render()"></div></div>
+    <div class="days" role="group" aria-label="أيام الأسبوع">${DAYS.map((d,i)=>{const c=all.filter(s=>s.day===i).length;return `<button type="button" class="day ${i===todayIdx()?'today':''}" aria-pressed="${i===day}" onclick="state.planDay=${i};render()"><b>${d.replace('ال','')}</b><small>${c?c+' جلسة':'—'}</small></button>`}).join('')}</div>
+    <div class="card"><div class="row"><h3>${DAYS[day]}${day===todayIdx()?' (اليوم)':''}</h3><span class="muted">${list.filter(isDone).length} من ${list.length} تمت</span></div>
+      ${list.length?`<div>${list.map(sessionRow).join('')}</div>`:'<p class="empty">لا جلسات في هذا اليوم.</p>'}
+    </div>
+    <div class="card"><h3>أضف جلسة يوم ${DAYS[day]}</h3><div class="form-grid">
+      <label class="field full">المادة<select class="input" id="ps-subject">${branchSubjects().map(id=>`<option value="${id}">${esc(SUBJECTS[id].name)}</option>`).join('')}<option value="review">مراجعة عامة</option></select></label>
+      <label class="field">الوقت<input type="time" class="input" id="ps-time" value="17:00"></label>
+      <label class="field">المدة<select class="input" id="ps-min">${[30,45,60,90,120].map(m=>`<option value="${m}" ${m===60?'selected':''}>${m} دقيقة</option>`).join('')}</select></label>
+      <label class="field full">ملاحظة (اختياري)<input class="input" id="ps-note" maxlength="60" placeholder="مثال: حل تمارين الدرس الثالث"></label>
+    </div><button type="button" class="btn block" onclick="addSession()">إضافة الجلسة</button></div>
+    <button type="button" class="btn soft" onclick="suggestPlan()">اقترح لي جدولاً أسبوعياً</button>
+    <div class="card"><h3>مهام سريعة</h3><div class="row"><input class="input" id="task-input" maxlength="100" placeholder="مثال: مراجعة قوانين الفيزياء" onkeydown="if(event.key==='Enter')addTask()"><button type="button" class="btn" onclick="addTask()">إضافة</button></div>
+      ${tasks.length?tasks.map((t,i)=>`<div class="session ${t.done?'done':''}"><button type="button" class="check" aria-pressed="${!!t.done}" aria-label="تم" onclick="toggleTask(${i})">✓</button><span class="what"><b>${esc(t.text)}</b></span><button type="button" class="icon-btn" aria-label="حذف" onclick="deleteTask(${i})">×</button></div>`).join(''):'<p class="empty">لا توجد مهام.</p>'}
+    </div>
+  </div>`;
+}
+function addTask(){const el=document.getElementById('task-input'),s=el.value.trim();if(!s)return;const t=load('tasks',[]);t.push({text:s,done:false});save('tasks',t);render();document.getElementById('task-input').focus()}
+function toggleTask(i){const t=load('tasks',[]);if(t[i]){t[i].done=!t[i].done;save('tasks',t);render()}}
+function deleteTask(i){const t=load('tasks',[]);t.splice(i,1);save('tasks',t);render()}
+
+/* ---------- smart tutor ---------- */
+let sampleFn=null,aiBlocked=false,chat=load('chat',[]),busy=null;
+if(!Array.isArray(chat))chat=[];
+if(window.claude&&typeof window.claude.use==='function'){window.claude.use('sample').then(s=>{sampleFn=s||null;if(state.screen==='tutor')renderTutor()}).catch(()=>{})}
+const aiOn=()=>!!sampleFn&&!aiBlocked;
+function saveChat(){save('chat',chat.slice(-40))}
+function renderTutor(){
+  if(!isPlus()){lockedTutor();return}
+  const subs=['general',...branchSubjects()],cur=state.tutorSubject;
+  const sugg=tutorSuggestions(cur);
+  appEl.innerHTML=bar('المدرس الذكي')+`<div class="screen wrap tutor">
+    <div class="row"><span class="status ${aiOn()?'on':''}"><i></i>${aiOn()?'متصل بـ Claude':'وضع بدون إنترنت: حل مسائل وشرح من ملخصات التطبيق'}</span>${chat.length?`<button type="button" class="link" onclick="chat=[];saveChat();render()">محادثة جديدة</button>`:''}</div>
+    <div class="chips" role="group" aria-label="المادة">${subs.map(id=>`<button type="button" class="chip" aria-pressed="${id===cur}" onclick="state.tutorSubject='${id}';render()">${id==='general'?'كل المواد':esc(SUBJECTS[id].name)}</button>`).join('')}</div>
+    <div class="chat" id="chat">${chat.length?chat.map(m=>`<div class="msg ${m.role==='user'?'me':'bot'}">${m.role==='user'?`<p>${esc(m.content)}</p>`:rich(m.content)}${m.extra||''}</div>`).join(''):`<div class="msg bot"><p>أهلاً! أنا مدرسك في «تفوق». اسألني عن أي درس، أو اكتب مسألة بالأرقام وسأحلها معك خطوة بخطوة.</p><p class="src">مثال: «بطارية قوتها الدافعة 12 فولت ومقاومتها الداخلية 1 أوم متصلة بمقاومة 5 أوم. احسب التيار.»</p></div>`}${busy?`<div class="msg bot" id="live"><p class="thinking">يفكر…</p></div>`:''}</div>
+    <div class="chips">${sugg.map(s=>`<button type="button" class="chip" onclick="sendTutor(this.textContent)">${esc(s)}</button>`).join('')}</div>
+    <div class="composer"><textarea id="tutor-input" rows="1" placeholder="اكتب سؤالك أو مسألتك…" oninput="this.style.height='auto';this.style.height=this.scrollHeight+'px'" onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();sendTutor()}"></textarea>${busy?`<button type="button" class="btn danger" onclick="busy&&busy.abort()">إيقاف</button>`:`<button type="button" class="btn" onclick="sendTutor()">إرسال</button>`}</div>
+  </div>`;
+  const live=document.getElementById('live')||appEl.querySelector('.chat .msg:last-child');if(chat.length&&live)live.scrollIntoView({block:'nearest'});
+}
+function tutorSuggestions(s){return({"general": ["كيف أذاكر قبل امتحانات الشهادة الإعدادية؟", "حل: 2س + 3 = 11", "ما علامة رفع الفاعل؟"], "arabic": ["ما علامة رفع الفاعل؟", "اشرح كان وأخواتها"], "english": ["متى أستخدم present perfect؟", "What is the past of \"go\"?"], "math": ["حل: 2س + 3 = 11", "احسب مساحة مستطيل طوله 6 وعرضه 4"], "science": ["ما الفرق بين التغير الفيزيائي والكيميائي؟", "احسب السرعة: 100 متر في 20 ثانية"], "social": ["في أي قارة تقع مصر؟", "ما أهمية نهر النيل لمصر؟"]})[s]||[]}
+function askTutorAbout(subject,text,ctx){if(!plusGate())return;state.tutorSubject=branchSubjects().includes(subject)?subject:'general';go('tutor');setTimeout(()=>sendTutor(text,ctx),50)}
+async function sendTutor(text,ctx){
+  if(!isPlus()){paywall();return}
+  if(busy)return;const box=document.getElementById('tutor-input');
+  text=(text??box?.value??'').trim();if(!text)return;
+  chat.push({role:'user',content:text});saveChat();
+  if(aiOn()){
+    const ctl=new AbortController();busy=ctl;renderTutor();
+    try{
+      const turns=chat.slice(-10).map(m=>({role:m.role,content:m.content}));
+      const {text:out}=await sampleFn([{role:'user',content:tutorRules()},{role:'assistant',content:'حاضر، سأشرح بهذه الطريقة.'},...turns],{signal:ctl.signal,cache:false,onText:({text:t})=>{const el=document.getElementById('live');if(el)el.innerHTML=rich(t)}});
+      chat.push({role:'assistant',content:out});
+    }catch(e){
+      if(e&&e.text)chat.push({role:'assistant',content:e.text});
+      if(e&&e.code==='cancelled'){}
+      else if(e&&['not_granted','sampling_disabled','capability_disabled','capability_removed','not_declared','session_expired'].includes(e.code)){aiBlocked=true;const r=localTutor(text,ctx);chat.push({role:'assistant',content:r.text,extra:r.extra})}
+      else if(e&&e.code==='rate_limited')chat.push({role:'assistant',content:'وصلنا لحد الأسئلة المسموح به مؤقتاً. انتظر دقيقة ثم أعد المحاولة.'});
+      else{const r=localTutor(text,ctx);chat.push({role:'assistant',content:'تعذر الوصول إلى Claude الآن، وهذه إجابة من ملخصات التطبيق:\n'+r.text,extra:r.extra})}
+    }finally{busy=null;saveChat();renderTutor()}
+  }else{const r=localTutor(text,ctx);chat.push({role:'assistant',content:r.text,extra:r.extra});saveChat();renderTutor()}
+}
+function tutorRules(){
+  const s=state.tutorSubject==='general'?'كل المواد':SUBJECTS[state.tutorSubject].name;
+  return `أنت «مدرس تفوق»، مدرس خصوصي صبور لطالب في الصف الثالث الثانوي بمصر، شعبة ${BRANCHES[state.branch].name}. المادة الحالية: ${s}.
+قواعد الإجابة:
+- اكتب بالعربية المبسطة، بجمل قصيرة وواضحة.
+- عند حل مسألة: اذكر المعطيات، ثم القانون، ثم التعويض، ثم الناتج مع الوحدة.
+- اكتب كل قانون أو تعويض رياضي في سطر مستقل بين علامتي backtick، مثل: \`I = V / R = 12 / 4 = 3 A\`، واستخدم الرموز اللاتينية داخل المعادلات.
+- لا تستخدم جداول ولا عناوين Markdown. يمكنك استخدام **للتأكيد** وقوائم تبدأ بـ "- ".
+- إذا كان السؤال عن خطأ في امتحان، فاشرح الفكرة الصحيحة ولماذا يقع الطلاب في هذا الخطأ.
+- لا تتجاوز 180 كلمة إلا إذا طلب الطالب التفصيل.
+- اختم بسؤال قصير يتحقق من الفهم أو بتمرين مشابه بدون حله.
+- إذا لم تكن متأكداً أن نقطة ما ضمن منهج 2026–2027 تحديداً، فقل ذلك بوضوح.`;
+}
+
+/* --- offline tutor: physics solver, algebra solver, and search over the app's notes --- */
+const toW=s=>String(s).replace(/[٠-٩]/g,d=>'٠١٢٣٤٥٦٧٨٩'.indexOf(d)).replace(/[۰-۹]/g,d=>'۰۱۲۳۴۵۶۷۸۹'.indexOf(d)).replace(/٫/g,'.').replace(/،/g,'، ');
+const norm=s=>toW(s).toLowerCase().replace(/[ً-ْـ]/g,'').replace(/[أإآ]/g,'ا').replace(/ة/g,'ه').replace(/ى/g,'ي');
+const num=x=>Math.round(x*1000)/1000;
+function grab(t,unitRe){const out=[];const re=new RegExp('(\\d+(?:\\.\\d+)?)\\s*(?:'+unitRe+')','g');let m;while((m=re.exec(t)))out.push({v:+m[1],i:m.index,end:re.lastIndex});return out}
+function near(t,i,end,word){return new RegExp(word).test(t.slice(Math.max(0,i-30),Math.min(t.length,end+25)))}
+function solvePhysics(raw){
+  const t=norm(raw);
+  const ohms=grab(t,'اوم|Ω|ohm'),volts=grab(t,'فولت|v\\b'),amps=grab(t,'امبير|a\\b'),coul=grab(t,'كولوم|c\\b'),joule=grab(t,'جول|j\\b');
+  const secs=[...grab(t,'ثانيه|ثوان|ثواني|s\\b'),...grab(t,'دقيقه|دقائق').map(x=>({...x,v:x.v*60,min:true}))];
+  if(/دقيقتين|دقيقتان/.test(t)&&!secs.length)secs.push({v:120,min:true});
+  const L=[];const ans=(lines,tail)=>({text:lines.join('\n')+(tail?'\n'+tail:''),solved:true});
+  const closest=(list,word)=>{const w=t.indexOf(word);if(w<0||!list.length)return null;return list.reduce((best,o)=>Math.abs(o.i-w)<Math.abs(best.i-w)?o:best)};
+  const ri=closest(ohms,'داخلي'),internal=ri?[ri]:[],external=ohms.filter(o=>o!==ri);
+  const emf=closest(volts,'دافع');
+  if(emf&&internal.length&&external.length){
+    const E=emf.v,r=internal[0].v,R=external.reduce((a,o)=>a+o.v,0)*(external.length>1&&/توازي/.test(t)?0:1)||eqParallel(external.map(o=>o.v));
+    const I=E/(R+r),V=E-I*r;
+    return ans(['**المعطيات:** القوة الدافعة E = '+E+' V، المقاومة الداخلية r = '+r+' Ω، المقاومة الخارجية R = '+num(R)+' Ω','**القانون:** قانون أوم للدائرة المغلقة','`I = E / (R + r)`','`I = '+E+' / ('+num(R)+' + '+r+') = '+num(I)+' A`','وفرق الجهد بين قطبي البطارية:','`V = E − I r = '+E+' − '+num(I)+' × '+r+' = '+num(V)+' V`'],'**الناتج:** شدة التيار '+num(I)+' أمبير.');
+  }
+  if(/توازي|توالي/.test(t)&&ohms.length>=2){
+    const vals=ohms.map(o=>o.v),par=/توازي/.test(t)&&!/توالي/.test(t);
+    const Re=par?eqParallel(vals):vals.reduce((a,b)=>a+b,0);
+    const lines=par?['**التوصيل على التوازي:** فرق الجهد متساوٍ على الفروع والمقاومة المكافئة أصغر من أصغر مقاومة.','`1 / Rₑ = '+vals.map(v=>'1/'+v).join(' + ')+'`','`Rₑ = '+num(Re)+' Ω`']:['**التوصيل على التوالي:** التيار واحد في كل المقاومات، والمقاومة المكافئة = مجموعها.','`Rₑ = '+vals.join(' + ')+' = '+num(Re)+' Ω`'];
+    if(volts.length){const V=volts[0].v;lines.push('ومع فرق جهد '+V+' فولت يكون التيار الكلي:','`I = V / Rₑ = '+V+' / '+num(Re)+' = '+num(V/Re)+' A`')}
+    return ans(lines,'**الناتج:** المقاومة المكافئة '+num(Re)+' أوم.');
+  }
+  if(coul.length&&secs.length&&!amps.length){const Q=coul[0].v,s=secs[0].v;return ans(['**المعطيات:** Q = '+Q+' C، t = '+s+' s'+(secs[0].min?' (بعد تحويل الدقائق إلى ثوانٍ)':''),'`I = Q / t`','`I = '+Q+' / '+s+' = '+num(Q/s)+' A`'],'**الناتج:** شدة التيار '+num(Q/s)+' أمبير.')}
+  if(amps.length&&secs.length&&!coul.length&&/شحنه|كميه/.test(t)){const I=amps[0].v,s=secs[0].v;return ans(['`Q = I × t = '+I+' × '+s+' = '+num(I*s)+' C`'],'**الناتج:** الشحنة '+num(I*s)+' كولوم.')}
+  if(coul.length&&amps.length&&/زمن|وقت/.test(t)){const Q=coul[0].v,I=amps[0].v;return ans(['`t = Q / I = '+Q+' / '+I+' = '+num(Q/I)+' s`'],'**الناتج:** الزمن '+num(Q/I)+' ثانية.')}
+  if(joule.length&&coul.length){const W=joule[0].v,Q=coul[0].v;return ans(['`V = W / Q = '+W+' / '+Q+' = '+num(W/Q)+' V`'],'**الناتج:** فرق الجهد '+num(W/Q)+' فولت.')}
+  if(volts.length&&ohms.length&&!amps.length){const V=volts[0].v,R=ohms[0].v;return ans(['**قانون أوم:**','`I = V / R = '+V+' / '+R+' = '+num(V/R)+' A`'],'**الناتج:** شدة التيار '+num(V/R)+' أمبير.')}
+  if(amps.length&&ohms.length&&!volts.length){const I=amps[0].v,R=ohms[0].v;return ans(['**قانون أوم:**','`V = I × R = '+I+' × '+R+' = '+num(I*R)+' V`'],'**الناتج:** فرق الجهد '+num(I*R)+' فولت.')}
+  if(volts.length&&amps.length&&!ohms.length&&/قدره/.test(t)){const V=volts[0].v,I=amps[0].v;return ans(['`P = V × I = '+V+' × '+I+' = '+num(V*I)+' W`'],'**الناتج:** القدرة '+num(V*I)+' وات.')}
+  if(volts.length&&amps.length&&!ohms.length){const V=volts[0].v,I=amps[0].v;return ans(['**قانون أوم:**','`R = V / I = '+V+' / '+I+' = '+num(V/I)+' Ω`'],'**الناتج:** المقاومة '+num(V/I)+' أوم.')}
+  return null;
+}
+function eqParallel(v){return 1/v.reduce((a,b)=>a+1/b,0)}
+/* Tiny safe expression parser: + − × ÷ ^ ( ) and variable x. */
+function parseExpr(src){
+  const s=src.replace(/[×✕]/g,'*').replace(/÷/g,'/').replace(/[−–]/g,'-').replace(/س/g,'x').replace(/\s+/g,'');let p=0;
+  const peek=()=>s[p];
+  function primary(){
+    if(peek()==='('){p++;const v=add();if(s[p]!==')')throw 0;p++;return v}
+    if(peek()==='-'){p++;const f=pow();return x=>-f(x)}
+    if(peek()==='x'){p++;return x=>x}
+    const m=s.slice(p).match(/^\d+(\.\d+)?/);if(!m)throw 0;p+=m[0].length;const c=+m[0];return()=>c;
+  }
+  function pow(){const b=primary();if(peek()==='^'){p++;const e=pow();return x=>Math.pow(b(x),e(x))}return b}
+  function mul(){let l=pow();for(;;){const c=peek();if(c==='*'||c==='/'){p++;const r=pow(),L=l;l=c==='*'?x=>L(x)*r(x):x=>L(x)/r(x)}else if(c==='x'||c==='('||(c&&/\d/.test(c))){const r=pow(),L=l;l=x=>L(x)*r(x)}else return l}}
+  function add(){let l=mul();while(peek()==='+'||peek()==='-'){const c=s[p++],r=mul(),L=l;l=c==='+'?x=>L(x)+r(x):x=>L(x)-r(x)}return l}
+  const f=add();if(p!==s.length)throw 0;return f;
+}
+function solveMath(raw){
+  const t=toW(raw).replace(/س/g,'x');
+  const m=t.match(/[0-9x+\-−–*×÷/^().\s]*[0-9x)][0-9x+\-−–*×÷/^().\s]*=[0-9x+\-−–*×÷/^().\s]+/);
+  if(m&&/x/.test(m[0])){
+    try{const [a,b]=m[0].split('=');const L=parseExpr(a),R=parseExpr(b);const f=x=>L(x)-R(x);const f0=f(0),k=f(1)-f0;
+      if(Math.abs((f(2)-f0)-2*k)<1e-9&&Math.abs(k)>1e-12){const x=-f0/k;const eq=m[0].trim().replace(/\*/g,'×').replace(/-/g,'−');
+        return{text:['**نحل المعادلة الخطية:**','`'+eq+'`','نجمع الحدود التي بها x في طرف والأعداد في الطرف الآخر:','`'+num(k)+' x = '+num(-f0)+'`','`x = '+num(-f0)+' / '+num(k)+' = '+num(x)+'`','**للتحقق:** عوّض بـ x = '+num(x)+' في الطرفين وستجدهما متساويين.'].join('\n')}}
+    }catch(e){}
+  }
+  const e=t.match(/[0-9(][0-9+\-−–*×÷/^().\s]*[0-9)]/g);
+  if(e){const best=e.filter(x=>/[+\-−–*×÷/^]/.test(x.trim().slice(1))).sort((a,b)=>b.length-a.length)[0];
+    if(best){try{const v=parseExpr(best)(0);if(isFinite(v))return{text:['`'+best.trim().replace(/\*/g,'×')+' = '+num(v)+'`','تذكّر ترتيب العمليات: الأقواس، ثم الأسس، ثم الضرب والقسمة، ثم الجمع والطرح.'].join('\n')}}catch(e){}}}
+  return null;
+}
+function knowledge(){
+  const kb=[];
+  PHYSICS_LESSONS.forEach(L=>kb.push({s:'physics',t:L.t,b:L.idea+'\n'+L.f.map(f=>'`'+f+'`').join('\n')+'\n**مثال:** '+L.ex+'\n`'+L.calc+'`'}));
+  Object.entries(NOTES).forEach(([s,ns])=>ns.forEach(n=>kb.push({s,t:n.t,b:n.b})));
+  Object.entries(BANK).forEach(([s,qs])=>qs.forEach(q=>kb.push({s,t:q.q,b:'**الإجابة:** '+q.a[0]+'\n'+q.e,q})));
+  return kb;
+}
+const STOP=new Set(['ما','ماذا','هو','هي','في','من','على','الى','عن','مع','هل','كيف','لماذا','اشرح','لي','ان','او','ثم','الذي','التي','هذا','هذه','بين','عند','كل','اي','الفرق','احسب','ارجو','ممكن','سؤال','اريد','افهم','لم','لا']);
+function tokens(s){return norm(s).replace(/[^؀-ۿa-z0-9 ]/g,' ').split(/\s+/).filter(w=>w.length>1&&!STOP.has(w)).map(w=>w.replace(/^(وال|بال|فال|كال|لل|ال)/,'')).filter(w=>w.length>1&&!STOP.has(w))}
+function localTutor(text,ctx){
+  if(ctx&&ctx.q){const q=ctx.q;const rel=searchKb(q.q+' '+q.a[0],state.tutorSubject).find(h=>!h.q);return{text:'**الإجابة الصحيحة:** '+q.a[0]+'\n'+q.e+(rel?'\n\n**راجع هذه الفكرة — '+rel.t+':**\n'+rel.b:'')+'\n\nنصيحة: اقرأ السؤال مرة ثانية وحدد الكلمة المفتاحية فيه قبل النظر إلى الاختيارات.'}}
+  const p=solvePhysics(text);if(p)return{text:p.text+'\n\nجرّب مسألة مشابهة بتغيير الأرقام وتأكد أنك تصل لنفس الخطوات.'};
+  const m=solveMath(text);if(m)return m;
+  if(/(ذاكر|مذاكر|خطه|اذاكر|تنظيم الوقت)/.test(norm(text)))return{text:'**خطة عملية قبل الامتحان:**\n- قسّم وقتك: جلستان يومياً لكل منهما 90 دقيقة مع راحة 10 دقائق.\n- ابدأ بالمادة الأصعب وأنت في أعلى تركيزك.\n- بعد كل درس حل 5 أسئلة على الأقل، وسجّل أخطاءك.\n- مرة أسبوعياً حل امتحاناً كاملاً بنظام البابل شيت وبالوقت.\n- راجع أخطاءك من «نتائجي» قبل أي امتحان جديد.\nيمكنك إنشاء جدول مقترح من شاشة «جدولي».'};
+  const hits=searchKb(text,state.tutorSubject);
+  if(hits.length){
+    const top=hits.find(h=>!h.q)||hits[0],qhit=hits.find(h=>h.q&&h!==top);
+    let extra='';if(qhit)extra=`<details><summary>جرّب سؤالاً مرتبطاً</summary><p>${qh(qhit.q.q)}</p><p class="src">الإجابة: <bdi>${esc(qhit.q.a[0])}</bdi></p></details>`;
+    return{text:'**'+top.t+'**\n'+top.b+'\n\nهذه إجابة من ملخصات التطبيق. اسألني بصيغة أخرى أو أعطني مسألة بالأرقام لأحلها خطوة بخطوة.',extra};
+  }
+  return{text:'لم أجد إجابة لهذا في ملخصات التطبيق.\n- لحل مسألة: اكتبها بالأرقام والوحدات، مثل «مقاومة 4 أوم وفرق جهد 12 فولت».\n- لمعادلة: اكتب مثل «2x + 3 = 11».\n- لدرس: اذكر اسمه، مثل «قانون أوم» أو «النسخ والترجمة».\nالمدرس الذكي الكامل يعمل عند فتح التطبيق داخل Claude.'};
+}
+function searchKb(text,subject){
+  const qt=tokens(text);if(!qt.length)return[];
+  return knowledge().map(d=>{const dt=norm(d.t+' '+d.b);let sc=0;qt.forEach(w=>{if(dt.includes(w))sc+=w.length>3?2:1});if(norm(d.t).includes(qt.join(' ')))sc+=3;if(subject!=='general'&&d.s===subject)sc*=1.5;if(subject!=='general'&&d.s!==subject)sc*=.6;return{...d,sc}}).filter(d=>d.sc>=2).sort((a,b)=>b.sc-a.sc).slice(0,4);
+}
+
+  /* ---------- Tafawoq Plus 2026–2027 (Google Play Billing via the Digital Goods API) ----------
+     Free: the first unit of every subject (lessons, questions, normal exams).
+     Plus (one-time purchase "tafawoq_plus_2026_2027", no auto-renewal, valid until 31 August 2027):
+     every unit, bubble-sheet exams and the smart tutor.
+     Locks only apply where Plus can be bought: Android (the Google Play app). iPhone and computers get
+     everything until a payment exists there. Add ?preview=free to the address to see the free version anywhere.
+     Every purchase is checked and acknowledged by the shared Supabase function "verify-purchase". */
+  const PLUS_SKU='tafawoq_prep_plus_2026_2027',PLUS_YEAR='2026–2027',PLUS_END=Date.parse('2027-09-01T00:00:00+03:00'),PLAY_ID='app.tafawoq.prep';
+  const VERIFY_URL='https://nwlmoecyepsajayyyugd.supabase.co/functions/v1/verify-purchase',VERIFY_KEY='sb_publishable_rgaE-hjmqV37RU57_C8JEA_yn-0AcEO';
+  let PREVIEW_FREE=/[?&#]preview=free/.test(location.search+location.hash);
+  try{if(PREVIEW_FREE)sessionStorage.setItem('tafawoqprep_preview','1');else if(/[?&#]preview=off/.test(location.search+location.hash))sessionStorage.removeItem('tafawoqprep_preview');PREVIEW_FREE=PREVIEW_FREE||sessionStorage.getItem('tafawoqprep_preview')==='1'}catch(e){}
+  const LOCKS_ON=PREVIEW_FREE||/Android/i.test(navigator.userAgent)||('getDigitalGoodsService' in window);
+  const billing={service:null,price:'',busy:false};
+  const plusOwned=()=>{const p=load('plus',null);return !!(p&&p.active&&p.sku===PLUS_SKU)};
+  const plusExpired=()=>Date.now()>=PLUS_END;
+  function isPlus(){if(PREVIEW_FREE)return false;return !LOCKS_ON||(plusOwned()&&!plusExpired())}
+  const plusOk=q=>isPlus()||q.ch===0;
+  function plusGate(){if(isPlus())return true;paywall();return false}
+  function setPlus(active){
+    if(PREVIEW_FREE)return;const was=isPlus();
+    save('plus',{active:!!active,sku:PLUS_SKU,checked:Date.now()});
+    if(was!==isPlus())render();
+  }
+  function plusCard(){
+    if(!LOCKS_ON)return '';
+    if(isPlus())return `<div class="card plus-card"><div class="row"><b>👑 تفوق بلس ${PLUS_YEAR}</b><span class="pill good">مفعّل</span></div><div class="muted">صالح حتى 31 أغسطس 2027</div></div>`;
+    return `<button type="button" class="card plus-card plus-cta" onclick="paywall()"><span class="plus-k">TAFAWOQ PLUS</span><b>👑 افتح كل الوحدات مع تفوق بلس ${PLUS_YEAR}</b><span class="muted">المجاني: الوحدة الأولى من كل مادة. بلس: كل الوحدات، البابل شيت، والمدرس الذكي.</span></button>`;
+  }
+  function lockedTutor(){
+    appEl.innerHTML=bar('المدرس الذكي')+`<div class="screen wrap"><div class="card plus-lock"><div style="font-size:34px">🔒</div><h3>المدرس الذكي ضمن تفوق بلس</h3><p class="muted">اسأل عن أي درس، أو اكتب مسألة بالأرقام وسيحلها معك خطوة بخطوة.</p><button type="button" class="btn block" onclick="paywall()">👑 اعرف المزيد عن تفوق بلس</button></div></div>`;
+  }
+  function paywall(){
+    const root=document.getElementById('modal-root');
+    const feats=[['📚','كل وحدات كل المواد','بنوك الأسئلة كاملة لكل الوحدات'],['📝','محاكاة البابل شيت','كراسة أسئلة وورقة إجابة كالامتحان الحقيقي'],['🤖','المدرس الذكي','شرح الدروس وحل المسائل خطوة بخطوة']];
+    const terms=['دفعة واحدة، بدون تجديد تلقائي','الوصول حتى 31 أغسطس 2027','استعادة الشراء على الأجهزة المرتبطة بالحساب','تحديثات المحتوى خلال فترة الصلاحية'];
+    let h=`<div class="modal" role="dialog" aria-modal="true" aria-labelledby="p-title"><div class="card plus-sheet">
+      <div class="plus-k">TAFAWOQ PLUS</div><h3 id="p-title">🎓 تفوق بلس ${PLUS_YEAR}</h3>`;
+    if(isPlus()) h+=`<p><span class="pill good">✓ مفعّل</span> صالح حتى 31 أغسطس 2027</p>`;
+    else{
+      h+=`<div class="plus-price"><b id="plus-price">${esc(billing.price||'299')}</b> <span>${billing.price?'':'جنيه مصري '}/ العام الدراسي</span></div>`;
+      if(plusOwned()&&plusExpired())h+=`<p class="note">انتهت صلاحية تفوق بلس 2026–2027.</p>`;
+    }
+    h+=`<ul class="plus-list">${feats.map(f=>`<li><span>${f[0]}</span><div><b>${f[1]}</b><small>${f[2]}</small></div></li>`).join('')}</ul>
+      <ul class="plus-terms">${terms.map(t=>`<li>✓ ${t}</li>`).join('')}</ul>`;
+    if(isPlus()) h+=`<button type="button" class="btn block" id="p-close">تم</button>`;
+    else if(billing.service) h+=`<div class="btns" style="flex-direction:column"><button type="button" class="btn block" id="p-buy">اشترك في تفوق بلس</button><button type="button" class="btn ghost block" id="p-restore">استعادة الشراء</button><button type="button" class="btn ghost block" id="p-close">ليس الآن</button></div>`;
+    else h+=`<p class="muted">📱 الشراء متاح من تطبيق «تفوق إعدادي» على Google Play.</p><div class="btns" style="flex-direction:column"><a class="btn block" style="text-decoration:none" href="https://play.google.com/store/apps/details?id=${PLAY_ID}" target="_blank" rel="noopener">Google Play</a><button type="button" class="btn ghost block" id="p-close">ليس الآن</button></div>`;
+    root.innerHTML=h+`</div></div>`;
+    const close=()=>root.innerHTML='';
+    root.querySelector('#p-close').onclick=close;
+    root.querySelector('.modal').onclick=e=>{if(e.target.classList.contains('modal'))close()};
+    const b=root.querySelector('#p-buy');if(b)b.onclick=buyPlus;
+    const r=root.querySelector('#p-restore');if(r)r.onclick=()=>restorePlus(true);
+  }
+  function verifyPurchase(token){
+    return fetch(VERIFY_URL,{method:'POST',headers:{'Content-Type':'application/json',apikey:VERIFY_KEY,Authorization:'Bearer '+VERIFY_KEY},body:JSON.stringify({purchaseToken:token,sku:PLUS_SKU})})
+      .then(r=>r.json().then(d=>{if(!r.ok&&r.status>=500)throw new Error('server');return !!(d&&d.valid)}));
+  }
+  function initBilling(){
+    if(!('getDigitalGoodsService' in window))return;
+    window.getDigitalGoodsService('https://play.google.com/billing').then(service=>{
+      billing.service=service;
+      service.getDetails([PLUS_SKU]).then(items=>{const it=items&&items[0];
+        if(it&&it.price){try{billing.price=new Intl.NumberFormat('ar-EG',{style:'currency',currency:it.price.currency}).format(it.price.value)}catch(e){billing.price=it.price.value+' '+it.price.currency}}
+        const p=document.getElementById('plus-price');if(p)p.textContent=billing.price;}).catch(()=>{});
+      restorePlus(false);
+    }).catch(()=>{billing.service=null});
+  }
+  function restorePlus(manual){
+    if(!billing.service){if(manual)toast('الشراء متاح من تطبيق «تفوق إعدادي» على Google Play');return}
+    billing.service.listPurchases().then(list=>{
+      const p=(list||[]).find(x=>x.itemId===PLUS_SKU);
+      if(!p){setPlus(false);if(manual)toast('لا يوجد شراء سابق على هذا الحساب');return}
+      return verifyPurchase(p.purchaseToken).then(ok=>{setPlus(ok);if(manual){toast(ok?'تم تفعيل تفوق بلس':'تعذّر التحقق من الشراء');if(ok)document.getElementById('modal-root').innerHTML=''}})
+        .catch(()=>setPlus(true)); // server not reachable: trust Google Play's list, check again next launch
+    }).catch(()=>{if(manual)toast('تعذّر التحقق من الشراء')});
+  }
+  function buyPlus(){
+    if(!billing.service||billing.busy)return;
+    if(!window.PaymentRequest){toast('لم يكتمل الشراء. حاول مرة أخرى');return}
+    billing.busy=true;let req;
+    try{req=new PaymentRequest([{supportedMethods:'https://play.google.com/billing',data:{sku:PLUS_SKU}}],{total:{label:'Total',amount:{currency:'EGP',value:'0'}}})}
+    catch(e){billing.busy=false;toast('لم يكتمل الشراء. حاول مرة أخرى');return}
+    req.show().then(res=>{const token=res.details&&res.details.purchaseToken;
+      return verifyPurchase(token).then(ok=>res.complete(ok?'success':'fail').then(()=>{billing.busy=false;if(ok){document.getElementById('modal-root').innerHTML='';setPlus(true);toast('شكراً! تم تفعيل تفوق بلس')}else toast('لم يكتمل الشراء. حاول مرة أخرى')}))
+        .catch(()=>res.complete('fail').then(()=>{billing.busy=false;toast('لم يكتمل الشراء. حاول مرة أخرى')}));
+    }).catch(()=>{billing.busy=false}); // cancelled
+  }
+
+render();
+initBilling();
+</script>
+<script>if('serviceWorker' in navigator&&location.protocol==='https:'){addEventListener('load',()=>navigator.serviceWorker.register('./sw.js').catch(()=>{}))}</script>
+</body>
+</html>

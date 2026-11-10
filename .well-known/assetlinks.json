@@ -34,5 +34,17 @@
         "1F:6C:A5:A6:60:8C:AA:0E:62:B3:29:2E:22:95:98:E2:2C:9C:C9:FC:94:2A:C6:04:5A:66:0B:EB:D4:B0:AE:B5"
       ]
     }
+  },
+  {
+    "relation": [
+      "delegate_permission/common.handle_all_urls"
+    ],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "app.tafawoq.prep",
+      "sha256_cert_fingerprints": [
+        "87:35:0F:F3:46:56:D9:CF:63:E2:71:F8:5F:F2:B5:31:04:FC:92:2F:17:BF:8E:6F:3C:7E:C3:81:AC:EB:77:12"
+      ]
+    }
   }
 ]
