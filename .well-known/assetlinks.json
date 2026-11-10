@@ -49,7 +49,10 @@
       "namespace": "android_app",
       "package_name": "app.tafawoq.prep",
       "sha256_cert_fingerprints": [
-        "87:35:0F:F3:46:56:D9:CF:63:E2:71:F8:5F:F2:B5:31:04:FC:92:2F:17:BF:8E:6F:3C:7E:C3:81:AC:EB:77:12"
+        "87:35:0F:F3:46:56:D9:CF:63:E2:71:F8:5F:F2:B5:31:04:FC:92:2F:17:BF:8E:6F:3C:7E:C3:81:AC:EB:77:12",
+        "B0:FA:C8:3B:83:95:3E:42:04:64:50:C4:3B:A2:8A:5D:88:21:FB:78:A3:02:6D:C9:49:A7:8C:43:1F:5B:40:02",
+        "DB:1C:FA:EC:70:DB:2F:1A:6F:AE:1F:66:D1:62:E2:4E:07:CE:53:E0:7F:CD:5C:54:40:11:BC:6A:BE:8A:AD:DB",
+        "1A:DE:F0:EB:D5:FF:E3:97:27:38:E3:1E:44:E6:EA:3E:E1:86:3F:89:14:BA:88:8B:AA:0C:5A:0D:39:C0:DE:EB"
       ]
     }
   }
