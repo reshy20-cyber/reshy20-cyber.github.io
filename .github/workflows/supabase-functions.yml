@@ -36,5 +36,7 @@ jobs:
             sbp_*) ;;
             *) echo "::error::SUPABASE_ACCESS_TOKEN does not look like a Supabase access token (it should start with sbp_; length ${#SUPABASE_ACCESS_TOKEN}). Paste the token from supabase.com → Account → Access Tokens."; exit 1 ;;
           esac
+          # shape only (never the token itself), to tell a mis-paste from a new token format
+          echo "token length ${#SUPABASE_ACCESS_TOKEN}; after sbp_: $(printf '%s' "${SUPABASE_ACCESS_TOKEN#sbp_}" | sed 's/[0-9a-f]/h/g; s/[g-zG-Z]/a/g; s/hh*/<hex>/g; s/aa*/<letters>/g' | head -c 120)"
           export SUPABASE_ACCESS_TOKEN
           supabase functions deploy verify-purchase --remote=nwlmoecyepsajayyyugd --no-verify-jwt --use-api --yes
