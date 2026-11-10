@@ -7,7 +7,10 @@
       "namespace": "android_app",
       "package_name": "app.hayati.organizer",
       "sha256_cert_fingerprints": [
-        "2E:9A:E8:33:75:E4:29:2C:23:1E:FC:F8:E4:E0:9A:22:74:B2:41:26:A1:6C:99:6C:97:69:CA:99:B6:8D:82:52"
+        "2E:9A:E8:33:75:E4:29:2C:23:1E:FC:F8:E4:E0:9A:22:74:B2:41:26:A1:6C:99:6C:97:69:CA:99:B6:8D:82:52",
+        "5F:FF:DF:0D:D2:53:D9:9C:B1:6A:DD:8A:57:8A:0E:F2:F1:ED:39:F8:0D:8E:A7:88:0E:11:45:DD:69:D5:0A:5D",
+        "5B:04:FC:2A:42:09:36:69:F3:43:3A:8A:FE:B4:31:7C:60:C4:BE:EE:F0:77:6E:97:85:AF:49:28:28:CC:AF:9F",
+        "05:CB:36:B7:C7:D0:79:06:76:2F:83:12:E8:9A:DD:8D:CE:B0:0A:CD:8C:B8:9F:7F:A6:3B:36:69:56:2C:B1:05"
       ]
     }
   },
