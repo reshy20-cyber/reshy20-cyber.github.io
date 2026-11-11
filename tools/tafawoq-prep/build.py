@@ -104,6 +104,8 @@ rep('الشراء متاح من تطبيق «تفوق» على Google Play', 'ا
 rep('--accent:#078fc2;--accent-ink:#ffffff;--accent-soft:#dcf0fa;--accent-deep:#05668f;',
     '--accent:#6244a9;--accent-ink:#ffffff;--accent-soft:#ece6f8;--accent-deep:#47308a;')
 out = out.replace('content="#078fc2"', 'content="#6244a9"')
+# Review code for Google Play reviewers: the prep app has its own code (only its SHA-256 is stored).
+out = out.replace("REVIEW_HASH='2775b58e2fc81f3abd2bffee8540ad1dafa92d6a01d8c02c68017b9d4b6bc1d1'", "REVIEW_HASH='015cf0ca1430b919c284627453ab999614a6338b28a8e081d9c38de35b0605ec'")
 out = out.replace('--accent:#33b4e4;--accent-ink:#04202d;--accent-soft:#113b50;--accent-deep:#7fd0ef;',
                   '--accent:#a98ef0;--accent-ink:#1b1036;--accent-soft:#2c2350;--accent-deep:#cdbdf7;')
 out = out.replace('--bg:#0c1820;--surface:#12232e;--surface-2:#173040;--line:#23404f;',

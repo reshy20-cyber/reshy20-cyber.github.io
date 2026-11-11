@@ -1244,6 +1244,7 @@ document.addEventListener('click',function(e){
     case 'paywall':e.preventDefault();paywall();break;
     case 'pro-buy':buyPremium();break;
     case 'pro-restore':restorePurchases(true);break;
+    case 'pro-code':redeemCode();break;
     case 'cloud-down':cloudRestore();break;
     case 'del-account':confirmSheet(t('del_confirm'),t('del_account'),function(){
       if(!cloud.client||!cloud.user)return;
@@ -1426,6 +1427,16 @@ function buyPremium(){
     });
   }).catch(function(){billing.busy=false;/* cancelled by the user */});
 }
+/* Google Play review: a code given to reviewers in Play Console (App access) turns Premium on, on this device only. Only its SHA-256 is kept here. */
+var REVIEW_HASH='94c33529e72e454a5b4b3cab1ac071ca56a7b609edf85bd034dd060a96a9232d';
+function redeemCode(){
+  var c=(window.prompt(S.lang==='ar'?'اكتب الرمز':'Enter the code')||'').trim().toUpperCase();if(!c)return;
+  if(!(window.crypto&&crypto.subtle)){toast(S.lang==='ar'?'هذا الرمز غير صحيح':'This code isn\'t valid');return;}
+  crypto.subtle.digest("SHA-256",new TextEncoder().encode(c)).then(function(b){return Array.from(new Uint8Array(b)).map(function(x){return x.toString(16).padStart(2,"0")}).join("")}).then(function(h){
+    if(h!==REVIEW_HASH){toast(S.lang==='ar'?'هذا الرمز غير صحيح':'This code isn\'t valid');return;}
+    S.gift=true;save();closeSheet(true);render();toast(t('pro_thanks'));
+  });
+}
 function paywall(reason){
   var benefits=[['☁️',t('pro_b1'),t('pro_b1s')],['📊',t('pro_b2'),t('pro_b2s')],['🔁',t('pro_b4'),t('pro_b4s')],['🎯',t('pro_b3'),t('pro_b3s').replace('{h}',FREE_HABITS)],['🎨',t('pro_b5'),t('pro_b5s')]];
   var h='<div class="pro-hero"><div class="k">👑</div><h3>HAYATI Premium</h3><p>'+esc(reason||t('pro_sub'))+'</p></div>';
@@ -1439,6 +1450,7 @@ function paywall(reason){
     h+='<div class="pro-price"><small>'+esc(t('pro_once'))+'</small></div><div class="cloud-msg" style="margin-bottom:12px">📱 '+esc(t('pro_only_play'))+'</div>'+
       (PLAY_PACKAGE?'<a class="btn" style="display:block;text-align:center;text-decoration:none" href="https://play.google.com/store/apps/details?id='+encodeURIComponent(PLAY_PACKAGE)+'" target="_blank" rel="noopener">Google Play</a>':'<button class="btn ghost" data-act="sheet-close">'+esc(t('cancel'))+'</button>');
   }
+  if(!isPro())h+='<div class="gap"></div><button class="btn ghost sm" style="width:100%" data-act="pro-code">'+esc(S.lang==='ar'?'لدي رمز':'I have a code')+'</button>';
   openSheet(h);
 }
 function premiumCard(){
