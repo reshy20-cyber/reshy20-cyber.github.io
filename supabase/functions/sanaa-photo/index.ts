@@ -17,7 +17,7 @@ const json = (body: unknown, status = 200) =>
 
 const SKU = "sanaa_premium";
 // SHA-256 of the review code given to Google Play reviewers (App access); the same hash is in the app.
-const REVIEW_HASH = "bbbf48c3a650e4ff0b8d6a66c2b13e7cbaf37f63bdf7c4bc7b42877466b03557";
+const REVIEW_HASH = "5a7a58f74c8ee278e332a0952f4a53a634189ca543c93ce8bc3c0fcb67ce5314";
 const MAX_IMAGES = 3;
 const MAX_B64 = 2_000_000; // per photo (~1.5 MB); the app sends ~150–400 KB
 const PER_DAY = 40; // answers per user per day (best effort, per server instance)
