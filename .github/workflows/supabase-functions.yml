@@ -1,4 +1,5 @@
-# Deploys the shared purchase check (supabase/functions/verify-purchase) to the HAYATI Supabase project.
+# Deploys the shared purchase check (supabase/functions/verify-purchase) and صنعة's photo assistant
+# (supabase/functions/sanaa-photo) to the HAYATI Supabase project.
 # Runs by itself when the function changes, or by hand from the Actions tab.
 # Needs the repository secret SUPABASE_ACCESS_TOKEN (supabase.com → Account → Access Tokens).
 name: Deploy purchase check to Supabase
@@ -7,7 +8,7 @@ on:
   workflow_dispatch:
   push:
     branches: [main]
-    paths: ["supabase/functions/verify-purchase/**", ".github/workflows/supabase-functions.yml"]
+    paths: ["supabase/functions/verify-purchase/**", "supabase/functions/sanaa-photo/**", ".github/workflows/supabase-functions.yml"]
 
 jobs:
   deploy:
@@ -42,3 +43,4 @@ jobs:
           echo "token length ${#SUPABASE_ACCESS_TOKEN}; after sbp_: $(printf '%s' "${SUPABASE_ACCESS_TOKEN#sbp_}" | sed 's/[0-9a-f]/#/g; s/[g-zG-Z]/@/g; s/##*/<hex>/g; s/@@*/<letters>/g' | head -c 120)"
           export SUPABASE_ACCESS_TOKEN
           supabase functions deploy verify-purchase --remote=nwlmoecyepsajayyyugd --no-verify-jwt --use-api --yes
+          supabase functions deploy sanaa-photo --remote=nwlmoecyepsajayyyugd --no-verify-jwt --use-api --yes

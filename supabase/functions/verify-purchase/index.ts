@@ -1,4 +1,4 @@
-// verify-purchase — shared by HAYATI, Tafawoq, Tafawoq Prep, Border Companion and Road Companion
+// verify-purchase — shared by HAYATI, Tafawoq, Tafawoq Prep, Border Companion, Road Companion and صنعة
 // Checks a Google Play purchase token for one of the one-time Premium products below,
 // acknowledges it (required within 3 days or Google refunds it), and answers { valid: true/false }.
 //
@@ -20,6 +20,7 @@ const PRODUCTS: Record<string, string> = {
   tafawoq_prep_plus_2026_2027: "app.tafawoq.prep",
   border_premium: "app.bordercompanion",
   roadcompanion_premium: "app.roadcompanion",
+  sanaa_premium: "app.sanaa",
 };
 
 function json(body: unknown, status = 200) {
