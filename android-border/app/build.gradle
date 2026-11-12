@@ -152,7 +152,9 @@ android {
     }
     buildTypes {
         release {
-            minifyEnabled true
+            // Off: code shrinking renamed a browser-helper class and the app crashed at launch
+            // ("Component class ... does not exist"). The app is tiny, so shrinking gains nothing.
+            minifyEnabled false
         }
     }
     compileOptions {
