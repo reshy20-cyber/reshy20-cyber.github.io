@@ -32,7 +32,7 @@ def twaManifest = [
     navigationColorDark: '#0B5D44', // The color used for the dark navbar.
     navigationDividerColor: '#0B5D44', // The navbar divider color.
     navigationDividerColorDark: '#0B5D44', // The dark navbar divider color.
-    backgroundColor: '#0B5D44', // The color used for the splash screen background.
+    backgroundColor: '#043A26', // The color used for the splash screen background.
     enableNotifications: false, // Set to true to enable notification delegation.
     // Every shortcut must include the following fields:
     // - name: String that will show up in the shortcut.
