@@ -58,5 +58,17 @@
         "1A:DE:F0:EB:D5:FF:E3:97:27:38:E3:1E:44:E6:EA:3E:E1:86:3F:89:14:BA:88:8B:AA:0C:5A:0D:39:C0:DE:EB"
       ]
     }
+  },
+  {
+    "relation": [
+      "delegate_permission/common.handle_all_urls"
+    ],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "app.tafawuq.azhari",
+      "sha256_cert_fingerprints": [
+        "40:3A:57:34:7C:97:79:3B:CC:44:E3:BE:92:97:FD:7E:0F:54:A9:04:F4:44:C9:A7:63:B7:F8:96:05:30:93:7B"
+      ]
+    }
   }
 ]

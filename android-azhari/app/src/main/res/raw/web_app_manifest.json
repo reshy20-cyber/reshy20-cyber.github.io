@@ -1,0 +1,17 @@
+{
+  "name": "تفوق الأزهري",
+  "short_name": "تفوق الأزهري",
+  "description": "تطبيق مذاكرة وامتحانات للشهادة الإعدادية الأزهرية",
+  "id": "/tafawuq-azhari/",
+  "lang": "ar",
+  "dir": "rtl",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#FAF8F3",
+  "theme_color": "#0b5d44",
+  "icons": [
+    { "src": "icons/icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "icons/icon-512.png", "sizes": "512x512", "type": "image/png" }
+  ]
+}
