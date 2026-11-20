@@ -21,6 +21,7 @@ const PRODUCTS: Record<string, string> = {
   border_premium: "app.bordercompanion",
   roadcompanion_premium: "app.roadcompanion",
   sanaa_premium: "app.sanaa",
+  lifetime_full: "app.tafawuq.azhari",
 };
 
 function json(body: unknown, status = 200) {
