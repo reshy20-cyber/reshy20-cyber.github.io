@@ -33,7 +33,7 @@ def twaManifest = [
     navigationDividerColor: '#6244A9', // The navbar divider color.
     navigationDividerColorDark: '#6244A9', // The dark navbar divider color.
     backgroundColor: '#6244A9', // The color used for the splash screen background.
-    enableNotifications: false, // Set to true to enable notification delegation.
+    enableNotifications: true, // Must be true: DelegationService is required for Play Billing (Digital Goods API).
     // Every shortcut must include the following fields:
     // - name: String that will show up in the shortcut.
     // - short_name: Shorter string used if |name| is too long.
