@@ -372,6 +372,7 @@ select.field{appearance:none;-webkit-appearance:none;background-image:linear-gra
   <div class="body">
     <div class="setgroup">
       <button class="setrow" onclick="go('family')"><span>👨‍👩‍👧 أفراد العائلة</span><span>‹</span></button>
+      <button class="setrow" onclick="ics()"><span>📅 أضف كل المستندات للتقويم<small>تذكيرات على هاتفك قبل الانتهاء</small></span><span>‹</span></button>
       <button class="setrow" onclick="exportData()"><span>💾 حفظ نسخة احتياطية<small>ملف على جهازك</small></span><span>‹</span></button>
       <button class="setrow" onclick="document.getElementById('impFile').click()"><span>📥 استرجاع نسخة احتياطية</span><span>‹</span></button>
       <a class="setrow" href="privacy.html"><span>🔒 الخصوصية</span><span>‹</span></a>
@@ -770,15 +771,27 @@ window.importData=function(inp){
 window.wipe=function(){if(confirm(tr('سيُحذف كل شيء من هذا الجهاز. متابعة؟'))){const p=S.premium;S={members:[{id:'m1',name:'أنا',rel:'أنا'}],docs:[],premium:p,onboarded:true,lang:S.lang};docFilter='all';save();toast(tr('تم الحذف'))}};
 function renderPay(){$('priceV').textContent=window.__awPrice||tr('دفعة واحدة');$('payLogo').innerHTML=LOGO}
 
-// تصدير حدث تقويم (ملف ics) بتذكيرات قبل 90 و30 و7 أيام
-window.ics=function(id){
-  const d=S.docs.find(x=>x.id===id);if(!d)return;const t=T(d);const m=mem(d.member);
-  const ymd=d.date.replace(/-/g,'');const nx=new Date(+d.date.slice(0,4),+d.date.slice(5,7)-1,+d.date.slice(8,10)+1);
-  const end=nx.getFullYear()+String(nx.getMonth()+1).padStart(2,'0')+String(nx.getDate()).padStart(2,'0');
-  const title=tr('تنتهي: {t}',{t:(d.name||tr(t.ar))+(m?' ('+mname(m)+')':'')}).replace(/[\r\n,;]/g,' ');
-  const al=[90,30,7].map(n=>'BEGIN:VALARM\r\nTRIGGER:-P'+n+'D\r\nACTION:DISPLAY\r\nDESCRIPTION:'+title+'\r\nEND:VALARM').join('\r\n');
-  const body=['BEGIN:VCALENDAR','VERSION:2.0','PRODID:-//Awraqi//AR','BEGIN:VEVENT','UID:'+d.id+'@awraqi','DTSTAMP:'+new Date().toISOString().replace(/[-:]/g,'').slice(0,15)+'Z','DTSTART;VALUE=DATE:'+ymd,'DTEND;VALUE=DATE:'+end,'SUMMARY:'+title,al,'END:VEVENT','END:VCALENDAR'].join('\r\n');
-  const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([body],{type:'text/calendar'}));a.download='awraqi-'+d.id+'.ics';document.body.appendChild(a);a.click();a.remove();
+// تصدير أحداث التقويم (ملف ics): حدث بيوم الانتهاء + تذكيرات الساعة 9 صباحًا قبل 90 و30 و7 ويوم، وفي يوم الانتهاء. بلا خادم.
+function icsEsc(x){return String(x).replace(/\\/g,'\\\\').replace(/[,;]/g,' ').replace(/\r?\n/g,' ')}
+function icsTrig(n){return n===0?'PT9H':(n===1?'-PT15H':'-P'+(n-1)+'DT15H')}
+window.ics=async function(id){
+  const list=id?S.docs.filter(x=>x.id===id):S.docs.filter(x=>x.date);
+  if(!list.length){toast(tr('أضف ورقة أولًا'));return}
+  const stamp=new Date().toISOString().replace(/[-:]/g,'').slice(0,15)+'Z';
+  const ev=list.map(d=>{
+    const t=T(d),m=mem(d.member);
+    const ymd=d.date.replace(/-/g,'');const nx=new Date(+d.date.slice(0,4),+d.date.slice(5,7)-1,+d.date.slice(8,10)+1);
+    const end=nx.getFullYear()+String(nx.getMonth()+1).padStart(2,'0')+String(nx.getDate()).padStart(2,'0');
+    const title=icsEsc(tr('تنتهي: {t}',{t:(d.name||tr(t.ar))+(m?' ('+mname(m)+')':'')}));
+    const al=[90,30,7,1,0].map(n=>'BEGIN:VALARM\r\nTRIGGER:'+icsTrig(n)+'\r\nACTION:DISPLAY\r\nDESCRIPTION:'+title+'\r\nEND:VALARM').join('\r\n');
+    return ['BEGIN:VEVENT','UID:'+d.id+'@awraqi','DTSTAMP:'+stamp,'DTSTART;VALUE=DATE:'+ymd,'DTEND;VALUE=DATE:'+end,'SUMMARY:'+title,al,'END:VEVENT'].join('\r\n');
+  }).join('\r\n');
+  const body='BEGIN:VCALENDAR\r\nVERSION:2.0\r\nPRODID:-//Awraqi//Reminders//EN\r\nCALSCALE:GREGORIAN\r\n'+ev+'\r\nEND:VCALENDAR\r\n';
+  const name='awraqi-'+(id||'all')+'.ics',file=new File([body],name,{type:'text/calendar'});
+  try{
+    if(navigator.canShare&&navigator.canShare({files:[file]})){await navigator.share({files:[file]});return}
+  }catch(e){if(e&&e.name==='AbortError')return}
+  const a=document.createElement('a');a.href=URL.createObjectURL(file);a.download=name;document.body.appendChild(a);a.click();a.remove();
   toast(tr('افتح الملف لإضافته إلى تقويم هاتفك'));
 };
 
