@@ -407,5 +407,119 @@ window.RENEWALS_I18N.de={
    ],
    "note": "Die Quelle nennt diese Anforderungen für die Ausstellung eines neuen Passes. Das Portal Ijraat ergänzt: den bisherigen Pass, aktuelle Fotos, eine Bescheinigung zum Familienstand und die Gebührenquittung. Für Personen im Ausland läuft der Antrag über das Konsulat."
   }
+ },
+ "in": {
+  "passport": {
+   "scope": "Neuausstellung eines gewöhnlichen indischen Reisepasses (über Passport Seva)",
+   "steps": [
+    "Auf dem Online-Portal Passport Seva registrieren und anmelden",
+    "„Apply for Fresh Passport/Re-issue of Passport“ wählen und den Antrag ausfüllen",
+    "Einen Termin in einem Passport Seva Kendra buchen und die Antragsquittung (ARN) ausdrucken",
+    "Die Originale der Nachweise, dazu je eine selbstbeglaubigte Fotokopie",
+    "Ihren aktuellen Reisepass im Original, mit einer selbstbeglaubigten Fotokopie"
+   ],
+   "note": "Ihr regionales Passamt kann zusätzliche Unterlagen verlangen, und die Liste hängt vom Grund ab (Ablauf, volle Seiten, geänderte Angaben). Prüfen Sie die offizielle Seite."
+  },
+  "license": {
+   "scope": "Verlängerung des indischen Führerscheins (über das Sarathi-Portal)",
+   "steps": [
+    "Ihr aktueller Führerschein",
+    "Antragsformular 2 (Form 2)",
+    "Form 1: Selbsterklärung zur körperlichen Eignung für Nicht-Gewerbefahrzeuge",
+    "Form 1A: ärztliches Attest eines zugelassenen Arztes, für Gewerbefahrzeuge und für Antragsteller über 40",
+    "Die vorgeschriebenen Gebühren",
+    "Auf sarathi.parivahan.gov.in den Bundesstaat und dann „Services on Driving Licence“ wählen; nach dem Ausfüllen buchen Sie einen Termin und gehen mit den Originalen zum RTO"
+   ],
+   "note": "Der Verlängerungsantrag wird frühestens ein Jahr vor Ablauf des Führerscheins angenommen. Ist der Ablauf mehr als ein Jahr her, müssen Sie die Fahrprüfung erneut ablegen."
+  }
+ },
+ "pk": {
+  "passport": {
+   "scope": "Pakistanischer Reisepass (Generaldirektion für Einwanderung und Pässe, DG I&P)",
+   "steps": [
+    "Gültige CNIC oder NICOP im Original, mit einer Fotokopie",
+    "Bisheriger Reisepass im Original, mit einer Fotokopie",
+    "Beschäftigte der Regierung und halbstaatlicher Stellen: eine Unbedenklichkeitsbescheinigung (NOC) des Arbeitgebers",
+    "Doppelstaatler: der ausländische Pass mit einer Fotokopie",
+    "Bei Verlust: ein Polizeibericht mit der Nummer des bisherigen Passes"
+   ],
+   "note": "Die Verlängerung ist online möglich (onlinemrp.dgip.gov.pk oder PakID-App), wenn der Pass in 12 Monaten oder weniger abläuft; sonst über das regionale Passamt oder die Botschaft. Der Online-Antrag verlangt Farbscans von Ausweis und Pass."
+  },
+  "id": {
+   "scope": "Verlängerung des nationalen Personalausweises, CNIC (NADRA)",
+   "steps": [
+    "Verlängerung spätestens einen Monat nach Ablauf der Karte beantragen (Regel 12 der NADRA-Regeln)",
+    "Über die PakID-App (Android und iPhone): Konto anlegen, den Verlängerungsdienst für die Karte wählen und die erforderlichen Unterlagen hochladen",
+    "Oder direkt in einem NADRA-Registrierungszentrum",
+    "Für Fingerabdrücke und Foto kann ein Besuch im Zentrum nötig sein",
+    "Den Antragsstatus in der App verfolgen"
+   ],
+   "note": "Die Karte ist 10 Jahre gültig und ab 60 Jahren lebenslang. Für Pakistaner im Ausland gibt es die NICOP-Karte, mit eigener Verlängerungsseite bei NADRA."
+  }
+ },
+ "tr": {
+  "passport": {
+   "scope": "Gewöhnlicher türkischer Reisepass (Generaldirektion für Bevölkerungs- und Staatsangehörigkeitsangelegenheiten, NVİ)",
+   "steps": [
+    "Der T.C.-Personalausweis, Ausweis oder ein vorläufiges Ausweisdokument (Original)",
+    "Ein biometrisches Foto, in den letzten 6 Monaten aufgenommen (ICAO-Standard)",
+    "Alle bisherigen Pässe, die nicht annulliert wurden",
+    "Die Kosten für das Passbuch und die Gebühr bezahlen (die Zahlungsdaten erscheinen im System, eine Quittung wird nicht verlangt)",
+    "Für Minderjährige oder Betreute: die Einwilligung des Vormunds, wenn der gesetzliche Vertreter nicht erscheint",
+    "Termin buchen: Telefon 199, randevu.nvi.gov.tr oder die App NVI Mobil"
+   ],
+   "note": "Diese Angaben stammen von der Seite einer örtlichen Bevölkerungsdirektion und können sich zwischen den Provinzen unterscheiden (zum Beispiel die Zahl der Fotos). Prüfen Sie die Seite Ihrer Direktion."
+  },
+  "license": {
+   "scope": "Verlängerung des türkischen Führerscheins (NVİ)",
+   "steps": [
+    "Personalausweis oder Ausweisdokument",
+    "Ihr alter Führerschein",
+    "Ein Gesundheitsbericht für Fahrer (die Gesundheitseinrichtung sendet ihn elektronisch über das System)",
+    "Ein biometrisches Foto, in den letzten 6 Monaten aufgenommen",
+    "Ein Nachweis der Blutgruppe, falls sie nicht im Gesundheitsbericht steht",
+    "Die Kosten für das Wertpapier, die Führerscheingebühr und den Stiftungsanteil bezahlen",
+    "Termin buchen: 199, NVI Mobil, randevu.nvi.gov.tr oder e-Devlet"
+   ],
+   "note": "Das Führungszeugnis wird elektronisch geprüft. Die Gebühren ändern sich jedes Jahr und stehen auf randevu.nvi.gov.tr. Die Quellseite ist ziemlich alt; bestätigen Sie die Liste bei der Terminbuchung."
+  },
+  "residence": {
+   "scope": "Verlängerung der Aufenthaltserlaubnis für Ausländer (Präsidium für Migrationsmanagement)",
+   "steps": [
+    "Antrag über das System e-İkamet ab 60 Tagen vor Ablauf der Erlaubnis stellen, in jedem Fall vor dem Ablauf",
+    "Das Antragsformular für die Aufenthaltserlaubnis, unterschrieben",
+    "Eine notariell beglaubigte Fotokopie des Reisepasses (Identitäts- und Fotoseiten sowie die gestempelten Seiten)",
+    "Zahlungsbelege für die Aufenthaltsgebühr und die Dokumentenkosten",
+    "Eine gültige Krankenversicherung für den beantragten Aufenthalt",
+    "Eine Erklärung über ausreichende finanzielle Mittel (Nachweise können verlangt werden)",
+    "Eine aktuelle Wohnsitzbescheinigung (die Adressregistrierung ist Pflicht)",
+    "Die Unterlagen per Einschreiben mit Rückschein oder per Frachtdienst an die Provinzdirektion für Migration senden, nicht per gewöhnlicher Post"
+   ],
+   "note": "Die Unterlagen unterscheiden sich je nach Art der Erlaubnis (kurzfristig, Familie, Student oder Arbeit); lesen Sie die Liste Ihrer Art im System e-İkamet."
+  }
+ },
+ "us": {
+  "passport": {
+   "scope": "Verlängerung des US-Reisepasses für Erwachsene (Formular DS-82)",
+   "steps": [
+    "Ihr Pass wurde ausgestellt, als Sie 16 oder älter waren, und war 10 Jahre gültig",
+    "Er lautet auf Ihren aktuellen Namen, oder Sie legen ein Dokument wie eine Heiratsurkunde oder ein Scheidungsurteil vor, das die Änderung belegt",
+    "Er ist nicht beschädigt, abgesehen von normaler Abnutzung",
+    "Das Formular DS-82 ausfüllen und einseitig bedruckt ausdrucken, dann unterschreiben und datieren",
+    "Den Antrag mit Ihrem aktuellen Pass per USPS (dem US-Postdienst) senden"
+   ],
+   "note": "Berechtigte in den USA können online auf travel.state.gov verlängern. Außerhalb der USA erfolgt die Verlängerung persönlich bei Botschaft oder Konsulat (in Kanada per Post). Die Regelbearbeitung dauert 4 bis 6 Wochen, ohne Postlaufzeit."
+  },
+  "residence": {
+   "scope": "Verlängerung der Green Card (dauerhafter Aufenthalt)",
+   "steps": [
+    "Formular I-90 online über ein USCIS-Konto oder per Post einreichen",
+    "Den Antrag stellen, wenn Ihre Karte innerhalb von 6 Monaten abläuft",
+    "Befinden Sie sich außerhalb der USA und läuft Ihre Karte innerhalb von 6 Monaten ab: Antrag sofort nach der Rückkehr stellen",
+    "Nachweise und Gebühren richten sich nach den Anleitungen zum Formular",
+    "Nach der Antragstellung kann die Eingangsbestätigung (I-797) zusammen mit Ihrer abgelaufenen Karte verwendet werden"
+   ],
+   "note": "Bedingte Aufenthaltsberechtigte (Karte für 2 Jahre) nutzen I-90 nicht, wenn ihr Status innerhalb von 90 Tagen abläuft; ihr Verfahren ist anders. US-Führerscheine werden von jedem Bundesstaat einzeln ausgestellt, daher gibt es hier keine einheitliche Liste."
+  }
  }
 };

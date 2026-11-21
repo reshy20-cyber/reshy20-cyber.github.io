@@ -237,9 +237,9 @@ ROWS.forEach(function(r){D.en[r[0]]=r[1];D.fr[r[0]]=r[2];D.de[r[0]]=r[3]});
 
 /* أسماء الدول */
 var CN={
- en:{eg:'Egypt',uk:'United Kingdom',sa:'Saudi Arabia',ae:'United Arab Emirates',kw:'Kuwait',jo:'Jordan',qa:'Qatar',bh:'Bahrain',om:'Oman',ma:'Morocco',lb:'Lebanon',tn:'Tunisia',dz:'Algeria',iq:'Iraq',ly:'Libya',other:'Other country'},
- fr:{eg:'Égypte',uk:'Royaume-Uni',sa:'Arabie saoudite',ae:'Émirats arabes unis',kw:'Koweït',jo:'Jordanie',qa:'Qatar',bh:'Bahreïn',om:'Oman',ma:'Maroc',lb:'Liban',tn:'Tunisie',dz:'Algérie',iq:'Irak',ly:'Libye',other:'Autre pays'},
- de:{eg:'Ägypten',uk:'Vereinigtes Königreich',sa:'Saudi-Arabien',ae:'Vereinigte Arabische Emirate',kw:'Kuwait',jo:'Jordanien',qa:'Katar',bh:'Bahrain',om:'Oman',ma:'Marokko',lb:'Libanon',tn:'Tunesien',dz:'Algerien',iq:'Irak',ly:'Libyen',other:'Anderes Land'}
+ en:{eg:'Egypt',uk:'United Kingdom',sa:'Saudi Arabia',ae:'United Arab Emirates',kw:'Kuwait',jo:'Jordan',qa:'Qatar',bh:'Bahrain',om:'Oman',ma:'Morocco',lb:'Lebanon',tn:'Tunisia',dz:'Algeria',iq:'Iraq',ly:'Libya','in':'India',pk:'Pakistan',tr:'Türkiye',us:'United States',other:'Other country'},
+ fr:{eg:'Égypte',uk:'Royaume-Uni',sa:'Arabie saoudite',ae:'Émirats arabes unis',kw:'Koweït',jo:'Jordanie',qa:'Qatar',bh:'Bahreïn',om:'Oman',ma:'Maroc',lb:'Liban',tn:'Tunisie',dz:'Algérie',iq:'Irak',ly:'Libye','in':'Inde',pk:'Pakistan',tr:'Turquie',us:'États-Unis',other:'Autre pays'},
+ de:{eg:'Ägypten',uk:'Vereinigtes Königreich',sa:'Saudi-Arabien',ae:'Vereinigte Arabische Emirate',kw:'Kuwait',jo:'Jordanien',qa:'Katar',bh:'Bahrain',om:'Oman',ma:'Marokko',lb:'Libanon',tn:'Tunesien',dz:'Algerien',iq:'Irak',ly:'Libyen','in':'Indien',pk:'Pakistan',tr:'Türkei',us:'Vereinigte Staaten',other:'Anderes Land'}
 };
 
 /* الأعداد والجموع */

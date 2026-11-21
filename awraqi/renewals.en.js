@@ -407,5 +407,119 @@ window.RENEWALS_I18N.en={
    ],
    "note": "The source lists these requirements for issuing a new passport. The Ijraat portal adds: the previous passport, recent photos, a family status certificate and the fee receipt. For residents abroad, the application goes through the consulate."
   }
+ },
+ "in": {
+  "passport": {
+   "scope": "Re-issue of an ordinary Indian passport (through Passport Seva)",
+   "steps": [
+    "Register on the Passport Seva online portal, then sign in",
+    "Choose “Apply for Fresh Passport/Re-issue of Passport” and fill in the application",
+    "Book an appointment at a Passport Seva Kendra and print the application receipt (ARN)",
+    "The original supporting documents, plus one self-attested photocopy of each",
+    "Your current passport in original, with a self-attested photocopy"
+   ],
+   "note": "Your regional passport office may ask for extra documents, and the list depends on the reason (expiry, full pages, change of details). Check the official page."
+  },
+  "license": {
+   "scope": "Renewing an Indian driving licence (through the Sarathi portal)",
+   "steps": [
+    "Your current driving licence",
+    "Application Form 2",
+    "Form 1: self-declaration of physical fitness for non-transport vehicles",
+    "Form 1A: a medical certificate from a certified doctor, for transport vehicles and for applicants over 40",
+    "The prescribed fees",
+    "Go to sarathi.parivahan.gov.in, select your state, then “Services on Driving Licence”; after filling in the application you book a slot and visit the RTO with the originals"
+   ],
+   "note": "A renewal application is accepted no more than one year before the licence expires. If you are more than a year late after expiry, you must take the driving test again."
+  }
+ },
+ "pk": {
+  "passport": {
+   "scope": "Pakistani passport (Directorate General of Immigration and Passports, DG I&P)",
+   "steps": [
+    "Original valid CNIC or NICOP with a photocopy",
+    "Previous passport in original, with a photocopy",
+    "Government and semi-government employees: a No Objection Certificate (NOC) from the employer",
+    "Dual nationals: the foreign passport with a photocopy",
+    "If lost: a police report mentioning the previous passport number"
+   ],
+   "note": "You can renew online (onlinemrp.dgip.gov.pk or the PakID app) if the passport expires within 12 months or less; otherwise go through the regional passport office or the embassy. The online application asks for colour scans of your ID card and passport."
+  },
+  "id": {
+   "scope": "Renewing the national identity card, CNIC (NADRA)",
+   "steps": [
+    "Apply for renewal no later than one month after the card expires (Rule 12 of the NADRA rules)",
+    "Through the PakID app (Android and iPhone): create an account, choose the card renewal service and upload the required documents",
+    "Or directly at a NADRA Registration Centre",
+    "A visit to the centre may be needed for fingerprints and a photo",
+    "Track the application status in the app"
+   ],
+   "note": "The card is valid for 10 years, and is issued for life from age 60. For Pakistanis living abroad there is the NICOP card, with its own renewal page at NADRA."
+  }
+ },
+ "tr": {
+  "passport": {
+   "scope": "Ordinary Turkish passport (General Directorate of Population and Citizenship Affairs, NVİ)",
+   "steps": [
+    "The original T.C. identity card, ID document or a temporary identity document",
+    "One biometric photo taken within the last 6 months (ICAO standards)",
+    "All previous passports that have not been cancelled",
+    "Pay the passport booklet cost and the fee (payment details appear in the system, and no receipt is requested)",
+    "For minors or persons under guardianship: the guardian’s consent if the legal representative does not attend",
+    "Book an appointment: phone 199, randevu.nvi.gov.tr or the NVI Mobil app"
+   ],
+   "note": "These details come from a local population directorate’s page and may differ between provinces (for example the number of photos). Check your own directorate’s page."
+  },
+  "license": {
+   "scope": "Renewing a Turkish driving licence (NVİ)",
+   "steps": [
+    "Identity card or ID document",
+    "Your old driving licence",
+    "A driver’s health report (the health institution sends it electronically through the system)",
+    "One biometric photo taken within the last 6 months",
+    "A blood group document if it is not in the health report",
+    "Pay the valuable-paper cost, the licence fee and the foundation share",
+    "Book an appointment: 199, NVI Mobil, randevu.nvi.gov.tr or e-Devlet"
+   ],
+   "note": "The criminal record is checked electronically. Fees change every year and appear on randevu.nvi.gov.tr. The source page is fairly old, so confirm the list when you book."
+  },
+  "residence": {
+   "scope": "Extending a residence permit for foreigners (Presidency of Migration Management)",
+   "steps": [
+    "Apply through the e-İkamet system from 60 days before the permit expires, and in all cases before it expires",
+    "The residence permit application form, signed",
+    "A notary-approved photocopy of the passport (identity and photo pages and the stamped pages)",
+    "Receipts for payment of the residence permit fee and the document cost",
+    "Valid health insurance covering the requested stay",
+    "A declaration of sufficient financial means (supporting documents may be requested)",
+    "An up-to-date document of residence (registering your address is mandatory)",
+    "Send the file to the provincial migration directorate by registered post with return receipt or by cargo, not by ordinary mail"
+   ],
+   "note": "The documents differ by permit type (short-term, family, student or work), so read the list for your type in the e-İkamet system."
+  }
+ },
+ "us": {
+  "passport": {
+   "scope": "Renewing a U.S. passport for adults (Form DS-82)",
+   "steps": [
+    "Your passport was issued when you were 16 or older and was valid for 10 years",
+    "It is in your current name, or you provide a document such as a marriage certificate or divorce decree showing the change",
+    "It is not damaged, other than normal wear and tear",
+    "Complete Form DS-82 and print it on single-sided paper, then sign and date it",
+    "Mail the application through USPS (the U.S. Postal Service) with your current passport"
+   ],
+   "note": "Eligible people inside the U.S. can renew online at travel.state.gov. Outside the U.S., renewal is in person at an embassy or consulate (by mail in Canada). Routine service takes 4 to 6 weeks, not counting mailing time."
+  },
+  "residence": {
+   "scope": "Renewing a Green Card (permanent residence)",
+   "steps": [
+    "File Form I-90 online through a USCIS account, or by mail",
+    "File the application if your card expires within 6 months",
+    "If you are outside the U.S. and your card expires within 6 months: file as soon as you return",
+    "Supporting documents and fees follow the form instructions",
+    "After filing, the receipt notice (I-797) can be used with your expired card"
+   ],
+   "note": "Conditional residents (a 2-year card) do not use I-90 if their status expires within 90 days, and their procedure is different. U.S. driving licences are issued by each state separately, so there is no single list for them here."
+  }
  }
 };
