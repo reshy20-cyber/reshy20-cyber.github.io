@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>أوراقي — تذكير بانتهاء أوراق العائلة</title>
+<meta name="description" content="أوراقي: سجّل تواريخ انتهاء الجوازات والإقامات والرخص لك ولعائلتك، ونبّهك قبل الانتهاء مع قائمة المستندات المطلوبة للتجديد.">
+<meta name="theme-color" content="#0f766e">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon-192.png">
+<link rel="apple-touch-icon" href="icon-192.png">
+<style>
+:root{--bg:#f4f7f6;--card:#fff;--text:#12302c;--muted:#5f736f;--line:#dbe5e2;--brand:#0f766e;--brand2:#0a5a54;--ok:#15803d;--okbg:#e8f6ec;--warn:#b45309;--warnbg:#fff4e0;--bad:#b91c1c;--badbg:#fdeaea}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Tahoma,Arial,sans-serif}
+html,body{margin:0;background:var(--bg);color:var(--text)}
+body{padding-bottom:calc(90px + env(safe-area-inset-bottom))}
+header{background:linear-gradient(135deg,var(--brand),var(--brand2));color:#fff;padding:calc(14px + env(safe-area-inset-top)) 16px 18px}
+header h1{margin:0;font-size:22px}
+header p{margin:4px 0 0;font-size:13px;opacity:.9}
+main{max-width:560px;margin:0 auto;padding:12px}
+.members{display:flex;gap:8px;overflow-x:auto;padding:4px 0 10px}
+.chip{flex:0 0 auto;border:1px solid var(--line);background:#fff;color:var(--text);border-radius:999px;min-height:38px;padding:0 14px;font-size:14px;font-weight:700;cursor:pointer}
+.chip.active{background:var(--brand);color:#fff;border-color:var(--brand)}
+.chip.add{color:var(--brand);border-style:dashed}
+.summary{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:2px 0 12px}
+.sbox{background:#fff;border:1px solid var(--line);border-radius:14px;padding:10px;text-align:center}
+.sbox b{display:block;font-size:22px}.sbox span{font-size:12px;color:var(--muted)}
+.sbox.bad b{color:var(--bad)}.sbox.warn b{color:var(--warn)}.sbox.ok b{color:var(--ok)}
+.doc{background:#fff;border:1px solid var(--line);border-radius:16px;padding:12px 14px;margin-bottom:10px;border-right:6px solid var(--ok)}
+.doc.warn{border-right-color:#e0a02b}.doc.bad{border-right-color:var(--bad)}
+.doc-top{display:flex;justify-content:space-between;gap:8px;align-items:flex-start}
+.doc-title{font-weight:800;font-size:16px}
+.doc-sub{font-size:12.5px;color:var(--muted);margin-top:2px}
+.badge{font-size:12px;font-weight:800;border-radius:999px;padding:4px 10px;white-space:nowrap;background:var(--okbg);color:var(--ok)}
+.warn .badge{background:var(--warnbg);color:var(--warn)}.bad .badge{background:var(--badbg);color:var(--bad)}
+.doc-actions{display:flex;gap:6px;margin-top:10px;flex-wrap:wrap}
+.btn{border:1px solid var(--line);background:#fff;color:var(--text);border-radius:12px;min-height:38px;padding:0 12px;font-size:13px;font-weight:700;cursor:pointer}
+.btn.primary{background:var(--brand);color:#fff;border-color:var(--brand)}
+.btn.danger{color:var(--bad)}
+.empty{text-align:center;color:var(--muted);padding:28px 10px;background:#fff;border:1px dashed var(--line);border-radius:16px;line-height:1.9}
+.fab{position:fixed;bottom:calc(18px + env(safe-area-inset-bottom));left:16px;right:16px;max-width:528px;margin:0 auto;min-height:54px;border:none;border-radius:16px;background:var(--brand);color:#fff;font-size:17px;font-weight:800;box-shadow:0 8px 22px rgba(15,118,110,.35);cursor:pointer}
+.modal{position:fixed;inset:0;background:rgba(10,30,28,.5);display:none;align-items:flex-end;justify-content:center;z-index:50}
+.modal.open{display:flex}
+.sheet{background:#fff;width:100%;max-width:560px;border-radius:22px 22px 0 0;padding:16px;max-height:88vh;overflow:auto;padding-bottom:calc(16px + env(safe-area-inset-bottom))}
+.sheet h2{margin:0 0 10px;font-size:18px}
+label{display:block;font-size:13px;font-weight:700;margin:10px 0 4px}
+input,select{width:100%;min-height:46px;border:1px solid var(--line);border-radius:12px;padding:0 12px;font-size:16px;background:#fff;color:var(--text)}
+.row{display:flex;gap:8px;margin-top:14px}.row .btn{flex:1;min-height:46px}
+ul.check{padding:0 20px 0 0;line-height:2;margin:8px 0}
+.note{font-size:12px;color:var(--muted);line-height:1.8;margin-top:8px}
+.upsell{background:#fff;border:1px solid #bfe3de;border-radius:16px;padding:14px;margin:10px 0;text-align:center;line-height:1.9}
+.toast{position:fixed;bottom:100px;left:50%;transform:translateX(-50%);background:#12302c;color:#fff;padding:10px 16px;border-radius:12px;font-size:14px;z-index:99;display:none;max-width:90%}
+</style>
+</head>
+<body>
+<header>
+  <h1>📄 أوراقي</h1>
+  <p>لا تفاجئك ورقة منتهية بعد اليوم — لك ولعائلتك</p>
+</header>
+<main>
+  <div class="members" id="members"></div>
+  <div class="summary" id="summary"></div>
+  <div id="list"></div>
+  <div id="upsell"></div>
+  <p class="note">🔒 يحفظ التطبيق اسم الورقة وتاريخ انتهائها فقط، على جهازك. لا صور ولا أرقام مستندات ولا حسابات.</p>
+</main>
+<button class="fab" onclick="openDoc()">+ إضافة ورقة</button>
+
+<div class="modal" id="docModal" onclick="if(event.target===this)closeM('docModal')"><div class="sheet">
+  <h2 id="docTitle">إضافة ورقة</h2>
+  <label>لمن هذه الورقة؟</label><select id="fMember"></select>
+  <label>نوع الورقة</label><select id="fType"></select>
+  <label>اسم مخصّص (اختياري)</label><input id="fName" maxlength="40" placeholder="مثال: جواز سفر أحمد">
+  <label>تاريخ الانتهاء</label><input type="date" id="fDate">
+  <div class="row"><button class="btn primary" onclick="saveDoc()">حفظ</button><button class="btn" onclick="closeM('docModal')">إلغاء</button></div>
+</div></div>
+
+<div class="modal" id="infoModal" onclick="if(event.target===this)closeM('infoModal')"><div class="sheet">
+  <h2 id="infoTitle"></h2><div id="infoBody"></div>
+  <div class="row"><button class="btn" onclick="closeM('infoModal')">إغلاق</button></div>
+</div></div>
+
+<div class="modal" id="memModal" onclick="if(event.target===this)closeM('memModal')"><div class="sheet">
+  <h2>إضافة فرد من العائلة</h2>
+  <label>الاسم</label><input id="mName" maxlength="24" placeholder="مثال: زوجتي، أحمد">
+  <div class="row"><button class="btn primary" onclick="saveMember()">إضافة</button><button class="btn" onclick="closeM('memModal')">إلغاء</button></div>
+</div></div>
+<div class="toast" id="toast"></div>
+
+<script>
+(function(){
+'use strict';
+const KEY='awraqi_v1', FREE_DOCS=3;
+const TYPES={
+  passport:{ar:'جواز سفر',ic:'🛂',list:['الجواز القديم','صور شخصية بمواصفات الجهة المصدِرة','الهوية الوطنية أو الإقامة السارية','إيصال الرسوم','حجز موعد أو تقديم الطلب عبر الموقع الرسمي أو القنصلية']},
+  residence:{ar:'إقامة',ic:'🏠',list:['جواز سفر ساري المفعول (غالبًا لا يقل عن 6 أشهر)','الإقامة الحالية','عقد العمل أو إثبات سكن/دراسة حسب نوع الإقامة','تأمين صحي إن كان مطلوبًا','صور شخصية','إيصال الرسوم']},
+  visa:{ar:'تأشيرة',ic:'✈️',list:['جواز ساري المفعول','حجز سفر وإقامة','إثبات تمويل أو كشف حساب','تأمين سفر إن كان مطلوبًا','طلب التأشيرة وصور شخصية','إيصال الرسوم']},
+  license:{ar:'رخصة قيادة',ic:'🚗',list:['الرخصة الحالية','الهوية أو الإقامة','صور شخصية','فحص طبي/نظر إن كان مطلوبًا','إيصال الرسوم']},
+  id:{ar:'بطاقة هوية',ic:'🪪',list:['البطاقة القديمة','صور شخصية','مستند إثبات العنوان إن كان مطلوبًا','إيصال الرسوم']},
+  insurance:{ar:'تأمين (سيارة/صحي)',ic:'🛡️',list:['وثيقة التأمين الحالية','بيانات المركبة أو المؤمَّن عليه','مقارنة عروض قبل التجديد','سداد القسط']},
+  card:{ar:'بطاقة بنكية',ic:'💳',list:['اتصل بالبنك أو افتح تطبيقه قبل الانتهاء','تأكد من العنوان لاستلام البطاقة الجديدة','حدّث البطاقة في الخدمات المرتبطة بها']},
+  other:{ar:'ورقة أخرى',ic:'📎',list:['راجع الجهة المصدِرة لمعرفة المستندات المطلوبة','جهّز نسخة من الورقة الحالية','احجز موعدًا إن كان مطلوبًا']}
+};
+const $=id=>document.getElementById(id);
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+function load(){try{const d=JSON.parse(localStorage.getItem(KEY));if(d&&Array.isArray(d.members)&&Array.isArray(d.docs))return d}catch(e){}return{members:[{id:'m1',name:'أنا'}],docs:[],premium:false}}
+let S=load(), cur='all';
+function save(){try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}}
+const uid=()=>Date.now().toString(36)+Math.random().toString(36).slice(2,6);
+function daysLeft(iso){const m=/^(\d{4})-(\d{2})-(\d{2})$/.exec(iso||'');if(!m)return null;const d=new Date(+m[1],+m[2]-1,+m[3]);const t=new Date();t.setHours(0,0,0,0);return Math.round((d-t)/864e5)}
+function status(n){return n<0?'bad':n<=30?'bad':n<=90?'warn':'ok'}
+function label(n){if(n<0)return'منتهية منذ '+(-n)+' يوم';if(n===0)return'تنتهي اليوم';if(n<=60)return'باقي '+n+' يوم';const mo=Math.round(n/30);return mo<24?'باقي '+mo+' شهر':'باقي '+(n/365).toFixed(1)+' سنة'}
+function toast(t){const e=$('toast');e.textContent=t;e.style.display='block';clearTimeout(toast.t);toast.t=setTimeout(()=>e.style.display='none',2600)}
+window.closeM=id=>$(id).classList.remove('open');
+const openM=id=>$(id).classList.add('open');
+
+function render(){
+  $('members').innerHTML='<button class="chip '+(cur==='all'?'active':'')+'" onclick="pick(\'all\')">الكل</button>'
+    +S.members.map(m=>'<button class="chip '+(cur===m.id?'active':'')+'" onclick="pick(\''+m.id+'\')">'+esc(m.name)+'</button>').join('')
+    +'<button class="chip add" onclick="openMember()">+ فرد</button>';
+  const docs=S.docs.filter(d=>cur==='all'||d.member===cur).map(d=>({d,n:daysLeft(d.date)})).filter(x=>x.n!==null).sort((a,b)=>a.n-b.n);
+  const c={bad:0,warn:0,ok:0};docs.forEach(x=>c[status(x.n)]++);
+  $('summary').innerHTML='<div class="sbox bad"><b>'+c.bad+'</b><span>عاجلة أو منتهية</span></div><div class="sbox warn"><b>'+c.warn+'</b><span>خلال 3 أشهر</span></div><div class="sbox ok"><b>'+c.ok+'</b><span>سارية</span></div>';
+  $('list').innerHTML=docs.length?docs.map(({d,n})=>{
+    const t=TYPES[d.type]||TYPES.other, st=status(n), m=S.members.find(x=>x.id===d.member);
+    return '<div class="doc '+(st==='ok'?'':st)+'"><div class="doc-top"><div><div class="doc-title">'+t.ic+' '+esc(d.name||t.ar)+'</div><div class="doc-sub">'+esc(m?m.name:'')+' · '+esc(t.ar)+' · '+esc(d.date)+'</div></div><span class="badge">'+label(n)+'</span></div>'
+     +'<div class="doc-actions"><button class="btn primary" onclick="info(\''+d.id+'\')">كيف أجدّدها؟</button><button class="btn" onclick="ics(\''+d.id+'\')">🔔 تذكير بالتقويم</button><button class="btn" onclick="openDoc(\''+d.id+'\')">تعديل</button><button class="btn danger" onclick="del(\''+d.id+'\')">حذف</button></div></div>';
+  }).join(''):'<div class="empty">لا توجد أوراق بعد.<br>اضغط «+ إضافة ورقة» وأدخل أول جواز أو إقامة أو رخصة.</div>';
+  const locked=!S.premium&&S.docs.length>=FREE_DOCS;
+  $('upsell').innerHTML=locked?'<div class="upsell">وصلت إلى حد النسخة المجانية ('+FREE_DOCS+' أوراق).<br><button class="btn primary" id="upBtn" onclick="upgrade()">فتح أوراق غير محدودة</button></div>':'';
+  if(locked&&window.__awPrice)$('upBtn').textContent='فتح أوراق غير محدودة — '+window.__awPrice;
+}
+window.pick=id=>{cur=id;render()};
+
+window.openDoc=function(id){
+  const d=id?S.docs.find(x=>x.id===id):null;
+  if(!d&&!S.premium&&S.docs.length>=FREE_DOCS){toast('وصلت إلى حد النسخة المجانية');upgrade();return}
+  $('docTitle').textContent=d?'تعديل الورقة':'إضافة ورقة';
+  $('fMember').innerHTML=S.members.map(m=>'<option value="'+m.id+'">'+esc(m.name)+'</option>').join('');
+  $('fType').innerHTML=Object.keys(TYPES).map(k=>'<option value="'+k+'">'+TYPES[k].ic+' '+TYPES[k].ar+'</option>').join('');
+  $('fMember').value=d?d.member:(cur!=='all'?cur:S.members[0].id);
+  $('fType').value=d?d.type:'passport';$('fName').value=d?(d.name||''):'';$('fDate').value=d?d.date:'';
+  openDoc.editing=id||null;openM('docModal');
+};
+window.saveDoc=function(){
+  const date=$('fDate').value;if(daysLeft(date)===null){toast('اختر تاريخ الانتهاء');return}
+  const rec={member:$('fMember').value,type:$('fType').value,name:$('fName').value.trim().slice(0,40),date};
+  if(openDoc.editing){Object.assign(S.docs.find(x=>x.id===openDoc.editing),rec)}else{S.docs.push(Object.assign({id:uid()},rec))}
+  save();closeM('docModal');render();toast('تم الحفظ — يمكنك إضافة تذكير بالتقويم من الزر 🔔');
+};
+window.del=function(id){if(confirm('حذف هذه الورقة؟')){S.docs=S.docs.filter(x=>x.id!==id);save();render()}};
+window.openMember=function(){$('mName').value='';openM('memModal')};
+window.saveMember=function(){const n=$('mName').value.trim();if(!n){toast('اكتب الاسم');return}S.members.push({id:uid(),name:n.slice(0,24)});save();closeM('memModal');render()};
+window.info=function(id){
+  const d=S.docs.find(x=>x.id===id);if(!d)return;const t=TYPES[d.type]||TYPES.other;
+  $('infoTitle').textContent=t.ic+' تجديد: '+(d.name||t.ar);
+  $('infoBody').innerHTML='<b>جهّز المستندات التالية:</b><ul class="check">'+t.list.map(x=>'<li>'+esc(x)+'</li>').join('')+'</ul><div class="note">قائمة إرشادية عامة. المتطلبات تختلف من بلد لآخر وتتغير، فتأكد دائمًا من الموقع الرسمي للجهة المصدِرة. ابدأ التجديد قبل الانتهاء بوقت كافٍ (يُنصح بـ 3 أشهر على الأقل للجوازات والإقامات).</div>';
+  openM('infoModal');
+};
+// تصدير حدث تقويم (ملف ics) بتذكيرات قبل 90 و30 و7 أيام
+window.ics=function(id){
+  const d=S.docs.find(x=>x.id===id);if(!d)return;const t=TYPES[d.type]||TYPES.other;const m=S.members.find(x=>x.id===d.member);
+  const ymd=d.date.replace(/-/g,'');const nx=new Date(+d.date.slice(0,4),+d.date.slice(5,7)-1,+d.date.slice(8,10)+1);
+  const end=nx.getFullYear()+String(nx.getMonth()+1).padStart(2,'0')+String(nx.getDate()).padStart(2,'0');
+  const title=('تنتهي: '+(d.name||t.ar)+(m?' ('+m.name+')':'')).replace(/[\r\n,;]/g,' ');
+  const al=[90,30,7].map(n=>'BEGIN:VALARM\r\nTRIGGER:-P'+n+'D\r\nACTION:DISPLAY\r\nDESCRIPTION:'+title+'\r\nEND:VALARM').join('\r\n');
+  const body=['BEGIN:VCALENDAR','VERSION:2.0','PRODID:-//Awraqi//AR','BEGIN:VEVENT','UID:'+d.id+'@awraqi','DTSTAMP:'+new Date().toISOString().replace(/[-:]/g,'').slice(0,15)+'Z','DTSTART;VALUE=DATE:'+ymd,'DTEND;VALUE=DATE:'+end,'SUMMARY:'+title,al,'END:VEVENT','END:VCALENDAR'].join('\r\n');
+  const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([body],{type:'text/calendar'}));a.download='awraqi-'+d.id+'.ics';document.body.appendChild(a);a.click();a.remove();
+  toast('افتح الملف لإضافته إلى تقويم هاتفك');
+};
+
+// ===== الشراء عبر Google Play Billing (داخل تطبيق Google Play فقط) =====
+const SKU='awraqi_premium',BILL='https://play.google.com/billing';
+const VURL='https://nwlmoecyepsajayyyugd.supabase.co/functions/v1/verify-purchase',VKEY='sb_publishable_rgaE-hjmqV37RU57_C8JEA_yn-0AcEO';
+function verify(token){return fetch(VURL,{method:'POST',headers:{'Content-Type':'application/json',apikey:VKEY,Authorization:'Bearer '+VKEY},body:JSON.stringify({purchaseToken:token,sku:SKU})}).then(r=>r.json().then(d=>{if(!r.ok&&r.status>=500)throw new Error('server');return !!(d&&d.valid)}))}
+let svc=null;
+async function service(){if(svc)return svc;if(!('getDigitalGoodsService' in window))return null;try{svc=await window.getDigitalGoodsService(BILL)}catch(e){svc=null}return svc}
+window.upgrade=async function(){
+  const s=await service();if(!s){toast('الترقية متاحة من داخل تطبيق Google Play فقط');return}
+  try{
+    const req=new PaymentRequest([{supportedMethods:BILL,data:{sku:SKU}}],{total:{label:'Total',amount:{currency:'USD',value:'0'}}});
+    const res=await req.show();const token=res.details&&res.details.purchaseToken;let ok=null;
+    try{ok=token?await verify(token):false}catch(e){ok=null}
+    if(ok===false){await res.complete('fail');toast('تعذّر التحقق من الشراء. تواصل معنا إن خُصم المبلغ.');return}
+    if(ok===null&&token){try{await s.acknowledge(token,'onetime')}catch(e){}}
+    await res.complete('success');S.premium=true;save();render();toast('🎉 تمت الترقية! شكرًا لك');
+  }catch(e){toast('تعذّر إتمام الشراء. لم يُخصم شيء.')}
+};
+(async function(){
+  const s=await service();if(!s)return;
+  try{const [it]=await s.getDetails([SKU]);if(it&&it.price)window.__awPrice=it.price.value+' '+it.price.currency}catch(e){}
+  try{
+    const mine=(await s.listPurchases()).find(p=>p.itemId===SKU);
+    if(!mine){if(S.premium){S.premium=false;save()}}
+    else{let ok=null;try{ok=await verify(mine.purchaseToken)}catch(e){ok=null}
+      if(ok===true&&!S.premium){S.premium=true;save()}else if(ok===false&&S.premium){S.premium=false;save()}}
+  }catch(e){}
+  render();
+})();
+if('serviceWorker' in navigator)navigator.serviceWorker.register('sw.js').catch(()=>{});
+render();
+})();
+</script>
+</body>
+</html>
