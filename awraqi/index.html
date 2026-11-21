@@ -526,7 +526,7 @@ function items(){return S.docs.map(d=>({d,n:daysLeft(d.date)})).filter(x=>x.n!==
 
 window.goDocs=id=>{docFilter=id;go('docs')};
 window.setFilter=id=>{docFilter=id;renderDocs()};
-window.setReqC=c=>{reqC=c;reqT=firstType(c);renderReq()};
+window.setReqC=c=>{reqC=c;reqT=firstType(c);followCountry(c);renderReq()};
 window.setReqT=k=>{reqT=k;renderReq()};
 window.byCountry=t=>{reqT=t;go('bycountry')};
 window.openReqC=c=>{openReq(c,(window.RENEWALS[c]||{})[reqT]?reqT:null)};
@@ -676,10 +676,12 @@ function renderDetails(){
 /* ===== متطلبات التجديد ===== */
 function firstType(c){const r=window.RENEWALS[c]||{};return Object.keys(r)[0]||'passport'}
 window.firstType=firstType;
-window.openReq=function(c,t){reqC=window.COUNTRIES[c]&&c!=='other'?c:'eg';reqT=t||firstType(reqC);go('req')};
+window.openReq=function(c,t){reqC=window.COUNTRIES[c]&&c!=='other'?c:'eg';reqT=t||firstType(reqC);followCountry(reqC);go('req')};
 /* لغة قائمة التجديد تتبع لغة الدولة: العربية للدول العربية، والإنجليزية لبريطانيا وأمريكا والهند وباكستان، والتركية لتركيا */
 const LISTLANG={uk:'en',us:'en','in':'en',pk:'en',tr:'tr'};
 function listLang(c){return LISTLANG[c]||'ar'}
+/* عند اختيار دولة تتبدّل لغة الواجهة كلها إلى لغتها (مؤقتًا، دون تغيير اللغة المحفوظة في الإعدادات) */
+function followCountry(c){const l=listLang(c);if(l!==L.lang())L.set(l)}
 function renderReq(){
   $('rCountry').innerHTML=Object.keys(window.COUNTRIES).filter(k=>k!=='other').map(k=>'<option value="'+k+'">'+FLAGS[k]+' '+cn_(k)+'</option>').join('');
   if(!window.COUNTRIES[reqC]||reqC==='other')reqC='eg';$('rCountry').value=reqC;
