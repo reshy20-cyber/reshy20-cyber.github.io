@@ -521,5 +521,78 @@ window.RENEWALS_I18N.es={
    ],
    "note": "Los residentes condicionales (tarjeta de 2 años) no usan el I-90 si su estatus caduca en 90 días, y su trámite es distinto. Los carnés de conducir de EE. UU. los expide cada estado por separado, por lo que aquí no hay una lista única para ellos."
   }
+ },
+ "es": {
+  "passport": {
+   "scope": "Pasaporte español dentro de España (Ministerio del Interior)",
+   "steps": [
+    "Pide cita previa: teléfono 060 o citapreviadnie.es",
+    "Acude en persona a una Unidad de Documentación",
+    "Paga la tasa fijada por ley",
+    "DNI en vigor y en buen estado (que no deba renovarse por deterioro); se devuelve en el acto una vez comprobados sus datos"
+   ],
+   "note": "Los menores y las personas tuteladas deben acreditar además la relación; consulta la página. Los españoles residentes en el extranjero lo solicitan en el consulado donde están inscritos."
+  },
+  "id": {
+   "scope": "Renovación del Documento Nacional de Identidad (DNI)",
+   "steps": [
+    "Pide cita previa en citapreviadnie.es; la renovación puede hacerse durante los últimos 180 días de vigencia",
+    "Acude en persona a una Unidad de Documentación",
+    "Paga la tasa en efectivo o con tarjeta, o por vía telemática al obtener la cita",
+    "Una fotografía reciente",
+    "El resto de documentos depende de tu caso; la lista completa está en la página oficial"
+   ],
+   "note": "El nuevo DNI en formato europeo (DNI 4.0) se entrega poco a poco a quienes renuevan o solicitan un documento nuevo."
+  },
+  "license": {
+   "scope": "Renovación del permiso de conducir español (Dirección General de Tráfico, DGT)",
+   "steps": [
+    "DNI, pasaporte o tarjeta de residencia originales en vigor",
+    "El informe de aptitud psicofísica de un Centro de Reconocimiento de Conductores autorizado",
+    "Justificante del pago de la tasa (la renovación es gratuita a partir de los 70 años)",
+    "Una fotografía actual de 32×26 mm",
+    "El impreso de solicitud cumplimentado",
+    "No es necesario ningún examen, solo superar el reconocimiento médico"
+   ],
+   "note": "Puedes presentar la solicitud hasta 3 meses antes de la caducidad, en el propio centro médico o en la DGT. La nueva vigencia depende de tu edad y del tipo de permiso. La foto y el impreso proceden de una página informativa más antigua de la DGT."
+  }
+ },
+ "mx": {
+  "passport": {
+   "scope": "Renovación del pasaporte mexicano para adultos (a través de embajadas y consulados)",
+   "steps": [
+    "Pide una cita gratuita en citas.sre.gob.mx, el único canal oficial gratuito",
+    "Acude en persona a tu cita",
+    "El formato de solicitud de pasaporte, cumplimentado",
+    "El pasaporte mexicano a renovar, en original y en buen estado, sin roturas ni hojas faltantes (no se aceptan copias)",
+    "Paga los derechos correspondientes"
+   ],
+   "note": "Si el pasaporte se expidió en México antes de 1995 o en el exterior antes de 2006 a 2008 (las páginas difieren), debes acreditar nacionalidad e identidad como en un trámite de primera vez. Esta lista procede de páginas consulares; el trámite dentro de México puede diferir, consulta el sitio de la SRE."
+  }
+ },
+ "co": {
+  "passport": {
+   "scope": "Pasaporte colombiano para mayores de edad (Ministerio de Relaciones Exteriores)",
+   "steps": [
+    "Acude personalmente a la oficina en la que programaste tu cita",
+    "Original de la cédula de ciudadanía vigente, o la contraseña por primera vez con copia del registro civil de nacimiento",
+    "Tu pasaporte anterior, si lo tienes",
+    "La fotografía, las huellas y la firma se toman en la oficina, no es necesario llevar fotos",
+    "La cita es gratuita y se programa solo en la página oficial de la Cancillería"
+   ],
+   "note": "En Colombia no hay una figura de renovación aparte; en cada trámite se verifican los requisitos según la normatividad vigente. Los mayores de edad con pasaporte electrónico expedido después del 17 de noviembre de 2017 y cotejo de huellas exitoso tienen un servicio en línea: adjuntan una fotografía reciente con fondo blanco y la entrega es presencial."
+  }
+ },
+ "arg": {
+  "passport": {
+   "scope": "Pasaporte argentino para mayores de edad (RENAPER)",
+   "steps": [
+    "DNI tarjeta vigente",
+    "Pasaporte anterior (recomendable pero no obligatorio)",
+    "Certificado médico cuando haya algún impedimento para la captura de la foto, las huellas o la firma",
+    "Acude en persona con turno previo"
+   ],
+   "note": "En los consulados en el exterior se pide el último DNI actualizado y el pasaporte anterior, o una denuncia policial por robo o extravío si no lo tienes, y el pasaporte anterior pierde vigencia desde que se inicia el nuevo trámite. Los detalles difieren entre consulados; consulta la página de tu consulado."
+  }
  }
 };

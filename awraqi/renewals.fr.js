@@ -521,5 +521,78 @@ window.RENEWALS_I18N.fr={
    ],
    "note": "Les résidents conditionnels (carte de 2 ans) n’utilisent pas l’I-90 si leur statut expire dans les 90 jours ; leur procédure est différente. Les permis de conduire américains sont délivrés par chaque État séparément ; il n’y a donc pas de liste unique ici."
   }
+ },
+ "es": {
+  "passport": {
+   "scope": "Passeport espagnol en Espagne (ministère de l’Intérieur)",
+   "steps": [
+    "Prendre rendez-vous à l’avance : téléphone 060 ou citapreviadnie.es",
+    "Se présenter en personne à une unité de documentation (Unidad de Documentación)",
+    "Payer la taxe fixée par la loi",
+    "Un DNI valide et en bon état (qui n’a pas à être renouvelé pour usure) ; il est rendu une fois ses données vérifiées"
+   ],
+   "note": "Les mineurs et les personnes sous tutelle doivent fournir des documents supplémentaires prouvant le lien de parenté ; consultez la page. Les Espagnols résidant à l’étranger déposent leur demande auprès du consulat où ils sont immatriculés."
+  },
+  "id": {
+   "scope": "Renouvellement de la carte d’identité nationale espagnole (DNI)",
+   "steps": [
+    "Prendre rendez-vous à l’avance sur citapreviadnie.es ; le renouvellement est possible durant les 180 derniers jours de validité de la carte",
+    "Se présenter en personne à une unité de documentation",
+    "Payer la taxe en espèces ou par carte, ou en ligne lors de la prise de rendez-vous",
+    "Une photographie récente",
+    "Les autres documents dépendent de votre cas ; la liste complète figure sur la page officielle"
+   ],
+   "note": "Le nouveau DNI au format européen (DNI 4.0) est délivré progressivement aux personnes qui renouvellent leur carte ou en demandent une nouvelle."
+  },
+  "license": {
+   "scope": "Renouvellement du permis de conduire espagnol (Direction générale de la circulation, DGT)",
+   "steps": [
+    "DNI, passeport ou carte de résident valide, en original",
+    "Le rapport d’aptitude psychophysique d’un centre de contrôle des conducteurs agréé",
+    "Le justificatif de paiement de la taxe (le renouvellement est gratuit à partir de 70 ans)",
+    "Une photo récente, 32×26 mm",
+    "Le formulaire de demande rempli",
+    "Aucun examen n’est nécessaire, seulement la réussite de la visite médicale"
+   ],
+   "note": "Vous pouvez déposer la demande jusqu’à 3 mois avant l’expiration du permis, au centre médical lui-même ou auprès de la DGT. La nouvelle validité dépend de votre âge et du type de permis. La photo et le formulaire proviennent d’une page d’aide plus ancienne de la DGT."
+  }
+ },
+ "mx": {
+  "passport": {
+   "scope": "Renouvellement du passeport mexicain pour adultes (via les ambassades et consulats)",
+   "steps": [
+    "Prendre un rendez-vous gratuit sur citas.sre.gob.mx, le seul canal officiel gratuit",
+    "Se présenter en personne au rendez-vous",
+    "Le formulaire de demande de passeport, rempli",
+    "Le passeport mexicain à renouveler, en original et en bon état, sans déchirure ni page manquante (les copies ne sont pas acceptées)",
+    "Payer les droits prescrits"
+   ],
+   "note": "Si le passeport a été délivré au Mexique avant 1995 ou à l’étranger avant 2006 à 2008 (les pages diffèrent), vous devez prouver votre nationalité et votre identité comme pour une première demande. Cette liste provient de pages consulaires ; la procédure au Mexique peut différer, consultez le site de la SRE."
+  }
+ },
+ "co": {
+  "passport": {
+   "scope": "Passeport colombien pour adultes (ministère des Affaires étrangères)",
+   "steps": [
+    "Se présenter en personne au bureau où vous avez pris rendez-vous",
+    "La carte de citoyenneté valide en original (cédula de ciudadanía), ou le récépissé provisoire (contraseña) avec une copie de l’acte de naissance",
+    "Votre ancien passeport, si vous en avez un",
+    "La photo, les empreintes et la signature sont pris au bureau ; inutile d’apporter des photos",
+    "Le rendez-vous est gratuit et se prend uniquement sur le site officiel du ministère"
+   ],
+   "note": "La Colombie n’a pas de procédure de « renouvellement » distincte ; chaque demande est vérifiée selon les règles en vigueur. Les adultes ayant un passeport électronique délivré après le 17 novembre 2017 et une comparaison d’empreintes réussie disposent d’un service en ligne : vous téléversez une photo récente sur fond blanc, et le retrait se fait en personne."
+  }
+ },
+ "arg": {
+  "passport": {
+   "scope": "Passeport argentin pour adultes (RENAPER)",
+   "steps": [
+    "Un DNI valide au format carte",
+    "Votre ancien passeport (recommandé, mais non obligatoire)",
+    "Un certificat médical si un obstacle empêche la capture de la photo, des empreintes ou de la signature",
+    "Se présenter en personne avec un rendez-vous préalable"
+   ],
+   "note": "Dans les consulats à l’étranger, on demande le dernier DNI à jour et l’ancien passeport, ou un rapport de police pour vol ou perte à défaut, et l’ancien passeport perd sa validité dès le début de la nouvelle demande. Les détails diffèrent selon les consulats ; consultez la page de votre consulat."
+  }
  }
 };

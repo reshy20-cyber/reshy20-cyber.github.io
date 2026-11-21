@@ -521,5 +521,78 @@ window.RENEWALS_I18N.tr={
    ],
    "note": "Koşullu oturum sahipleri (2 yıllık kart), statüleri 90 gün içinde dolacaksa I-90’ı kullanmaz; prosedürleri farklıdır. ABD ehliyetlerini her eyalet ayrı düzenler, bu nedenle burada bunlar için tek bir liste yoktur."
   }
+ },
+ "es": {
+  "passport": {
+   "scope": "İspanya’da İspanyol pasaportu (İçişleri Bakanlığı)",
+   "steps": [
+    "Önceden randevu alın: telefon 060 veya citapreviadnie.es",
+    "Bir Belge Birimi’ne (Unidad de Documentación) şahsen gidin",
+    "Kanunla belirlenen harcı ödeyin",
+    "Geçerli ve iyi durumda bir DNI (yıpranma nedeniyle yenilenmesi gerekmeyen); bilgileri karşılaştırıldıktan sonra iade edilir"
+   ],
+   "note": "Reşit olmayanlar ve vesayet altındakiler için akrabalığı kanıtlayan ek belgeler gerekir; sayfaya bakın. Yurt dışında yaşayan İspanyollar, kayıtlı oldukları konsolosluk aracılığıyla başvurur."
+  },
+  "id": {
+   "scope": "İspanyol ulusal kimlik kartını (DNI) yenileme",
+   "steps": [
+    "citapreviadnie.es üzerinden önceden randevu alın; yenileme kartın geçerliliğinin son 180 gününde yapılabilir",
+    "Bir Belge Birimi’ne şahsen gidin",
+    "Harcı nakit veya kartla ya da randevu alırken çevrimiçi ödeyin",
+    "Yakın tarihli bir fotoğraf",
+    "Diğer belgeler durumunuza bağlıdır; tam liste resmi sayfadadır"
+   ],
+   "note": "Avrupa biçimindeki yeni DNI (DNI 4.0), kartını yenileyen veya yeni kart çıkartanlara kademeli olarak veriliyor."
+  },
+  "license": {
+   "scope": "İspanyol ehliyetini yenileme (Genel Trafik Müdürlüğü, DGT)",
+   "steps": [
+    "Geçerli DNI, pasaport veya oturma kartının aslı",
+    "Onaylı bir sürücü muayene merkezinden psikofiziksel yeterlilik raporu",
+    "Harç makbuzu (yenileme 70 yaşından itibaren ücretsizdir)",
+    "Yakın tarihli fotoğraf, 32×26 mm",
+    "Doldurulmuş başvuru formu",
+    "Sınav gerekmez, yalnızca sağlık kontrolünü geçmek yeterlidir"
+   ],
+   "note": "Başvuru, ehliyetin süresi dolmadan en fazla 3 ay önce, sağlık merkezinin kendisinde veya DGT’de yapılabilir. Yeni geçerlilik süresi yaşa ve ehliyet türüne bağlıdır. Fotoğraf ve form, DGT’nin daha eski bir rehber sayfasından alınmıştır."
+  }
+ },
+ "mx": {
+  "passport": {
+   "scope": "Yetişkinler için Meksika pasaportunu yenileme (büyükelçilikler ve konsolosluklar aracılığıyla)",
+   "steps": [
+    "Tek resmî ücretsiz kanal olan citas.sre.gob.mx üzerinden ücretsiz randevu alın",
+    "Randevuya şahsen gidin",
+    "Doldurulmuş pasaport başvuru formu",
+    "Yenilenecek Meksika pasaportu; aslı, iyi durumda, yırtık veya eksik sayfa olmadan (kopyalar kabul edilmez)",
+    "Belirlenen harcı ödeyin"
+   ],
+   "note": "Pasaport Meksika’da 1995’ten önce veya yurt dışında 2006 ile 2008’den önce düzenlenmişse (sayfalar farklı bilgi veriyor), vatandaşlığı ve kimliği ilk başvurudaki gibi kanıtlamanız gerekir. Bu liste konsolosluk sayfalarından alınmıştır; Meksika içindeki prosedür farklı olabilir, SRE web sitesine bakın."
+  }
+ },
+ "co": {
+  "passport": {
+   "scope": "Yetişkinler için Kolombiya pasaportu (Dışişleri Bakanlığı)",
+   "steps": [
+    "Randevu aldığınız ofise şahsen gidin",
+    "Geçerli vatandaşlık kartının (cédula de ciudadanía) aslı veya doğum kaydının kopyasıyla birlikte geçici makbuz (contraseña)",
+    "Varsa önceki pasaportunuz",
+    "Fotoğraf, parmak izi ve imza ofiste alınır; fotoğraf getirmeniz gerekmez",
+    "Randevu ücretsizdir ve yalnızca Bakanlığın resmi web sitesinden alınır"
+   ],
+   "note": "Kolombiya’da ayrı bir “yenileme” prosedürü yoktur; her başvuru yürürlükteki kurallara göre incelenir. 17 Kasım 2017’den sonra düzenlenmiş elektronik pasaportu olan ve parmak izi eşleşmesi başarılı yetişkinler için çevrimiçi bir hizmet vardır: beyaz fonlu yakın tarihli bir fotoğraf yüklersiniz, teslim alma şahsen yapılır."
+  }
+ },
+ "arg": {
+  "passport": {
+   "scope": "Yetişkinler için Arjantin pasaportu (RENAPER)",
+   "steps": [
+    "Kart biçiminde geçerli bir DNI",
+    "Önceki pasaportunuz (tavsiye edilir, zorunlu değildir)",
+    "Fotoğraf, parmak izi veya imzanın alınmasına engel bir durum varsa sağlık raporu",
+    "Önceden randevu alarak şahsen gidin"
+   ],
+   "note": "Yurt dışındaki konsolosluklarda en son güncel DNI ve önceki pasaport istenir; yoksa hırsızlık veya kayıp için polis tutanağı gerekir ve önceki pasaport, yeni başvuru başlar başlamaz geçerliliğini yitirir. Ayrıntılar konsolosluklara göre değişir; konsolosluğunuzun sayfasına bakın."
+  }
  }
 };

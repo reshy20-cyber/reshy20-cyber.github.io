@@ -521,5 +521,78 @@ window.RENEWALS_I18N.en={
    ],
    "note": "Conditional residents (a 2-year card) do not use I-90 if their status expires within 90 days, and their procedure is different. U.S. driving licences are issued by each state separately, so there is no single list for them here."
   }
+ },
+ "es": {
+  "passport": {
+   "scope": "Spanish passport inside Spain (Ministry of the Interior)",
+   "steps": [
+    "Book an appointment in advance: phone 060 or citapreviadnie.es",
+    "Attend in person at a Documentation Unit (Unidad de Documentación)",
+    "Pay the fee set by law",
+    "A valid DNI in good condition (one that doesn’t need renewal for wear); it is returned once its data has been checked"
+   ],
+   "note": "Minors and persons under guardianship need extra documents to prove the relationship, so check the page. Spaniards living abroad apply through the consulate where they are registered."
+  },
+  "id": {
+   "scope": "Renewing the Spanish national ID card (DNI)",
+   "steps": [
+    "Book an appointment in advance at citapreviadnie.es; renewal can be done within the last 180 days of the card’s validity",
+    "Attend in person at a Documentation Unit",
+    "Pay the fee in cash or by card, or online when booking the appointment",
+    "A recent photograph",
+    "The other documents depend on your case; the full list is on the official page"
+   ],
+   "note": "The new European-format DNI (DNI 4.0) is being issued gradually to people who renew or apply for a new card."
+  },
+  "license": {
+   "scope": "Renewing a Spanish driving licence (Directorate-General of Traffic, DGT)",
+   "steps": [
+    "Original valid DNI, passport or residence card",
+    "The psychophysical fitness report from an authorised driver testing centre",
+    "Receipt for the fee (renewal is free from age 70)",
+    "A recent photo, 32×26 mm",
+    "The application form, completed",
+    "No exam is needed, only passing the medical check"
+   ],
+   "note": "You can apply up to 3 months before the licence expires, at the medical centre itself or with the DGT. The new validity depends on your age and licence type. The photo and form come from an older DGT guidance page."
+  }
+ },
+ "mx": {
+  "passport": {
+   "scope": "Renewing a Mexican passport for adults (through embassies and consulates)",
+   "steps": [
+    "Book a free appointment at citas.sre.gob.mx, the only official free channel",
+    "Attend in person at your appointment",
+    "The passport application form, completed",
+    "The Mexican passport to be renewed, in original and in good condition, without tears or missing pages (copies are not accepted)",
+    "Pay the prescribed fee"
+   ],
+   "note": "If the passport was issued in Mexico before 1995 or abroad before 2006 to 2008 (pages differ), you must prove nationality and identity as for a first-time application. This list comes from consulate pages; the procedure inside Mexico may differ, so check the SRE website."
+  }
+ },
+ "co": {
+  "passport": {
+   "scope": "Colombian passport for adults (Ministry of Foreign Affairs)",
+   "steps": [
+    "Attend in person at the office where you booked your appointment",
+    "The original valid citizenship card (cédula de ciudadanía), or the temporary receipt (contraseña) with a copy of the birth registration",
+    "Your previous passport, if you have one",
+    "Photo, fingerprints and signature are taken at the office, so no photos are needed",
+    "The appointment is free and is booked only through the Ministry’s official website"
+   ],
+   "note": "Colombia has no separate “renewal” procedure; each application is checked against the rules in force. Adults with an electronic passport issued after 17 November 2017 and a successful fingerprint match have an online service: you upload a recent photo on a white background, and collection is in person."
+  }
+ },
+ "arg": {
+  "passport": {
+   "scope": "Argentine passport for adults (RENAPER)",
+   "steps": [
+    "A valid DNI in card format",
+    "Your previous passport (recommended, but not mandatory)",
+    "A medical certificate if something prevents capturing the photo, fingerprints or signature",
+    "Attend in person with a prior appointment"
+   ],
+   "note": "At consulates abroad, the latest updated DNI and the previous passport are requested, or a police report of theft or loss if you don’t have it, and the previous passport loses validity as soon as the new application starts. Details differ between consulates, so check your consulate’s page."
+  }
  }
 };
