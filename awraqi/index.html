@@ -788,6 +788,7 @@ window.ics=async function(id){
   }).join('\r\n');
   const body='BEGIN:VCALENDAR\r\nVERSION:2.0\r\nPRODID:-//Awraqi//Reminders//EN\r\nCALSCALE:GREGORIAN\r\n'+ev+'\r\nEND:VCALENDAR\r\n';
   const name='awraqi-'+(id||'all')+'.ics',file=new File([body],name,{type:'text/calendar'});
+  if(/iPhone|iPad|iPod/.test(navigator.userAgent)||(navigator.platform==='MacIntel'&&navigator.maxTouchPoints>1)){location.href='data:text/calendar;charset=utf-8,'+encodeURIComponent(body);return}
   try{
     if(navigator.canShare&&navigator.canShare({files:[file]})){await navigator.share({files:[file]});return}
   }catch(e){if(e&&e.name==='AbortError')return}
