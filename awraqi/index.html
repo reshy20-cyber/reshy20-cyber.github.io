@@ -430,7 +430,7 @@ const TYPES={
   other:{ar:'ورقة أخرى',list:['راجع الجهة المصدِرة لمعرفة المستندات المطلوبة','جهّز نسخة من الورقة الحالية','احجز موعدًا إن كان مطلوبًا']}
 };
 const GRID=['passport','residence','visa','id','insurance','license','other'];
-const FLAGS={eg:'🇪🇬',uk:'🇬🇧',sa:'🇸🇦',ae:'🇦🇪',kw:'🇰🇼',jo:'🇯🇴',qa:'🇶🇦',bh:'🇧🇭',om:'🇴🇲',ma:'🇲🇦',lb:'🇱🇧',tn:'🇹🇳',dz:'🇩🇿',iq:'🇮🇶',ly:'🇱🇾','in':'🇮🇳',pk:'🇵🇰',tr:'🇹🇷',us:'🇺🇸',other:'🌍'};
+const FLAGS={eg:'🇪🇬',uk:'🇬🇧',sa:'🇸🇦',ae:'🇦🇪',kw:'🇰🇼',jo:'🇯🇴',qa:'🇶🇦',bh:'🇧🇭',om:'🇴🇲',ma:'🇲🇦',lb:'🇱🇧',tn:'🇹🇳',dz:'🇩🇿',iq:'🇮🇶',ly:'🇱🇾','in':'🇮🇳',pk:'🇵🇰',tr:'🇹🇷',us:'🇺🇸',es:'🇪🇸',mx:'🇲🇽',co:'🇨🇴',arg:'🇦🇷',other:'🌍'};
 const RELS=['أنا','زوجتي','زوجي','ابني','ابنتي','أبي','أمي','أخي','أختي','آخر'];
 
 /* ===== أيقونات ===== */
@@ -678,7 +678,7 @@ function firstType(c){const r=window.RENEWALS[c]||{};return Object.keys(r)[0]||'
 window.firstType=firstType;
 window.openReq=function(c,t){reqC=window.COUNTRIES[c]&&c!=='other'?c:'eg';reqT=t||firstType(reqC);followCountry(reqC);go('req')};
 /* لغة قائمة التجديد تتبع لغة الدولة: العربية للدول العربية، والإنجليزية لبريطانيا وأمريكا والهند وباكستان، والتركية لتركيا */
-const LISTLANG={uk:'en',us:'en','in':'en',pk:'en',tr:'tr'};
+const LISTLANG={uk:'en',us:'en','in':'en',pk:'en',tr:'tr',es:'es',mx:'es',co:'es',arg:'es'};
 function listLang(c){return LISTLANG[c]||'ar'}
 /* عند اختيار دولة تتبدّل لغة الواجهة كلها إلى لغتها (مؤقتًا، دون تغيير اللغة المحفوظة في الإعدادات) */
 function followCountry(c){const l=listLang(c);if(l!==L.lang())L.set(l)}

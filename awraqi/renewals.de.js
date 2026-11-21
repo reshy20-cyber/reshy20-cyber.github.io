@@ -521,5 +521,78 @@ window.RENEWALS_I18N.de={
    ],
    "note": "Bedingte Aufenthaltsberechtigte (Karte für 2 Jahre) nutzen I-90 nicht, wenn ihr Status innerhalb von 90 Tagen abläuft; ihr Verfahren ist anders. US-Führerscheine werden von jedem Bundesstaat einzeln ausgestellt, daher gibt es hier keine einheitliche Liste."
   }
+ },
+ "es": {
+  "passport": {
+   "scope": "Spanischer Reisepass in Spanien (Innenministerium)",
+   "steps": [
+    "Vorab einen Termin buchen: Telefon 060 oder citapreviadnie.es",
+    "Persönlich in einer Dokumentationsstelle (Unidad de Documentación) erscheinen",
+    "Die gesetzlich festgelegte Gebühr zahlen",
+    "Ein gültiger DNI in gutem Zustand (der nicht wegen Abnutzung erneuert werden muss); er wird zurückgegeben, sobald die Daten abgeglichen sind"
+   ],
+   "note": "Minderjährige und Betreute brauchen zusätzliche Nachweise zum Verwandtschaftsverhältnis; lesen Sie die Seite. Im Ausland lebende Spanier stellen den Antrag bei dem Konsulat, in dem sie registriert sind."
+  },
+  "id": {
+   "scope": "Verlängerung des spanischen Personalausweises (DNI)",
+   "steps": [
+    "Vorab einen Termin auf citapreviadnie.es buchen; die Verlängerung ist in den letzten 180 Tagen der Gültigkeit der Karte möglich",
+    "Persönlich in einer Dokumentationsstelle erscheinen",
+    "Die Gebühr bar oder mit Karte zahlen, oder online bei der Terminbuchung",
+    "Ein aktuelles Foto",
+    "Die weiteren Unterlagen hängen von Ihrem Fall ab; die vollständige Liste steht auf der offiziellen Seite"
+   ],
+   "note": "Der neue DNI im europäischen Format (DNI 4.0) wird nach und nach an Personen ausgegeben, die ihre Karte verlängern oder neu beantragen."
+  },
+  "license": {
+   "scope": "Verlängerung des spanischen Führerscheins (Generaldirektion für Verkehr, DGT)",
+   "steps": [
+    "Gültiger DNI, Reisepass oder Aufenthaltskarte im Original",
+    "Das psychophysische Eignungsgutachten eines zugelassenen Fahrerprüfzentrums",
+    "Zahlungsbeleg der Gebühr (die Verlängerung ist ab 70 Jahren kostenlos)",
+    "Ein aktuelles Foto, 32×26 mm",
+    "Das ausgefüllte Antragsformular",
+    "Es ist keine Prüfung nötig, nur die bestandene ärztliche Untersuchung"
+   ],
+   "note": "Der Antrag kann bis zu 3 Monate vor Ablauf des Führerscheins gestellt werden, im Untersuchungszentrum selbst oder bei der DGT. Die neue Gültigkeit hängt von Alter und Führerscheinart ab. Foto und Formular stammen von einer älteren Hinweisseite der DGT."
+  }
+ },
+ "mx": {
+  "passport": {
+   "scope": "Verlängerung des mexikanischen Reisepasses für Erwachsene (über Botschaften und Konsulate)",
+   "steps": [
+    "Einen kostenlosen Termin auf citas.sre.gob.mx buchen, dem einzigen offiziellen kostenlosen Kanal",
+    "Persönlich zum Termin erscheinen",
+    "Das ausgefüllte Passantragsformular",
+    "Der zu verlängernde mexikanische Pass im Original und in gutem Zustand, ohne Risse oder fehlende Seiten (Kopien werden nicht akzeptiert)",
+    "Die vorgeschriebene Gebühr zahlen"
+   ],
+   "note": "Wurde der Pass vor 1995 in Mexiko oder vor 2006 bis 2008 im Ausland ausgestellt (die Seiten weichen ab), müssen Sie Staatsangehörigkeit und Identität wie bei einem Erstantrag nachweisen. Diese Liste stammt von Konsulatsseiten; das Verfahren in Mexiko kann abweichen, prüfen Sie die Website der SRE."
+  }
+ },
+ "co": {
+  "passport": {
+   "scope": "Kolumbianischer Reisepass für Erwachsene (Außenministerium)",
+   "steps": [
+    "Persönlich in dem Büro erscheinen, in dem Sie den Termin gebucht haben",
+    "Der gültige Bürgerausweis im Original (cédula de ciudadanía) oder die vorläufige Bescheinigung (contraseña) mit einer Kopie der Geburtsregistrierung",
+    "Ihr bisheriger Reisepass, falls vorhanden",
+    "Foto, Fingerabdrücke und Unterschrift werden im Büro aufgenommen, Fotos müssen Sie nicht mitbringen",
+    "Der Termin ist kostenlos und wird nur über die offizielle Website des Ministeriums gebucht"
+   ],
+   "note": "Kolumbien hat kein eigenes „Verlängerungsverfahren“; jeder Antrag wird nach den geltenden Regeln geprüft. Erwachsene mit einem elektronischen Pass, der nach dem 17. November 2017 ausgestellt wurde, und erfolgreichem Fingerabdruckabgleich können einen Online-Dienst nutzen: Sie laden ein aktuelles Foto auf weißem Hintergrund hoch, die Abholung erfolgt persönlich."
+  }
+ },
+ "arg": {
+  "passport": {
+   "scope": "Argentinischer Reisepass für Erwachsene (RENAPER)",
+   "steps": [
+    "Ein gültiger DNI im Kartenformat",
+    "Ihr bisheriger Reisepass (empfohlen, aber nicht verpflichtend)",
+    "Ein ärztliches Attest, falls etwas die Erfassung von Foto, Fingerabdrücken oder Unterschrift verhindert",
+    "Persönlich mit vorherigem Termin erscheinen"
+   ],
+   "note": "In Konsulaten im Ausland werden der aktuelle DNI und der bisherige Pass verlangt, ersatzweise eine Polizeianzeige wegen Diebstahls oder Verlusts, und der bisherige Pass verliert seine Gültigkeit, sobald der neue Antrag beginnt. Die Einzelheiten unterscheiden sich je nach Konsulat; prüfen Sie die Seite Ihres Konsulats."
+  }
  }
 };
