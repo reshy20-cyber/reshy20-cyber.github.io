@@ -788,12 +788,8 @@ window.ics=async function(id){
   }).join('\r\n');
   const body='BEGIN:VCALENDAR\r\nVERSION:2.0\r\nPRODID:-//Awraqi//Reminders//EN\r\nCALSCALE:GREGORIAN\r\n'+ev+'\r\nEND:VCALENDAR\r\n';
   const name='awraqi-'+(id||'all')+'.ics',file=new File([body],name,{type:'text/calendar'});
-  if(/iPhone|iPad|iPod/.test(navigator.userAgent)||(navigator.platform==='MacIntel'&&navigator.maxTouchPoints>1)){
-    let w=null;try{w=window.open('data:text/calendar;charset=utf-8,'+encodeURIComponent(body),'_blank')}catch(e){}
-    if(w)return;
-  }
   try{
-    if(navigator.canShare&&navigator.canShare({files:[file]})){toast(tr('اختر «إضافة إلى التقويم» من قائمة المشاركة'));await new Promise(r=>setTimeout(r,900));await navigator.share({files:[file]});return}
+    if(navigator.canShare&&navigator.canShare({files:[file]})){toast(tr('احفظه في «الملفات» ثم افتحه لإضافته إلى التقويم'));await new Promise(r=>setTimeout(r,900));await navigator.share({files:[file]});return}
   }catch(e){if(e&&e.name==='AbortError')return}
   const a=document.createElement('a');a.href=URL.createObjectURL(file);a.download=name;document.body.appendChild(a);a.click();a.remove();
   toast(tr('افتح الملف لإضافته إلى تقويم هاتفك'));
