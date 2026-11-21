@@ -1,7 +1,7 @@
 // قوائم التجديد الموثّقة. كل بند مأخوذ من صفحة حكومية أو قنصلية رسمية (الرابط في url) وتاريخ آخر تحقق في verified.
 // ما لم يُوثَّق بعد غير موجود هنا عمدًا؛ يعرض التطبيق عندها قائمة عامة مع تنبيه.
 window.COUNTRIES = {
-  eg: 'مصر', uk: 'بريطانيا', sa: 'السعودية', ae: 'الإمارات', kw: 'الكويت', jo: 'الأردن', qa: 'قطر', bh: 'البحرين', om: 'عُمان', ma: 'المغرب', lb: 'لبنان', tn: 'تونس', dz: 'الجزائر', iq: 'العراق', ly: 'ليبيا', 'in': 'الهند', pk: 'باكستان', tr: 'تركيا', us: 'الولايات المتحدة', other: 'دولة أخرى'
+  eg: 'مصر', uk: 'بريطانيا', sa: 'السعودية', ae: 'الإمارات', kw: 'الكويت', jo: 'الأردن', qa: 'قطر', bh: 'البحرين', om: 'عُمان', ma: 'المغرب', lb: 'لبنان', tn: 'تونس', dz: 'الجزائر', iq: 'العراق', ly: 'ليبيا', 'in': 'الهند', pk: 'باكستان', tr: 'تركيا', us: 'الولايات المتحدة', es: 'إسبانيا', mx: 'المكسيك', co: 'كولومبيا', arg: 'الأرجنتين', other: 'دولة أخرى'
 };
 window.RENEWALS = {
   eg: {
@@ -300,10 +300,54 @@ window.RENEWALS = {
       note: 'المقيمون المشروطون (بطاقة سنتين) لا يستخدمون I-90 إن كانت إقامتهم تنتهي خلال 90 يومًا، وإجراؤهم مختلف. رخصة القيادة في أمريكا تصدرها كل ولاية على حدة، لذلك لا توجد لها قائمة موحدة هنا.',
       url: 'https://www.uscis.gov/green-card/after-we-grant-your-green-card/replace-your-green-card', verified: '2026-11-21'
     }
+  },
+  'es': {
+    passport: {
+      scope: 'جواز السفر الإسباني داخل إسبانيا (وزارة الداخلية)',
+      steps: ['حجز موعد مسبق: هاتف 060 أو موقع citapreviadnie.es', 'الحضور الشخصي إلى وحدة الوثائق (Unidad de Documentación)', 'سداد الرسم المقرر قانونًا', 'بطاقة الهوية DNI سارية وغير متضررة بحيث لا تحتاج إلى تجديد، وتُعاد إليك فور مطابقة بياناتها'],
+      note: 'للقاصرين والمشمولين بالوصاية مستندات إضافية لإثبات العلاقة، فراجع الصفحة. أما الإسبان المقيمون في الخارج فيقدّمون الطلب عبر القنصلية المسجَّلين فيها.',
+      url: 'https://www.interior.gob.es/opencms/es/servicios-al-ciudadano/tramites-y-gestiones/pasaporte/procedimiento-de-expedicion/', verified: '2026-11-21'
+    },
+    id: {
+      scope: 'تجديد بطاقة الهوية الإسبانية DNI',
+      steps: ['حجز موعد مسبق عبر citapreviadnie.es، ويمكن التجديد خلال آخر 180 يومًا من صلاحية البطاقة', 'الحضور الشخصي إلى وحدة الوثائق', 'سداد الرسم نقدًا أو ببطاقة، أو إلكترونيًا عند حجز الموعد', 'صورة حديثة', 'بقية المستندات حسب حالتك، وقائمتها كاملة في الصفحة الرسمية'],
+      note: 'يُسلَّم الـDNI بالصيغة الأوروبية الجديدة (DNI 4.0) تدريجيًا لمن يجدّد بطاقته أو يستخرج بطاقة جديدة.',
+      url: 'https://www.interior.gob.es/opencms/es/servicios-al-ciudadano/tramites-y-gestiones/dni/documentacion-necesaria-para-su-tramitacion/', verified: '2026-11-21'
+    },
+    license: {
+      scope: 'تجديد رخصة القيادة الإسبانية (المديرية العامة للمرور DGT)',
+      steps: ['أصل بطاقة DNI أو جواز السفر أو بطاقة الإقامة سارية', 'تقرير اللياقة النفسية والجسدية من مركز فحص سائقين معتمد', 'إيصال سداد الرسم (التجديد مجاني لمن بلغ 70 سنة)', 'صورة حديثة بمقاس 32×26 مم', 'نموذج الطلب معبأ', 'لا يلزم أي امتحان، بل اجتياز الفحص الطبي فقط'],
+      note: 'يمكن تقديم الطلب قبل انتهاء الرخصة بـ 3 أشهر، في مركز الفحص الطبي نفسه أو لدى DGT. وتختلف مدة الصلاحية الجديدة بحسب العمر ونوع الرخصة. الصورة والنموذج مذكوران في صفحة إرشادية أقدم من DGT.',
+      url: 'https://sede.dgt.gob.es/', verified: '2026-11-21'
+    }
+  },
+  'mx': {
+    passport: {
+      scope: 'تجديد جواز السفر المكسيكي للبالغين (عبر السفارات والقنصليات)',
+      steps: ['حجز موعد مجاني عبر citas.sre.gob.mx، وهو القناة الرسمية الوحيدة المجانية', 'الحضور الشخصي في الموعد', 'نموذج طلب جواز السفر معبأ', 'جواز السفر المكسيكي المراد تجديده بأصله وبحالة جيدة، دون تمزق أو نقص أوراق (لا تُقبل النسخ)', 'سداد الرسم المقرر'],
+      note: 'إن كان الجواز صادرًا في المكسيك قبل 1995 أو في الخارج قبل 2006 إلى 2008 (تختلف الصفحات)، فعليك إثبات الجنسية والهوية كطلب أول مرة. هذه القائمة مأخوذة من صفحات القنصليات؛ والإجراء داخل المكسيك قد يختلف، فراجع موقع SRE.',
+      url: 'https://consulmex.sre.gob.mx/saltlakecity/index.php/documentos-de-identidad/pasaportes', verified: '2026-11-21'
+    }
+  },
+  'co': {
+    passport: {
+      scope: 'جواز السفر الكولومبي للبالغين (وزارة الخارجية)',
+      steps: ['الحضور الشخصي إلى المكتب الذي حجزتَ موعدك فيه', 'أصل بطاقة الهوية cédula de ciudadanía سارية، أو الإيصال المؤقت (contraseña) مع نسخة سجل الميلاد', 'جواز السفر السابق إن وُجد', 'التصوير وأخذ البصمة والتوقيع في المكتب نفسه، ولا حاجة لإحضار صور', 'الموعد مجاني ويُحجز عبر موقع وزارة الخارجية الرسمي فقط'],
+      note: 'لا يوجد في كولومبيا إجراء «تجديد» منفصل، فكل طلب تُفحص شروطه بحسب النظام الساري. وللبالغين الذين لديهم جواز إلكتروني صادر بعد 17 نوفمبر 2017 مع بصمة ناجحة خدمة إلكترونية: ترفع فيها صورة حديثة بخلفية بيضاء ويكون الاستلام حضوريًا.',
+      url: 'https://www.cancilleria.gov.co/', verified: '2026-11-21'
+    }
+  },
+  'arg': {
+    passport: {
+      scope: 'جواز السفر الأرجنتيني للبالغين (RENAPER)',
+      steps: ['بطاقة الهوية DNI بصيغة البطاقة سارية', 'جواز السفر السابق (يُنصح به وليس إلزاميًا)', 'شهادة طبية إن وُجد مانع في التقاط الصورة أو البصمة أو التوقيع', 'الحضور الشخصي بموعد مسبق'],
+      note: 'في القنصليات بالخارج يُطلب آخر DNI محدَّث والجواز السابق، أو بلاغ شرطة بالسرقة أو الضياع إن لم يوجد، ويفقد الجواز السابق سريانه بمجرد بدء الطلب الجديد. تختلف التفاصيل بين القنصليات، فراجع صفحة قنصليتك.',
+      url: 'https://www.argentina.gob.ar/', verified: '2026-11-21'
+    }
   }
 };
 // صفحات رسمية عامة لكل دولة تُعرض حين لا توجد قائمة موثّقة بعد
 window.OFFICIAL_HOME = {
   eg: 'https://www.mfa.gov.eg/ar/ConsularServicesAndTransactions/Details/73',
-  uk: 'https://www.gov.uk/browse/driving', sa: 'https://www.absher.sa/', ae: 'https://u.ae/ar/information-and-services/visa-and-emirates-id', kw: 'https://e.gov.kw/', jo: 'https://eservice.cspd.gov.jo/', qa: 'https://portal.moi.gov.qa/', bh: 'https://www.bahrain.bh/', om: 'https://www.rop.gov.om/', ma: 'https://www.passeport.ma/', lb: 'https://www.general-security.gov.lb/', tn: 'https://services.interieur.gov.tn/', dz: 'https://passeport.interieur.gov.dz/', iq: 'https://mofa.gov.iq/', ly: 'https://lpa.gov.ly/', 'in': 'https://www.passportindia.gov.in/', pk: 'https://dgip.gov.pk/', tr: 'https://www.turkiye.gov.tr/', us: 'https://travel.state.gov/'
+  uk: 'https://www.gov.uk/browse/driving', sa: 'https://www.absher.sa/', ae: 'https://u.ae/ar/information-and-services/visa-and-emirates-id', kw: 'https://e.gov.kw/', jo: 'https://eservice.cspd.gov.jo/', qa: 'https://portal.moi.gov.qa/', bh: 'https://www.bahrain.bh/', om: 'https://www.rop.gov.om/', ma: 'https://www.passeport.ma/', lb: 'https://www.general-security.gov.lb/', tn: 'https://services.interieur.gov.tn/', dz: 'https://passeport.interieur.gov.dz/', iq: 'https://mofa.gov.iq/', ly: 'https://lpa.gov.ly/', 'in': 'https://www.passportindia.gov.in/', pk: 'https://dgip.gov.pk/', tr: 'https://www.turkiye.gov.tr/', us: 'https://travel.state.gov/', es: 'https://www.interior.gob.es/', mx: 'https://www.gob.mx/sre', co: 'https://www.cancilleria.gov.co/', arg: 'https://www.argentina.gob.ar/'
 };
