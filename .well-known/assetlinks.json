@@ -70,5 +70,17 @@
         "40:3A:57:34:7C:97:79:3B:CC:44:E3:BE:92:97:FD:7E:0F:54:A9:04:F4:44:C9:A7:63:B7:F8:96:05:30:93:7B"
       ]
     }
+  },
+  {
+    "relation": [
+      "delegate_permission/common.handle_all_urls"
+    ],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "app.awraqi",
+      "sha256_cert_fingerprints": [
+        "AA:10:AA:E3:39:BC:2D:19:B2:16:3E:66:40:14:DE:EA:70:D9:CC:EC:6B:76:D2:8A:E8:2E:0D:71:F9:E2:E8:50"
+      ]
+    }
   }
 ]
