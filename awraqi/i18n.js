@@ -54,6 +54,7 @@ var ROWS=[
 ['📅 أضف كل المستندات للتقويم','📅 Add all documents to calendar','📅 Ajouter tous les documents au calendrier','📅 Alle Dokumente zum Kalender hinzufügen'],
 ['تذكيرات على هاتفك قبل الانتهاء','Reminders on your phone before expiry','Rappels sur votre téléphone avant l’expiration','Erinnerungen auf Ihrem Handy vor Ablauf'],
 ['أضف ورقة أولًا','Add a document first','Ajoutez d’abord un document','Fügen Sie zuerst ein Dokument hinzu'],
+['اختر «إضافة إلى التقويم» من قائمة المشاركة','Choose “Add to Calendar” in the share menu','Choisissez « Ajouter au calendrier » dans le menu de partage','Wählen Sie im Teilen-Menü „Zum Kalender hinzufügen“'],
 ['ملف على جهازك','A file on your device','Un fichier sur votre appareil','Eine Datei auf Ihrem Gerät'],
 ['📥 استرجاع نسخة احتياطية','📥 Restore a backup','📥 Restaurer une sauvegarde','📥 Sicherung wiederherstellen'],
 ['🔒 الخصوصية','🔒 Privacy','🔒 Confidentialité','🔒 Datenschutz'],
