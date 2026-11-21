@@ -14,7 +14,7 @@ var cur='ar';
 
 /* [عربي, English, Français, Deutsch] */
 var ROWS=[
-['أوراقي','Awraqi','Awraqi','Awraqi'],
+['أوراقي','My Papers','Mes Papiers','Meine Papiere'],
 ['أوراقي — إدارة وتجديد أوراقك وأوراق عائلتك','Awraqi — track and renew your family’s documents','Awraqi — gérez et renouvelez les documents de votre famille','Awraqi — Dokumente Ihrer Familie verwalten und erneuern'],
 ['أوراقي: سجّل تواريخ انتهاء الجوازات والإقامات والرخص لك ولعائلتك، ونبّهك قبل الانتهاء مع قائمة المستندات المطلوبة للتجديد.','Awraqi: record the expiry dates of passports, residence permits and licences for you and your family, and get reminded before they expire, with the list of documents needed to renew.','Awraqi : enregistrez les dates d’expiration des passeports, titres de séjour et permis de votre famille, et soyez averti avant l’échéance, avec la liste des pièces à fournir pour le renouvellement.','Awraqi: Erfassen Sie die Ablaufdaten von Pässen, Aufenthaltstiteln und Führerscheinen für sich und Ihre Familie und werden Sie rechtzeitig erinnert – mit der Liste der Unterlagen für die Verlängerung.'],
 ['إدارة وتجديد جميع أوراقك وأوراق عائلتك','Manage and renew all your family’s documents','Gérez et renouvelez tous les documents de votre famille','Alle Dokumente Ihrer Familie verwalten und erneuern'],
