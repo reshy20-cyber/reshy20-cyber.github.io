@@ -502,7 +502,7 @@ const avatar=r=>AV[AVMAP[r]||'neutral'];
 const $=id=>document.getElementById(id);
 const esc=s=>String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 function load(){try{const d=JSON.parse(localStorage.getItem(KEY));if(d&&Array.isArray(d.members)&&Array.isArray(d.docs)&&d.members.length)return d}catch(e){}return{members:[{id:'m1',name:'أنا',rel:'أنا'}],docs:[],premium:false}}
-function initLang(){let l=null;try{const d=JSON.parse(localStorage.getItem(KEY));l=d&&d.lang}catch(e){}return l&&L.LANGS[l]?l:L.detect()}
+function initLang(){let l=null;try{const d=JSON.parse(localStorage.getItem(KEY));l=d&&d.lang}catch(e){}return l&&L.LANGS[l]?l:"ar"}
 let S=load(), docFilter='all', curDoc=null, editing=null, editType='passport', editMember=null, memEditing=null, memRel='آخر', renewing=false, reqC='eg', reqT='passport';
 function save(){try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}}
 const uid=()=>Date.now().toString(36)+Math.random().toString(36).slice(2,6);
