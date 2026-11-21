@@ -407,5 +407,119 @@ window.RENEWALS_I18N.fr={
    ],
    "note": "La source indique ces conditions pour la délivrance d’un nouveau passeport. Le portail Ijraat ajoute : l’ancien passeport, des photos récentes, un certificat de situation familiale et le reçu des frais. Pour les résidents à l’étranger, la demande passe par le consulat."
   }
+ },
+ "in": {
+  "passport": {
+   "scope": "Réémission d’un passeport indien ordinaire (via Passport Seva)",
+   "steps": [
+    "S’inscrire sur le portail en ligne Passport Seva, puis se connecter",
+    "Choisir « Apply for Fresh Passport/Re-issue of Passport » et remplir la demande",
+    "Prendre rendez-vous dans un Passport Seva Kendra et imprimer le reçu de la demande (ARN)",
+    "Les originaux des pièces justificatives, plus une photocopie certifiée sur l’honneur de chacune",
+    "Votre passeport actuel en original, avec une photocopie certifiée sur l’honneur"
+   ],
+   "note": "Le bureau régional des passeports peut demander des pièces supplémentaires, et la liste dépend du motif (expiration, pages remplies, changement de données). Consultez la page officielle."
+  },
+  "license": {
+   "scope": "Renouvellement du permis de conduire indien (via le portail Sarathi)",
+   "steps": [
+    "Votre permis de conduire actuel",
+    "Formulaire de demande n° 2 (Form 2)",
+    "Form 1 : déclaration sur l’honneur d’aptitude physique pour les véhicules non commerciaux",
+    "Form 1A : certificat médical d’un médecin agréé, pour les véhicules commerciaux et les plus de 40 ans",
+    "Les frais prescrits",
+    "Aller sur sarathi.parivahan.gov.in, choisir l’État puis « Services on Driving Licence » ; après avoir rempli la demande, vous réservez un créneau et vous vous rendez à l’RTO avec les originaux"
+   ],
+   "note": "La demande de renouvellement est acceptée au plus un an avant l’expiration du permis. Si vous dépassez d’un an l’expiration, vous devez repasser l’examen de conduite."
+  }
+ },
+ "pk": {
+  "passport": {
+   "scope": "Passeport pakistanais (Direction générale de l’immigration et des passeports, DG I&P)",
+   "steps": [
+    "CNIC ou NICOP valide en original, avec une photocopie",
+    "Ancien passeport en original, avec une photocopie",
+    "Agents du gouvernement et du semi-public : un certificat de non-objection (NOC) de l’employeur",
+    "Binationaux : le passeport étranger avec une photocopie",
+    "En cas de perte : un rapport de police mentionnant le numéro de l’ancien passeport"
+   ],
+   "note": "Vous pouvez renouveler en ligne (onlinemrp.dgip.gov.pk ou l’application PakID) si le passeport expire dans 12 mois ou moins ; sinon, passez par le bureau régional des passeports ou l’ambassade. La demande en ligne exige des scans couleur de votre carte d’identité et de votre passeport."
+  },
+  "id": {
+   "scope": "Renouvellement de la carte d’identité nationale, CNIC (NADRA)",
+   "steps": [
+    "Déposer la demande de renouvellement au plus tard un mois après l’expiration de la carte (règle 12 des règles NADRA)",
+    "Via l’application PakID (Android et iPhone) : créer un compte, choisir le service de renouvellement de la carte et téléverser les pièces requises",
+    "Ou directement dans un centre d’enregistrement NADRA",
+    "Une visite au centre peut être nécessaire pour les empreintes et la photo",
+    "Suivre l’état de la demande dans l’application"
+   ],
+   "note": "La carte est valable 10 ans et délivrée à vie à partir de 60 ans. Pour les Pakistanais résidant à l’étranger, il existe la carte NICOP, avec sa propre page de renouvellement chez NADRA."
+  }
+ },
+ "tr": {
+  "passport": {
+   "scope": "Passeport turc ordinaire (Direction générale de la population et de la citoyenneté, NVİ)",
+   "steps": [
+    "La carte d’identité T.C., la pièce d’identité ou un document d’identité provisoire (original)",
+    "Une photo biométrique prise au cours des 6 derniers mois (normes OACI)",
+    "Tous les passeports précédents non annulés",
+    "Payer le coût du livret de passeport et la taxe (les informations de paiement s’affichent dans le système, aucun reçu n’est demandé)",
+    "Pour les mineurs ou personnes sous tutelle : le consentement du tuteur si le représentant légal ne se présente pas",
+    "Prendre rendez-vous : téléphone 199, randevu.nvi.gov.tr ou l’application NVI Mobil"
+   ],
+   "note": "Ces détails proviennent de la page d’une direction locale de la population et peuvent varier selon les provinces (par exemple le nombre de photos). Consultez la page de votre direction."
+  },
+  "license": {
+   "scope": "Renouvellement du permis de conduire turc (NVİ)",
+   "steps": [
+    "Carte d’identité ou pièce d’identité",
+    "Votre ancien permis de conduire",
+    "Un rapport de santé du conducteur (l’établissement de santé l’envoie par voie électronique via le système)",
+    "Une photo biométrique prise au cours des 6 derniers mois",
+    "Un document indiquant le groupe sanguin s’il ne figure pas dans le rapport de santé",
+    "Payer le coût du papier valeur, la taxe du permis et la part de la fondation",
+    "Prendre rendez-vous : 199, NVI Mobil, randevu.nvi.gov.tr ou e-Devlet"
+   ],
+   "note": "Le casier judiciaire est vérifié électroniquement. Les frais changent chaque année et s’affichent sur randevu.nvi.gov.tr. La page source est assez ancienne ; confirmez la liste lors de la prise de rendez-vous."
+  },
+  "residence": {
+   "scope": "Prolongation du titre de séjour pour les étrangers (Présidence de la gestion des migrations)",
+   "steps": [
+    "Faire la demande via le système e-İkamet à partir de 60 jours avant l’expiration du titre, et dans tous les cas avant son expiration",
+    "Le formulaire de demande de titre de séjour, signé",
+    "Une photocopie du passeport certifiée par un notaire (pages d’identité et de photo, et pages tamponnées)",
+    "Les reçus du paiement de la taxe de séjour et du coût du document",
+    "Une assurance maladie valide couvrant le séjour demandé",
+    "Une déclaration de ressources financières suffisantes (des justificatifs peuvent être demandés)",
+    "Un justificatif de résidence à jour (l’enregistrement de l’adresse est obligatoire)",
+    "Envoyer le dossier à la direction provinciale des migrations par courrier recommandé avec accusé de réception ou par transporteur, pas par courrier ordinaire"
+   ],
+   "note": "Les documents varient selon le type de titre (court séjour, famille, étudiant ou travail) ; lisez la liste de votre type dans le système e-İkamet."
+  }
+ },
+ "us": {
+  "passport": {
+   "scope": "Renouvellement du passeport américain pour les adultes (formulaire DS-82)",
+   "steps": [
+    "Votre passeport a été délivré quand vous aviez 16 ans ou plus et avait une validité de 10 ans",
+    "Il est à votre nom actuel, ou vous fournissez un document comme un acte de mariage ou un jugement de divorce attestant le changement",
+    "Il n’est pas endommagé, hormis l’usure normale",
+    "Remplir le formulaire DS-82 et l’imprimer en recto seul, puis le signer et le dater",
+    "Envoyer la demande par USPS (le service postal américain) avec votre passeport actuel"
+   ],
+   "note": "Les personnes éligibles aux États-Unis peuvent renouveler en ligne sur travel.state.gov. Hors des États-Unis, le renouvellement se fait en personne à l’ambassade ou au consulat (par courrier au Canada). Le traitement normal prend de 4 à 6 semaines, hors délai postal."
+  },
+  "residence": {
+   "scope": "Renouvellement de la carte verte (résidence permanente)",
+   "steps": [
+    "Déposer le formulaire I-90 en ligne via un compte USCIS, ou par courrier",
+    "Déposer la demande si votre carte expire dans les 6 mois",
+    "Si vous êtes hors des États-Unis et que votre carte expire dans les 6 mois : déposer la demande dès votre retour",
+    "Les pièces justificatives et les frais suivent les instructions du formulaire",
+    "Après le dépôt, l’avis de réception (I-797) peut être utilisé avec votre carte expirée"
+   ],
+   "note": "Les résidents conditionnels (carte de 2 ans) n’utilisent pas l’I-90 si leur statut expire dans les 90 jours ; leur procédure est différente. Les permis de conduire américains sont délivrés par chaque État séparément ; il n’y a donc pas de liste unique ici."
+  }
  }
 };
