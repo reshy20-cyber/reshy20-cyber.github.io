@@ -51,18 +51,20 @@ body[data-nav=on] .screen{padding-bottom:92px}
 .wm{font-weight:800;font-size:54px;line-height:1.5;padding-bottom:4px;background:linear-gradient(180deg,#FFF1C2,var(--gold) 60%,var(--gold2));-webkit-background-clip:text;background-clip:text;color:transparent}
 
 /* home hero */
-.hero{background:linear-gradient(170deg,var(--tm) 0%,var(--t) 45%,var(--td) 100%);height:300px;position:relative;overflow:hidden;text-align:center;color:#fff}
+.hero{background:#0B4A55;position:relative;overflow:hidden;text-align:center;color:#fff}
 .hero .sky{position:absolute;bottom:0;left:0;width:100%;height:130px}
 .hero .logo{display:block;margin:34px auto 0;width:112px;height:104px;position:relative}
 .hero .wm{position:relative;margin-top:-18px;font-size:50px}
 .hero .sub{position:relative;font-size:13px;opacity:.92;margin-top:4px}
+.heroimg{display:block;width:100%;height:auto;min-height:190px;object-fit:cover}
 .hbtn{position:absolute;top:14px;width:46px;height:46px;border-radius:50%;background:rgba(255,255,255,.14);border:0;display:grid;place-items:center;z-index:2}
 .hbtn svg{width:24px;height:24px}
 .hbtn.l{left:14px}.hbtn.r{right:14px}
 .hbtn.dot::after{content:"";position:absolute;top:8px;right:11px;width:10px;height:10px;border-radius:50%;background:#FF5A4F;border:2px solid var(--td)}
-.tiles{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;padding:0 14px;margin-top:-52px;position:relative;z-index:2}
+.tiles{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;padding:0 14px;margin-top:-6px;position:relative;z-index:2}
 .tile{background:var(--card);border-radius:18px;box-shadow:var(--shadow);border:0;padding:12px 4px 10px;display:flex;flex-direction:column;align-items:center;gap:6px;font-size:12px;font-weight:700;line-height:1.3;text-align:center;min-height:92px}
-.tile svg{width:34px;height:34px}
+.tile .tb{width:46px;height:46px;border-radius:15px;display:grid;place-items:center}
+.tile svg{width:30px;height:30px}
 .secrow{display:flex;justify-content:space-between;align-items:center;margin:20px 18px 10px;background:var(--card);border-radius:16px;padding:10px 14px;box-shadow:var(--shadow)}
 .secrow h3{font-size:17px;font-weight:800;display:flex;gap:8px;align-items:center}
 .secrow h3 svg{width:24px;height:24px}
@@ -243,21 +245,7 @@ select.field{appearance:none;-webkit-appearance:none;background-image:linear-gra
   <div class="hero">
     <button class="hbtn l" id="bell" aria-label="التنبيهات" onclick="go('alerts')"></button>
     <button class="hbtn r" id="gearBtn" aria-label="الإعدادات" onclick="go('settings')"></button>
-    <svg class="logo" id="heroLogo" viewBox="0 0 130 120" aria-hidden="true"></svg>
-    <div class="wm">أوراقي</div>
-    <div class="sub">إدارة وتجديد جميع أوراقك وأوراق عائلتك</div>
-    <svg class="sky" viewBox="0 0 480 130" preserveAspectRatio="xMidYMax slice" aria-hidden="true">
-      <defs><linearGradient id="fade" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff" stop-opacity=".16"/><stop offset="1" stop-color="#F2D58A" stop-opacity=".22"/></linearGradient></defs>
-      <g fill="url(#fade)">
-        <path d="M30 130V60h8V40l6-14 6 14v20h8v70z"/><path d="M58 130V74h14v56z"/>
-        <path d="M84 130V80h10V62h10v18h8v50z"/>
-        <path d="M330 130l50-72 50 72z"/><path d="M400 130l36-52 36 52z" opacity=".7"/>
-        <path d="M250 130v-46h10v-14a14 14 0 0 1 28 0v14h10v46z"/><path d="M296 130V46l4-16 4 16v84z"/>
-        <path d="M150 130V70l10-10v-14h8v14l10 10v60z"/>
-        <path d="M196 130V92h8v-8h8v8h8v38z"/>
-        <path d="M0 130V104c40-6 80 2 120 0s90-8 140-2 120 8 220-2v30z" opacity=".8"/>
-      </g>
-    </svg>
+    <img class="heroimg" src="hero.jpg" alt="أوراقي — إدارة وتجديد جميع أوراقك وأوراق عائلتك" width="1024" height="562" fetchpriority="high">
   </div>
   <div class="tiles" id="tiles"></div>
   <div class="secrow"><h3 id="calIc"></h3><button onclick="goDocs('all')">عرض الكل</button></div>
@@ -516,9 +504,9 @@ function card(x){
 /* ===== الرئيسية ===== */
 function renderHome(){
   $('bell').innerHTML=IC.bell;$('gearBtn').innerHTML=IC.gear;
-  $('heroLogo').innerHTML=LOGO;$('calIc').innerHTML=IC.cal+' الأوراق الأقرب انتهاءً';
+  $('calIc').innerHTML=IC.cal+' الأوراق الأقرب انتهاءً';
   const all=items();$('bell').classList.toggle('dot',all.some(x=>x.n<=30));
-  const tl=(ic,c,t,g)=>'<button class="tile" onclick="'+g+'">'+tint(ic,c)+'<span>'+t+'</span></button>';
+  const tl=(ic,c,t,g)=>'<button class="tile" onclick="'+g+'"><span class="tb" style="background:'+c+'22">'+tint(ic,c)+'</span><span>'+t+'</span></button>';
   $('tiles').innerHTML=tl(IC.people,'#1B8A57','أفراد<br>العائلة',"go('family')")+tl(IC.chart,'#C9972B','التقارير',"go('reports')")+tl(IC.globe,'#0B5D54','حسب<br>الدولة',"go('bycountry')")+tl(IC.doc,'#B98521','متطلبات<br>التجديد',"go('req')");
   $('homeList').innerHTML=all.length?all.slice(0,4).map(card).join(''):'<div class="empty" style="margin:0"><b>لا أوراق بعد</b>اضغط «إضافة ورقة» وسجّل أول جواز أو إقامة، وسنعرض لك المتبقي ونذكّرك قبل الانتهاء.</div>';
   const locked=!S.premium&&S.docs.length>=FREE_DOCS;
