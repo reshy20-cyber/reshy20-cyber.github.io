@@ -1,5 +1,5 @@
-const CACHE = "awraqi-v16";
-const SHELL = ["./", "./index.html", "./manifest.webmanifest", "./icon-192.png", "./renewals.js", "./i18n.js", "./hero.jpg"];
+const CACHE = "awraqi-v17";
+const SHELL = ["./", "./index.html", "./manifest.webmanifest", "./icon-192.png", "./renewals.js", "./i18n.js", "./i18n.more.js", "./hero.jpg"];
 self.addEventListener("install", e => e.waitUntil(caches.open(CACHE).then(c => c.addAll(SHELL)).then(() => self.skipWaiting())));
 self.addEventListener("activate", e => e.waitUntil(caches.keys().then(k => Promise.all(k.filter(x => x !== CACHE).map(x => caches.delete(x)))).then(() => self.clients.claim())));
 self.addEventListener("fetch", e => {
