@@ -1,4 +1,4 @@
-/* أوراقي — نظام اللغات: العربية (الأصل) + English + Français + Deutsch.
+/* أوراقي — نظام اللغات: العربية (الأصل) + English + Français + Deutsch + Türkçe + Español.
    المفتاح هو النص العربي نفسه؛ إن لم توجد ترجمة يظهر النص العربي. */
 (function(){
 'use strict';
@@ -6,7 +6,9 @@ var LANGS={
   ar:{n:'العربية',dir:'rtl',loc:'ar'},
   en:{n:'English',dir:'ltr',loc:'en-GB'},
   fr:{n:'Français',dir:'ltr',loc:'fr-FR'},
-  de:{n:'Deutsch',dir:'ltr',loc:'de-DE'}
+  de:{n:'Deutsch',dir:'ltr',loc:'de-DE'},
+  tr:{n:'Türkçe',dir:'ltr',loc:'tr-TR'},
+  es:{n:'Español',dir:'ltr',loc:'es-ES'}
 };
 var cur='ar';
 
@@ -232,14 +234,17 @@ var ROWS=[
 ['فقط','','','']
 ];
 
-var D={en:{},fr:{},de:{}};
+var D={en:{},fr:{},de:{},tr:{},es:{}};
 ROWS.forEach(function(r){D.en[r[0]]=r[1];D.fr[r[0]]=r[2];D.de[r[0]]=r[3]});
+var MORE=window.I18N_MORE||{};D.tr=MORE.tr||{};D.es=MORE.es||{};
 
 /* أسماء الدول */
 var CN={
  en:{eg:'Egypt',uk:'United Kingdom',sa:'Saudi Arabia',ae:'United Arab Emirates',kw:'Kuwait',jo:'Jordan',qa:'Qatar',bh:'Bahrain',om:'Oman',ma:'Morocco',lb:'Lebanon',tn:'Tunisia',dz:'Algeria',iq:'Iraq',ly:'Libya','in':'India',pk:'Pakistan',tr:'Türkiye',us:'United States',other:'Other country'},
  fr:{eg:'Égypte',uk:'Royaume-Uni',sa:'Arabie saoudite',ae:'Émirats arabes unis',kw:'Koweït',jo:'Jordanie',qa:'Qatar',bh:'Bahreïn',om:'Oman',ma:'Maroc',lb:'Liban',tn:'Tunisie',dz:'Algérie',iq:'Irak',ly:'Libye','in':'Inde',pk:'Pakistan',tr:'Turquie',us:'États-Unis',other:'Autre pays'},
- de:{eg:'Ägypten',uk:'Vereinigtes Königreich',sa:'Saudi-Arabien',ae:'Vereinigte Arabische Emirate',kw:'Kuwait',jo:'Jordanien',qa:'Katar',bh:'Bahrain',om:'Oman',ma:'Marokko',lb:'Libanon',tn:'Tunesien',dz:'Algerien',iq:'Irak',ly:'Libyen','in':'Indien',pk:'Pakistan',tr:'Türkei',us:'Vereinigte Staaten',other:'Anderes Land'}
+ de:{eg:'Ägypten',uk:'Vereinigtes Königreich',sa:'Saudi-Arabien',ae:'Vereinigte Arabische Emirate',kw:'Kuwait',jo:'Jordanien',qa:'Katar',bh:'Bahrain',om:'Oman',ma:'Marokko',lb:'Libanon',tn:'Tunesien',dz:'Algerien',iq:'Irak',ly:'Libyen','in':'Indien',pk:'Pakistan',tr:'Türkei',us:'Vereinigte Staaten',other:'Anderes Land'},
+ tr:{eg:'Mısır',uk:'Birleşik Krallık',sa:'Suudi Arabistan',ae:'Birleşik Arap Emirlikleri',kw:'Kuveyt',jo:'Ürdün',qa:'Katar',bh:'Bahreyn',om:'Umman',ma:'Fas',lb:'Lübnan',tn:'Tunus',dz:'Cezayir',iq:'Irak',ly:'Libya','in':'Hindistan',pk:'Pakistan',tr:'Türkiye',us:'Amerika Birleşik Devletleri',other:'Diğer ülke'},
+ es:{eg:'Egipto',uk:'Reino Unido',sa:'Arabia Saudí',ae:'Emiratos Árabes Unidos',kw:'Kuwait',jo:'Jordania',qa:'Catar',bh:'Baréin',om:'Omán',ma:'Marruecos',lb:'Líbano',tn:'Túnez',dz:'Argelia',iq:'Irak',ly:'Libia','in':'India',pk:'Pakistán',tr:'Turquía',us:'Estados Unidos',other:'Otro país'}
 };
 
 /* الأعداد والجموع */
@@ -276,7 +281,21 @@ var F={
   only:''
  }
 };
-F.ar.dayDat=F.ar.dayGen;F.en.dayDat=F.en.dayStr;F.fr.dayDat=F.fr.dayStr;
+F.tr={
+  papers:function(n){return n+' belge'},
+  dayStr:function(n){return n+' gün'},
+  label:function(n){if(n<0)return F.tr.dayStr(-n)+' önce süresi doldu';if(n===0)return'Bugün sona eriyor';if(n<=100)return F.tr.dayStr(n)+' kaldı';var mo=Math.round(n/30);return mo<24?mo+' ay kaldı':(n/365).toFixed(1).replace('.',',')+' yıl kaldı'},
+  when:function(n){return n<0?'süresi <em>'+F.tr.dayStr(-n)+' önce</em> doldu':n===0?'<em>bugün</em> sona eriyor':n===1?'<em>yarın</em> sona eriyor':'<em>'+F.tr.dayStr(n)+'</em> içinde sona eriyor'},
+  only:''
+};
+F.es={
+  papers:function(n){return n+' '+pl(n,'documento','documentos')},
+  dayStr:function(n){return n+' '+pl(n,'día','días')},
+  label:function(n){if(n<0)return'Caducó hace '+F.es.dayStr(-n);if(n===0)return'Caduca hoy';if(n<=100)return pl(n,'Queda ','Quedan ')+F.es.dayStr(n);var mo=Math.round(n/30);return mo<24?'Quedan '+mo+' meses':'Quedan '+(n/365).toFixed(1).replace('.',',')+' años'},
+  when:function(n){return n<0?'caducó <em>hace '+F.es.dayStr(-n)+'</em>':n===0?'caduca <em>hoy</em>':n===1?'caduca <em>mañana</em>':'caduca en <em>'+F.es.dayStr(n)+'</em>'},
+  only:''
+};
+F.ar.dayDat=F.ar.dayGen;F.en.dayDat=F.en.dayStr;F.fr.dayDat=F.fr.dayStr;F.tr.dayDat=F.tr.dayStr;F.es.dayDat=F.es.dayStr;
 
 /* ترجمة أنواع القوائم والعلاقات تمرّ عبر t() لأن مفاتيحها عربية */
 function t(k,v){

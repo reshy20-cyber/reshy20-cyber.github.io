@@ -412,7 +412,7 @@ select.field{appearance:none;-webkit-appearance:none;background-image:linear-gra
 <div class="modal" id="actModal" onclick="if(event.target===this)closeM('actModal')"><div class="sheet" id="actBody"></div></div>
 <div class="toast" id="toast" role="status"></div>
 
-<script src="i18n.js"></script>
+<script src="i18n.more.js"></script><script src="i18n.js"></script>
 <script src="renewals.js"></script>
 <script>
 (function(){
@@ -677,22 +677,28 @@ function renderDetails(){
 function firstType(c){const r=window.RENEWALS[c]||{};return Object.keys(r)[0]||'passport'}
 window.firstType=firstType;
 window.openReq=function(c,t){reqC=window.COUNTRIES[c]&&c!=='other'?c:'eg';reqT=t||firstType(reqC);go('req')};
+/* لغة قائمة التجديد تتبع لغة الدولة: العربية للدول العربية، والإنجليزية لبريطانيا وأمريكا والهند وباكستان، والتركية لتركيا */
+const LISTLANG={uk:'en',us:'en','in':'en',pk:'en',tr:'tr'};
+function listLang(c){return LISTLANG[c]||'ar'}
 function renderReq(){
   $('rCountry').innerHTML=Object.keys(window.COUNTRIES).filter(k=>k!=='other').map(k=>'<option value="'+k+'">'+FLAGS[k]+' '+cn_(k)+'</option>').join('');
   if(!window.COUNTRIES[reqC]||reqC==='other')reqC='eg';$('rCountry').value=reqC;
   const R=window.RENEWALS[reqC]||{};
   $('rTypes').innerHTML=['passport','residence','id','license','visa','insurance'].map(k=>'<button class="chip'+(reqT===k?' on':'')+'" onclick="setReqT(\''+k+'\')">'+tn(k)+(R[k]?' <span class="v">✓</span>':'')+'</button>').join('');
   const e0=R[reqT],t=TYPES[reqT]||TYPES.other,cn=cn_(reqC),ti=tn(reqT);let h='';
-  const RI=L.lang()!=='ar'&&window.RENEWALS_I18N&&window.RENEWALS_I18N[L.lang()]&&window.RENEWALS_I18N[L.lang()][reqC]&&window.RENEWALS_I18N[L.lang()][reqC][reqT];
+  const LL=listLang(reqC);
+  if(LL!=='ar'&&!(window.RENEWALS_I18N&&window.RENEWALS_I18N[LL]))L.load(LL,()=>{if(window.RENEWALS_I18N&&window.RENEWALS_I18N[LL])renderReq()});
+  const RI=LL!=='ar'&&window.RENEWALS_I18N&&window.RENEWALS_I18N[LL]&&window.RENEWALS_I18N[LL][reqC]&&window.RENEWALS_I18N[LL][reqC][reqT];
   const e=e0&&Object.assign({},e0,RI||{});
-  const arOnly=!!(e0&&L.lang()!=='ar'&&!RI);
-  const list=a=>'<div class="chkcard"><div class="chkhead">'+IC.pin+'<span>'+tr('المستندات المطلوبة')+'</span></div><ul class="chk">'+a.map(x=>'<li><i>'+IC.check+'</i><span>'+esc(x)+'</span></li>').join('')+'</ul></div>';
+  const arOnly=!!(e0&&LL!=='ar'&&!RI);
+  const dr=LL==='ar'?'rtl':'ltr';
+  const list=(a,d)=>'<div class="chkcard"><div class="chkhead">'+IC.pin+'<span>'+tr('المستندات المطلوبة')+'</span></div><ul class="chk"'+(d?' dir="'+d+'"':'')+'>'+a.map(x=>'<li><i>'+IC.check+'</i><span>'+esc(x)+'</span></li>').join('')+'</ul></div>';
   const gl=(u,tx)=>'<a class="btn gold goldlink" href="'+esc(u)+'" target="_blank" rel="noopener"><span>'+tx+'</span>'+IC.ext+'</a>';
   if(e){
-    h='<div class="rhead"><span class="fl">'+FLAGS[reqC]+'</span><div><b>'+esc(tr('تجديد {t} — {c}',{t:ti,c:cn}))+'</b><small>'+esc(e.scope)+'</small></div></div>'
+    h='<div class="rhead"><span class="fl">'+FLAGS[reqC]+'</span><div><b>'+esc(tr('تجديد {t} — {c}',{t:ti,c:cn}))+'</b><small dir="'+dr+'">'+esc(e.scope)+'</small></div></div>'
      +(arOnly?'<div class="note info">'+tr('هذه القائمة معروضة بالعربية كما وردت من المصدر، وترجمتها قيد الإعداد.')+'</div>':'')
-     +list(e.steps)
-     +(e.note?'<div class="note">'+esc(e.note)+'</div>':'')
+     +list(e.steps,dr)
+     +(e.note?'<div class="note" dir="'+dr+'">'+esc(e.note)+'</div>':'')
      +'<div class="meta">'+tr('آخر تحقق من المصدر الرسمي: {d}',{d:esc(e.verified)})+'</div>'
      +gl(e.url,tr('عرض الموقع الرسمي'))
      +'<div class="meta"><a href="mailto:roadcompanion.support@gmail.com?subject='+encodeURIComponent((L.lang()==='ar'?'':'')+tr('خطأ في قائمة التجديد')+': '+cn+' / '+ti)+'" style="color:var(--t);font-weight:700">'+tr('⚑ أبلغ عن خطأ في هذه القائمة')+'</a></div>';
