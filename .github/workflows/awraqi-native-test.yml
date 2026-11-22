@@ -1,0 +1,52 @@
+name: Awraqi native test build (Android, with phone notifications)
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths: ["native-awraqi/**", "awraqi/**", ".github/workflows/awraqi-native-test.yml"]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: native-awraqi
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: "17"
+
+      - name: Install Capacitor
+        run: npm install --no-audit --no-fund
+
+      - name: Copy the web app
+        run: |
+          mkdir -p www
+          rsync -a ../awraqi/ www/
+
+      - name: Create the Android project
+        run: |
+          npx cap add android
+          # notification permission for Android 13+
+          sed -i 's#<application#<uses-permission android:name="android.permission.POST_NOTIFICATIONS" />\n    <application#' android/app/src/main/AndroidManifest.xml
+          npx cap sync android
+
+      - name: Build a test APK
+        run: |
+          cd android
+          chmod +x gradlew
+          yes | "$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager" --licenses > /dev/null || true
+          ./gradlew --no-daemon assembleDebug
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: awraqi-native-test-apk
+          path: native-awraqi/android/app/build/outputs/apk/debug/app-debug.apk
