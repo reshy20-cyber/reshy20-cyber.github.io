@@ -54,7 +54,7 @@ var ROWS=[
 ['📅 أضف كل المستندات للتقويم','📅 Add all documents to calendar','📅 Ajouter tous les documents au calendrier','📅 Alle Dokumente zum Kalender hinzufügen'],
 ['تذكيرات على هاتفك قبل الانتهاء','Reminders on your phone before expiry','Rappels sur votre téléphone avant l’expiration','Erinnerungen auf Ihrem Handy vor Ablauf'],
 ['أضف ورقة أولًا','Add a document first','Ajoutez d’abord un document','Fügen Sie zuerst ein Dokument hinzu'],
-['اختر «إضافة إلى التقويم» من قائمة المشاركة','Choose “Add to Calendar” in the share menu','Choisissez « Ajouter au calendrier » dans le menu de partage','Wählen Sie im Teilen-Menü „Zum Kalender hinzufügen“'],
+['احفظه في «الملفات» ثم افتحه لإضافته إلى التقويم','Save it to Files, then open it to add it to Calendar','Enregistrez-le dans Fichiers, puis ouvrez-le pour l’ajouter à l’agenda','Sichern Sie es in „Dateien“ und öffnen Sie es, um es dem Kalender hinzuzufügen'],
 ['🔔 جرّب إشعارًا الآن','🔔 Send a test notification','🔔 Envoyer une notification test','🔔 Testbenachrichtigung senden'],
 ['يصلك بعد 10 ثوانٍ','Arrives in 10 seconds','Arrive dans 10 secondes','Kommt in 10 Sekunden'],
 ['سيصلك إشعار خلال 10 ثوانٍ، أغلق التطبيق وانتظر','A notification will arrive in 10 seconds. Close the app and wait','Une notification arrivera dans 10 secondes. Fermez l’app et patientez','In 10 Sekunden kommt eine Benachrichtigung. App schließen und warten'],
