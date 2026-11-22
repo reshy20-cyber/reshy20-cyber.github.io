@@ -1,0 +1,6 @@
+{
+  "appId": "app.awraqi.native",
+  "appName": "أوراقي",
+  "webDir": "www",
+  "server": { "androidScheme": "https" }
+}
