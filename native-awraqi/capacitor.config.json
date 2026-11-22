@@ -1,5 +1,5 @@
 {
-  "appId": "app.awraqi.native",
+  "appId": "app.awraqi.test",
   "appName": "أوراقي",
   "webDir": "www",
   "server": { "androidScheme": "https" }
