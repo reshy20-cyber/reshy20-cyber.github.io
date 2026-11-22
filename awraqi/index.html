@@ -59,7 +59,7 @@ body[data-nav=on] .screen{padding-bottom:92px}
 .hero .logo{display:block;margin:34px auto 0;width:112px;height:104px;position:relative}
 .hero .wm:not(.heroname){position:relative;margin-top:-18px;font-size:50px}
 .hero .sub{position:relative;font-size:13px;opacity:.92;margin-top:4px}
-.herobox{position:relative;container-type:inline-size}.heroname{position:absolute;left:0;right:0;top:36%;text-align:center;font-size:10.5cqw;white-space:nowrap;line-height:1.3;filter:drop-shadow(0 2px 6px rgba(0,0,0,.45))}.herotag{position:absolute;left:6%;right:6%;top:70%;text-align:center;font-size:3.8cqw;line-height:1.35;font-weight:700;color:#fff;text-shadow:0 1px 6px rgba(0,0,0,.7)}html[dir=rtl] .heroname{font-size:15cqw;top:40%}.heroimg{display:block;width:100%;height:auto;min-height:190px;object-fit:cover}
+.native .btn.gold[onclick^="ics"],.native .setrow[onclick^="ics"]{display:none!important}.native #testRow{display:flex!important}.herobox{position:relative;container-type:inline-size}.heroname{position:absolute;left:0;right:0;top:36%;text-align:center;font-size:10.5cqw;white-space:nowrap;line-height:1.3;filter:drop-shadow(0 2px 6px rgba(0,0,0,.45))}.herotag{position:absolute;left:6%;right:6%;top:70%;text-align:center;font-size:3.8cqw;line-height:1.35;font-weight:700;color:#fff;text-shadow:0 1px 6px rgba(0,0,0,.7)}html[dir=rtl] .heroname{font-size:15cqw;top:40%}.heroimg{display:block;width:100%;height:auto;min-height:190px;object-fit:cover}
 .hbtn{position:absolute;top:14px;width:46px;height:46px;border-radius:50%;background:rgba(255,255,255,.14);border:0;display:grid;place-items:center;z-index:2}
 .hbtn svg{width:24px;height:24px}
 .hbtn.l{left:14px}.hbtn.r{right:14px}
@@ -373,6 +373,7 @@ select.field{appearance:none;-webkit-appearance:none;background-image:linear-gra
     <div class="setgroup">
       <button class="setrow" onclick="go('family')"><span>👨‍👩‍👧 أفراد العائلة</span><span>‹</span></button>
       <button class="setrow" onclick="ics()"><span>📅 أضف كل المستندات للتقويم<small>تذكيرات على هاتفك قبل الانتهاء</small></span><span>‹</span></button>
+      <button class="setrow nat" id="testRow" onclick="testNotif()" style="display:none"><span>🔔 جرّب إشعارًا الآن<small>يصلك بعد 10 ثوانٍ</small></span><span>‹</span></button>
       <button class="setrow" onclick="exportData()"><span>💾 حفظ نسخة احتياطية<small>ملف على جهازك</small></span><span>‹</span></button>
       <button class="setrow" onclick="document.getElementById('impFile').click()"><span>📥 استرجاع نسخة احتياطية</span><span>‹</span></button>
       <a class="setrow" href="privacy.html"><span>🔒 الخصوصية</span><span>‹</span></a>
@@ -839,7 +840,7 @@ async function doSched(ask){
     let p=await LN.checkPermissions();
     if(p.display!=='granted'){if(!S.docs.length&&!ask)return;p=await LN.requestPermissions();if(p.display!=='granted')return}
     const pend=await LN.getPending();
-    if(pend.notifications&&pend.notifications.length)await LN.cancel({notifications:pend.notifications.map(x=>({id:x.id}))});
+    const pn=(pend.notifications||[]).filter(x=>x.id!==9999);if(pn.length)await LN.cancel({notifications:pend.notifications.filter(x=>x.id!==9999).map(x=>({id:x.id}))});
     const now=Date.now(),list=[];
     S.docs.forEach(d=>{
       if(!/^\d{4}-\d{2}-\d{2}$/.test(d.date||''))return;
@@ -852,6 +853,16 @@ async function doSched(ask){
     if(items.length)await LN.schedule({notifications:items});
   }catch(e){}
 }
+window.testNotif=async function(){
+  const LN=nativeLN();if(!LN)return;
+  try{
+    let p=await LN.checkPermissions();if(p.display!=='granted')p=await LN.requestPermissions();
+    if(p.display!=='granted'){toast(tr('فعّل الإشعارات من إعدادات الهاتف'));return}
+    await LN.schedule({notifications:[{id:9999,title:tr('أوراقي'),body:tr('هذا إشعار تجريبي. هكذا ستصلك تنبيهات انتهاء أوراقك.'),schedule:{at:new Date(Date.now()+10000),allowWhileIdle:true}}]});
+    toast(tr('سيصلك إشعار خلال 10 ثوانٍ، أغلق التطبيق وانتظر'));
+  }catch(e){toast(String(e&&e.message||e))}
+};
+if(nativeLN())document.body.classList.add('native');
 window.schedNotifs=schedNotifs;
 schedNotifs();
 if('serviceWorker' in navigator)navigator.serviceWorker.register('sw.js').catch(()=>{});
