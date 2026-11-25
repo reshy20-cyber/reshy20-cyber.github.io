@@ -88,5 +88,17 @@
         "13:5B:91:75:3B:9D:12:9B:99:3B:B8:80:15:A6:58:2E:2B:B7:22:D9:68:3C:32:DA:98:A3:0C:7E:99:3F:25:1C"
       ]
     }
+  },
+  {
+    "relation": [
+      "delegate_permission/common.handle_all_urls"
+    ],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "app.tafawuq.azhari.thanawi",
+      "sha256_cert_fingerprints": [
+        "2E:A6:3A:07:2D:D1:87:F9:4F:16:19:45:C1:18:66:D5:BC:4B:7A:5F:C4:56:EC:FE:5D:79:CE:54:9C:34:6C:80"
+      ]
+    }
   }
 ]

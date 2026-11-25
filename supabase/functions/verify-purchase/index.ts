@@ -23,6 +23,7 @@ const PRODUCTS: Record<string, string> = {
   sanaa_premium: "app.sanaa",
   lifetime_full: "app.tafawuq.azhari",
   awraqi_premium: "app.awraqi",
+  azhari_thanawi_premium: "app.tafawuq.azhari.thanawi",
 };
 
 function json(body: unknown, status = 200) {
