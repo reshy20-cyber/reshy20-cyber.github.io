@@ -97,7 +97,9 @@
       "namespace": "android_app",
       "package_name": "app.tafawuq.azhari.thanawi",
       "sha256_cert_fingerprints": [
-        "2E:A6:3A:07:2D:D1:87:F9:4F:16:19:45:C1:18:66:D5:BC:4B:7A:5F:C4:56:EC:FE:5D:79:CE:54:9C:34:6C:80"
+        "2E:A6:3A:07:2D:D1:87:F9:4F:16:19:45:C1:18:66:D5:BC:4B:7A:5F:C4:56:EC:FE:5D:79:CE:54:9C:34:6C:80",
+        "93:99:AB:1C:73:B8:2B:75:BE:31:09:A3:75:C6:34:15:1B:7F:0C:50:24:02:01:96:47:27:88:F6:3C:1B:61:C2",
+        "DD:5E:98:5A:AE:8C:CF:58:F5:D7:5D:30:E3:15:91:97:C3:DB:CF:9F:FA:CA:47:58:30:69:A2:A7:E8:C5:45:7F"
       ]
     }
   }
